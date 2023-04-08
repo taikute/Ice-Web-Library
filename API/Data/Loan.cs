@@ -9,15 +9,15 @@ namespace API.Data
         [Key]
         public int ID { get; set; }
         [Required]
-        public int BookID { get; set; }
+        public int BookCode { get; set; }
         [Required]
         public int ReaderID { get; set; }
         public DateTime BorrowedDate { get; set; } = DateTime.Now;
         public DateTime? ReturnedDate { get; set; } = null;
 
-        [ForeignKey("BookID")]
-        public virtual Book Book { get; set; } = new Book();
+        [ForeignKey("BookCode")]
+        public virtual BookInstance? BookInstance { get; set; }
         [ForeignKey("ReaderID")]
-        public virtual Reader Reader { get; set; } = new Reader();
+        public virtual Reader? Reader { get; set; }
     }
 }

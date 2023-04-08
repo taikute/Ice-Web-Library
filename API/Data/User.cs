@@ -17,6 +17,6 @@ namespace API.Data
         public string? Password { get; set; }
         public int RoleID { get; set; } = 1;
         [ForeignKey("RoleID")]
-        public virtual UserRole Role { get; set; } = new UserRole();
+        public virtual UserRole? Role { get; set; }
     }
 }
