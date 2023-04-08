@@ -6,6 +6,6 @@ namespace API.Data
     [Table("Reader")]
     public class Reader: User
     {
-        public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();
+        public virtual ICollection<Loan>? Loans { get; set; }
     }
 }
