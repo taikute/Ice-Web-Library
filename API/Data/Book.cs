@@ -8,7 +8,7 @@ namespace API.Data
     {
         [Key]
         public int ID { get; set; }
-        public string Title { get; set; } = "";
+        public string Title { get; set; } = "NewTitle";
         public int AuthorID { get; set; }
         public int CategoryID { get; set; }
         public int Price { get; set; } = 0;

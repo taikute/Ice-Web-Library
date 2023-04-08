@@ -11,6 +11,7 @@ namespace API.Models
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Loan> Loans { get; set; }
 
+        //public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         protected readonly IConfiguration Configuration;
         public DataContext(IConfiguration configuration)
         {

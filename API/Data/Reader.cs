@@ -8,7 +8,7 @@ namespace API.Data
     {
         [Key]
         public int ID { get; set; }
-        public string Name { get; set; } = "";
+        public string Name { get; set; } = "NewName";
         public string Email { get; set; } = "";
         [Required]
         public string? UserName { get; set; }
