@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Data
 {
-    [Table("Category")]
+    [Table("BookCategory")]
     public class BookCategory
     {
         [Key]
