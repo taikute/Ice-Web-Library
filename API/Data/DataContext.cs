@@ -1,13 +1,12 @@
-﻿using API.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace API.Models
+namespace API.Data
 {
     public class DataContext : DbContext
     {
         public DbSet<Book> Books { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Author> Authors { get; set; }
+        public DbSet<BookCategory> Categories { get; set; }
+        public DbSet<BookAuthor> Authors { get; set; }
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Loan> Loans { get; set; }
 
@@ -45,6 +44,8 @@ namespace API.Models
                 .HasOne(l => l.Reader)
                 .WithMany(r => r.Loans)
                 .HasForeignKey(l => l.ReaderID);
+
+            //AddSeedData
         }
     }
 }
