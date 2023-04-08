@@ -3,16 +3,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Models
 {
-    public class AppDbContext : DbContext
+    public class DataContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-
         public DbSet<Book> Books { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Loan> Loans { get; set; }
 
+        protected readonly IConfiguration Configuration;
+        public DataContext(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            // connect to sql server with connection string from app settings
+            options.UseSqlServer(Configuration.GetConnectionString("MyConnectionString"));
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
