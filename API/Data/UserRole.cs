@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data
 {
-    [Table("BookStatus")]
-    public class BookStatus
+    [Table("UserRole")]
+    public class UserRole
     {
         [Key]
         public int ID { get; set; }
+        [Required]
         public string? Name { get; set; }
-        public virtual ICollection<Book> Books { get; set; } = new List<Book>();
+        public virtual ICollection<User> Users { get; set; } = new List<User>();
     }
 }
