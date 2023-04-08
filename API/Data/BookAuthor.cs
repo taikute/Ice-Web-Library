@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace API.Data
 {
-    [Table("Category")]
-    public class Category
+    [Table("Author")]
+    public class BookAuthor
     {
         [Key]
         public int ID { get; set; }
-        public string Name { get; set; } = "NewCategory";
+        public string Name { get; set; } = "NewAuthor";
         public virtual ICollection<Book> Books { get; set; } = new List<Book>();
     }
 }
