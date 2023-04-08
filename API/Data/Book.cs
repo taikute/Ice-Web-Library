@@ -8,7 +8,6 @@ namespace API.Data
     {
         [Key]
         public int ID { get; set; }
-
         public int Code { get; set; }
         public string Title { get; set; } = "NewTitle";
         [Required]
