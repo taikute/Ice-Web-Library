@@ -8,7 +8,7 @@ namespace API.Data
     {
         [Key]
         public int ID { get; set; }
-        public string Name { get; set; } = "NewCategory";
+        public string Name { get; set; } = "Unknow";
         public virtual ICollection<Book>? Books { get; set; }
     }
 }

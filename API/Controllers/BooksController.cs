@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Data;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -14,10 +15,12 @@ namespace API.Controllers
     public class BooksController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public BooksController(DataContext context)
+        public BooksController(DataContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Books

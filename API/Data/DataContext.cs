@@ -6,12 +6,12 @@ namespace API.Data
     {
         public DbSet<BookInstance> BookInstances { get; set; }
         public DbSet<Book> Books { get; set; }
-        public DbSet<BookCategory> Categories { get; set; }
-        public DbSet<BookAuthor> Authors { get; set; }
-        public DbSet<BookStatus> Statuss { get; set; }
+        public DbSet<BookCategory> BookCategories { get; set; }
+        public DbSet<BookAuthor> BookAuthors { get; set; }
+        public DbSet<BookStatus> BookStatuses { get; set; }
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Loan> Loans { get; set; }
-        public DbSet<Librarian> Librarian { get; set; }
+        public DbSet<Librarian> Librarians { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> Roles { get; set; }
 
@@ -32,17 +32,27 @@ namespace API.Data
 
             #region AddRelationShip
             modelBuilder.Entity<Book>()
-                .HasOne(b => b.Category)
+                .HasOne(b => b.BookPublisher)
                 .WithMany(c => c.Books)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Book>()
-                .HasOne(b => b.Author)
+                .HasOne(b => b.BookCategory)
+                .WithMany(c => c.Books)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Book>()
+                .HasOne(b => b.BookAuthor)
                 .WithMany(a => a.Books)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<BookInstance>()
-                .HasOne(b => b.Status)
+                .HasOne(b => b.BookStatus)
+                .WithMany(a => a.BookInstances)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BookInstance>()
+                .HasOne(b => b.Book)
                 .WithMany(a => a.BookInstances)
                 .OnDelete(DeleteBehavior.Restrict);
 

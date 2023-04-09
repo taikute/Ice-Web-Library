@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using WEB.Helpers;
-
-namespace WEB.Models
+﻿namespace WEB.Models.BookModels
 {
     public class BookVM
     {
@@ -9,9 +6,9 @@ namespace WEB.Models
         public int Code { get; set; }
         public string? Title { get; set; }
         public int AuthorID { get; set; }
-        public string AuthorName { get; set; } = string.Empty;
+        public string? AuthorName { get; set; }
         public int CategoryID { get; set; }
-        public string CategoryName { get; set; } = string.Empty;
+        public string? CategoryName { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
     }

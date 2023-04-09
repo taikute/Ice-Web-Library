@@ -8,12 +8,15 @@ namespace API.Data
     {
         [Key]
         public int ID { get; set; }
+        public int BookID { get; set; }
         [Required]
-        public int BookCode { get; set; }
+        public string BookCode { get; set; } = "DEFAULT-CODE";
         public int StatusID { get; set; } = 1;
-        [ForeignKey("StatusID")]
-        public virtual BookStatus? Status { get; set; }
 
+        [ForeignKey("StatusID")]
+        public virtual BookStatus? BookStatus { get; set; }
+        [ForeignKey("BookID")]
+        public virtual Book? Book { get; set; }
         public virtual ICollection<Loan>? Loans { get; set; }
     }
 }
