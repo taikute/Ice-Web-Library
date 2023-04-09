@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WEB.Models.BookViewModel>
+﻿@model IEnumerable<WEB.Models.BookVM>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,59 +12,25 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AuthorID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CategoryID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Quantity)
-            </th>
-            <th></th>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Detail</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Code)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AuthorID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CategoryID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.ID  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.ID  })
-            </td>
-        </tr>
-}
+        @foreach (var book in Model)
+        {
+            <tr>
+                <td>@book.ID</td>
+                <td>@book.Title</td>
+                <td>@(book.AuthorName)</td>
+                <td>@(book.CategoryName)</td>
+                <td>
+                    <a href="@Url.Action("Detail", "Book", new { id = book.ID })">View</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
