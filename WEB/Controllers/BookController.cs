@@ -7,31 +7,47 @@ namespace WEB.Controllers
 {
     public class BookController : Controller
     {
+        List<BookVM> books = ApiHelper.GetList<BookVM>("Books")!;
+        public BookController()
+        {
+            //UpdateData
+            foreach (var book in books)
+            {
+                var author = ApiHelper.GetByID<AuthorVM>(book.AuthorID, "BookAuthors")!;
+                book.AuthorName = author.Name!;
+
+                var category = ApiHelper.GetByID<CategoryVM>(book.CategoryID, "BookCategories")!;
+                book.CategoryName = category.Name!;
+            }
+        }
         public IActionResult Index()
         {
-            var books = ApiHelper.GetList<BookVM>("Books");
-            if (books != null)
-            {
-                foreach (var book in books)
-                {
-                    var author = ApiHelper.GetByID<AuthorVM>(book.AuthorID, "BookAuthors");
-                    if (author != null) book.AuthorName = author.Name ?? "Unknow";
-                    else return NotFound("Author");
-
-                    var category = ApiHelper.GetByID<CategoryVM>(book.CategoryID, "BookCategories");
-                    if (category != null) book.CategoryName = category.Name ?? "Unknow";
-                    else return NotFound("Category");
-                }
-            }
-            else return BadRequest();
             return View(books);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var book = books.FirstOrDefault(x => x.ID == id);
+            return View(book);
+        }
+        [HttpPost]
+        public IActionResult Delete(int id, BookVM book)
+        {
+            ApiHelper.request = new RestRequest($"books/{id}", Method.Delete);
+            RestResponse response = ApiHelper.client.Execute(ApiHelper.request);
+            if (response.IsSuccessful) return RedirectToAction("Index");
+            else
+            {
+                TempData["ErrorMessage"] = "Failed to delete book";
+                return View(book);
+            }
         }
 
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var book = ApiHelper.GetByID<BookVM>(id, "Books");
-            if (book == null) return NotFound();
+            var book = books.FirstOrDefault(x => x.ID == id);
             return View(book);
         }
         [HttpPost]
@@ -51,8 +67,7 @@ namespace WEB.Controllers
         [HttpGet]
         public IActionResult Detail(int id)
         {
-            var book = ApiHelper.GetByID<BookVM>(id, "books");
-
+            var book = books.FirstOrDefault(x => x.ID == id);
             return View(book);
         }
     }

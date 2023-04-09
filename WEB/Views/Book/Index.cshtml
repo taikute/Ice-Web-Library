@@ -6,24 +6,21 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<button class="btn btn-primary" onclick="location.href='@Url.Action("Create")'">Create New</button>
+
 <table class="table">
     <thead>
         <tr>
-            <th>ID</th>
             <th>Title</th>
             <th>Author</th>
             <th>Category</th>
-            <th>Detail</th>
+            <th>Infomation</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var book in Model)
         {
             <tr>
-                <td>@book.ID</td>
                 <td>@book.Title</td>
                 <td>@(book.AuthorName)</td>
                 <td>@(book.CategoryName)</td>

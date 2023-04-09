@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Detail";
+}
+
+<h1>Detail</h1>
+
+<div class="info-box">
+    <h2>Book Information</h2>
+    <table>
+        <tr>
+            <td>ID:</td>
+            <td>@Model.ID</td>
+        </tr>
+        <tr>
+            <td>Title:</td>
+            <td>@Model.Title</td>
+        </tr>
+        <tr>
+            <td>Author:</td>
+            <td>@Model.AuthorName</td>
+        </tr>
+        <tr>
+            <td>Category:</td>
+            <td>@Model.CategoryName</td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td>@Model.Price</td>
+        </tr>
+        <tr>
+            <td>Quantity:</td>
+            <td>@Model.Quantity</td>
+        </tr>
+    </table>
+    <div style="margin-top: 20px;">
+        <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-primary">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.ID" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+
+<style>
+    .info-box {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td {
+        padding: 5px;
+        font-size: 16px;
+        border-bottom: 1px solid #ccc;
+    }
+
+        td:first-child {
+            font-weight: bold;
+            width: 120px;
+        }
+
+    .btn {
+        padding: 8px 12px;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+</style>
