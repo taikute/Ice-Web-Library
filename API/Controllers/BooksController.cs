@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using API.Data;
 using AutoMapper;
 using API.Repos;
-using API.Models.BookModels;
+using API.Models;
 
 namespace API.Controllers
 {
@@ -16,73 +16,33 @@ namespace API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        readonly BookIndexRepository _bookIndexR;
-        private readonly DataContext _context;
-
-        public BooksController(DataContext context, IMapper mapper, BookIndexRepository bookIndexR)
+        readonly BookRepo _bookRepo;
+        readonly DataContext _context;
+        public BooksController(DataContext context, BookRepo bookRepo)
         {
             _context = context;
-            _bookIndexR = bookIndexR;
+            _bookRepo = bookRepo;
         }
 
-        // GET: api/Books
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<BookIndexM>>> GetBooks()
+        [HttpGet("GetListBookIndex")]
+        public async Task<ActionResult<List<BookIndexModel>>> GetListBookIndex()
         {
-            return Ok(await _bookIndexR.GetBookIndex());
+            return Ok(await _bookRepo.GetListBookIndexModel());
         }
 
-        // GET: api/Books/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Book>> GetBook(int id)
+        [HttpGet("GetBookEditModel/{id}")]
+        public async Task<ActionResult<BookEditModel>> GetBookEditModel(int id)
         {
-            if (_context.Books == null)
-            {
-                return NotFound();
-            }
-            var book = await _context.Books.FindAsync(id);
-
-            if (book == null)
-            {
-                return NotFound();
-            }
-
-            return book;
+            return Ok(await _bookRepo.GetBookEditModel(id));
         }
 
-        // PUT: api/Books/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBook(int id, Book book)
+        [HttpPut]
+        public async Task<IActionResult> PutBook(BookEditModel bookEditModel)
         {
-            if (id != book.ID)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(book).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _bookRepo.UpdateBookEditModel(bookEditModel);
             return NoContent();
         }
 
-        // POST: api/Books
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Book>> PostBook(Book book)
         {

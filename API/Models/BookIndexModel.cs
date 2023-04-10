@@ -1,6 +1,8 @@
-﻿namespace WEB.Models.BookModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Models
 {
-    public class BookIndexVM
+    public class BookIndexModel
     {
         public int ID { get; set; }
         public string? Title { get; set; }

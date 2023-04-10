@@ -14,11 +14,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("BookStore")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("IceLibraryConnectionString")));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddScoped<IBookIndexRepository, BookIndexRepository>();
+builder.Services.AddScoped<BookRepo>();
 
 var app = builder.Build();
 

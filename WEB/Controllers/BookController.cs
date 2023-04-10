@@ -23,12 +23,7 @@ namespace WEB.Controllers
                 }*/
         public IActionResult Index()
         {
-            var books = ApiHelper.GetList<BookIndexVM>("Books");
-            if (books == null)
-            {
-                return BadRequest("Book Null On Web/Book/Index");
-            }
-            return View(books);
+            return View(ApiHelper.GetList<BookIndexVM>("Books"));
         }
 
         /*        [HttpGet]

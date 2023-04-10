@@ -1,5 +1,4 @@
 ﻿using API.Data;
-using API.Models.BookModels;
 using API.Models;
 using AutoMapper;
 
@@ -9,8 +8,8 @@ namespace API.Helpers
     {
         public MappingProfile()
         {
-            CreateMap<Book, BookIndexM>().ReverseMap();
-            CreateMap<BookAuthor, TestM>().ReverseMap();
+            CreateMap<Book, BookIndexModel>();
+            CreateMap<Book, BookEditModel>().ReverseMap();
         }
     }
 }

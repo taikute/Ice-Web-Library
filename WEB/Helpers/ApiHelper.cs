@@ -11,19 +11,8 @@ namespace WEB.Helpers
         //GetList
         public static List<T>? GetList<T>(string endpoint)
         {
-            var response = client.Execute<List<T>>(new RestRequest(endpoint));
-            if (response.IsSuccessful)
-            {
-                var data = response.Data;
-                Console.WriteLine($"Data: {JsonConvert.SerializeObject(data)}");
-                return data;
-            }
-            else
-            {
-                Console.WriteLine("ERROR!!!");
-                return null;
-            }
-        } 
+            return client.Execute<List<T>>(new RestRequest(endpoint)).Data;
+        }
         //GetByID
         public static T? GetByID<T>(int id, string endpoint)
         {

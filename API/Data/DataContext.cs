@@ -25,7 +25,7 @@ namespace API.Data
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to sql server with connection string from app settings
-            options.UseSqlServer(Configuration.GetConnectionString("MyConnectionString"));
+            options.UseSqlServer(Configuration.GetConnectionString("IceLibraryConnectionString"));
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
