@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Data;
 using AutoMapper;
+using API.Repos;
+using API.Models.BookModels;
 
 namespace API.Controllers
 {
@@ -14,34 +16,30 @@ namespace API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
+        readonly BookIndexRepository _bookIndexR;
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
 
-        public BooksController(DataContext context, IMapper mapper)
+        public BooksController(DataContext context, IMapper mapper, BookIndexRepository bookIndexR)
         {
             _context = context;
-            _mapper = mapper;
+            _bookIndexR = bookIndexR;
         }
 
         // GET: api/Books
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
+        public async Task<ActionResult<IEnumerable<BookIndexM>>> GetBooks()
         {
-          if (_context.Books == null)
-          {
-              return NotFound();
-          }
-            return await _context.Books.ToListAsync();
+            return Ok(await _bookIndexR.GetBookIndex());
         }
 
         // GET: api/Books/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
-          if (_context.Books == null)
-          {
-              return NotFound();
-          }
+            if (_context.Books == null)
+            {
+                return NotFound();
+            }
             var book = await _context.Books.FindAsync(id);
 
             if (book == null)
@@ -88,10 +86,10 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<Book>> PostBook(Book book)
         {
-          if (_context.Books == null)
-          {
-              return Problem("Entity set 'DataContext.Books'  is null.");
-          }
+            if (_context.Books == null)
+            {
+                return Problem("Entity set 'DataContext.Books'  is null.");
+            }
             _context.Books.Add(book);
             await _context.SaveChangesAsync();
 

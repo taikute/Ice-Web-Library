@@ -1,4 +1,4 @@
-﻿namespace WEB.Models.BookModels
+﻿namespace WEB.Models
 {
     public class BookVM
     {

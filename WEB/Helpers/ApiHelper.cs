@@ -1,4 +1,6 @@
-﻿using RestSharp;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Newtonsoft.Json;
+using RestSharp;
 
 namespace WEB.Helpers
 {
@@ -9,8 +11,19 @@ namespace WEB.Helpers
         //GetList
         public static List<T>? GetList<T>(string endpoint)
         {
-            return client.Execute<List<T>>(new RestRequest(endpoint)).Data;
-        }
+            var response = client.Execute<List<T>>(new RestRequest(endpoint));
+            if (response.IsSuccessful)
+            {
+                var data = response.Data;
+                Console.WriteLine($"Data: {JsonConvert.SerializeObject(data)}");
+                return data;
+            }
+            else
+            {
+                Console.WriteLine("ERROR!!!");
+                return null;
+            }
+        } 
         //GetByID
         public static T? GetByID<T>(int id, string endpoint)
         {

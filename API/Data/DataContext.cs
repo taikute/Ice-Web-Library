@@ -4,6 +4,7 @@ namespace API.Data
 {
     public class DataContext : DbContext
     {
+        public DbSet<BookPublisher> BookPublishers { get; set; }
         public DbSet<BookInstance> BookInstances { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<BookCategory> BookCategories { get; set; }
@@ -13,7 +14,7 @@ namespace API.Data
         public DbSet<Loan> Loans { get; set; }
         public DbSet<Librarian> Librarians { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserRole> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
 
         //public DataContext(DbContextOptions<DataContext> options) : base(options) { }
         protected readonly IConfiguration Configuration;
@@ -98,11 +99,22 @@ namespace API.Data
                 new BookAuthor { ID = 8, Name = "Dan Brown" },
                 new BookAuthor { ID = 9, Name = "Michelle Obama" });
 
+            modelBuilder.Entity<BookPublisher>().HasData(
+                new BookPublisher { ID = 1, Name = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
+                new BookPublisher { ID = 2, Name = "HarperCollins", Description = "An American publishing company, one of the world's largest." },
+                new BookPublisher { ID = 3, Name = "Random House", Description = "An American book publisher and the largest general-interest paperback publisher in the world." },
+                new BookPublisher { ID = 4, Name = "Simon & Schuster", Description = "An American publishing company and a division of ViacomCBS." },
+                new BookPublisher { ID = 5, Name = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." }
+            );
+
             modelBuilder.Entity<Book>().HasData(
-                new Book { ID = 1, Title = "The Da Vinci Code", AuthorID = 8, CategoryID = 1 },
-                new Book { ID = 2, Title = "The Hitchhiker's Guide to the Galaxy", AuthorID = 3, CategoryID = 3 },
-                new Book { ID = 3, Title = "Pride and Prejudice", AuthorID = 2, CategoryID = 2 }
-                );
+                new Book { ID = 1, AuthorID = 2, CategoryID = 1, PublisherID = 3, Title = "To Kill a Mockingbird" },
+                new Book { ID = 2, AuthorID = 4, CategoryID = 2, PublisherID = 1, Title = "The Great Gatsby" },
+                new Book { ID = 3, AuthorID = 6, CategoryID = 3, PublisherID = 4, Title = "Animal Farm" },
+                new Book { ID = 4, AuthorID = 7, CategoryID = 2, PublisherID = 2, Title = "Nineteen Eighty-Four" },
+                new Book { ID = 5, AuthorID = 8, CategoryID = 1, PublisherID = 5, Title = "The Catcher in the Rye" }
+            );
+
             #endregion
         }
     }

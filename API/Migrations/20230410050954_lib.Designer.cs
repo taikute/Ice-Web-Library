@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230408194640_library")]
-    partial class library
+    [Migration("20230410050954_lib")]
+    partial class lib
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,10 +39,42 @@ namespace API.Migrations
                     b.Property<int>("CategoryID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Code")
+                    b.Property<string>("ContentType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("CoverImage")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Edition")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PageCount")
                         .HasColumnType("int");
 
                     b.Property<int>("Price")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PublishYear")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("nvarchar(4)");
+
+                    b.Property<int>("PublisherID")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -50,7 +82,8 @@ namespace API.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("ID");
 
@@ -58,38 +91,90 @@ namespace API.Migrations
 
                     b.HasIndex("CategoryID");
 
+                    b.HasIndex("PublisherID");
+
                     b.ToTable("Book");
 
                     b.HasData(
                         new
                         {
                             ID = 1,
-                            AuthorID = 8,
+                            AuthorID = 2,
                             CategoryID = 1,
-                            Code = 0,
-                            Price = 0,
+                            Description = "Unknown",
+                            Edition = "Latest Edition",
+                            ISBN = "ISBN",
+                            Language = "English",
+                            PageCount = 1,
+                            Price = 1000,
+                            PublishYear = "2023",
+                            PublisherID = 3,
                             Quantity = 1,
-                            Title = "The Da Vinci Code"
+                            Title = "To Kill a Mockingbird"
                         },
                         new
                         {
                             ID = 2,
-                            AuthorID = 3,
-                            CategoryID = 3,
-                            Code = 0,
-                            Price = 0,
+                            AuthorID = 4,
+                            CategoryID = 2,
+                            Description = "Unknown",
+                            Edition = "Latest Edition",
+                            ISBN = "ISBN",
+                            Language = "English",
+                            PageCount = 1,
+                            Price = 1000,
+                            PublishYear = "2023",
+                            PublisherID = 1,
                             Quantity = 1,
-                            Title = "The Hitchhiker's Guide to the Galaxy"
+                            Title = "The Great Gatsby"
                         },
                         new
                         {
                             ID = 3,
-                            AuthorID = 2,
-                            CategoryID = 2,
-                            Code = 0,
-                            Price = 0,
+                            AuthorID = 6,
+                            CategoryID = 3,
+                            Description = "Unknown",
+                            Edition = "Latest Edition",
+                            ISBN = "ISBN",
+                            Language = "English",
+                            PageCount = 1,
+                            Price = 1000,
+                            PublishYear = "2023",
+                            PublisherID = 4,
                             Quantity = 1,
-                            Title = "Pride and Prejudice"
+                            Title = "Animal Farm"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            AuthorID = 7,
+                            CategoryID = 2,
+                            Description = "Unknown",
+                            Edition = "Latest Edition",
+                            ISBN = "ISBN",
+                            Language = "English",
+                            PageCount = 1,
+                            Price = 1000,
+                            PublishYear = "2023",
+                            PublisherID = 2,
+                            Quantity = 1,
+                            Title = "Nineteen Eighty-Four"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            AuthorID = 8,
+                            CategoryID = 1,
+                            Description = "Unknown",
+                            Edition = "Latest Edition",
+                            ISBN = "ISBN",
+                            Language = "English",
+                            PageCount = 1,
+                            Price = 1000,
+                            PublishYear = "2023",
+                            PublisherID = 5,
+                            Quantity = 1,
+                            Title = "The Catcher in the Rye"
                         });
                 });
 
@@ -101,9 +186,15 @@ namespace API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("ID");
 
@@ -113,46 +204,55 @@ namespace API.Migrations
                         new
                         {
                             ID = 1,
+                            Bio = "Unknow",
                             Name = "Albert Einstein"
                         },
                         new
                         {
                             ID = 2,
+                            Bio = "Unknow",
                             Name = "Jane Austen"
                         },
                         new
                         {
                             ID = 3,
+                            Bio = "Unknow",
                             Name = "Stephen Hawking"
                         },
                         new
                         {
                             ID = 4,
+                            Bio = "Unknow",
                             Name = "J.K. Rowling"
                         },
                         new
                         {
                             ID = 5,
+                            Bio = "Unknow",
                             Name = "Agatha Christie"
                         },
                         new
                         {
                             ID = 6,
+                            Bio = "Unknow",
                             Name = "Neil deGrasse Tyson"
                         },
                         new
                         {
                             ID = 7,
+                            Bio = "Unknow",
                             Name = "Isaac Asimov"
                         },
                         new
                         {
                             ID = 8,
+                            Bio = "Unknow",
                             Name = "Dan Brown"
                         },
                         new
                         {
                             ID = 9,
+                            Bio = "Unknow",
                             Name = "Michelle Obama"
                         });
                 });
@@ -199,7 +299,11 @@ namespace API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("BookCode")
+                    b.Property<string>("BookCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BookID")
                         .HasColumnType("int");
 
                     b.Property<int>("StatusID")
@@ -207,9 +311,64 @@ namespace API.Migrations
 
                     b.HasKey("ID");
 
+                    b.HasIndex("BookID");
+
                     b.HasIndex("StatusID");
 
                     b.ToTable("BookInstance");
+                });
+
+            modelBuilder.Entity("API.Data.BookPublisher", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("BookPublishers");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Description = "One of the largest and most prestigious English-language publishers.",
+                            Name = "Penguin Books"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Description = "An American publishing company, one of the world's largest.",
+                            Name = "HarperCollins"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Description = "An American book publisher and the largest general-interest paperback publisher in the world.",
+                            Name = "Random House"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Description = "An American publishing company and a division of ViacomCBS.",
+                            Name = "Simon & Schuster"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group.",
+                            Name = "Macmillan Publishers"
+                        });
                 });
 
             modelBuilder.Entity("API.Data.BookStatus", b =>
@@ -356,32 +515,48 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Book", b =>
                 {
-                    b.HasOne("API.Data.BookAuthor", "Author")
+                    b.HasOne("API.Data.BookAuthor", "BookAuthor")
                         .WithMany("Books")
                         .HasForeignKey("AuthorID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("API.Data.BookCategory", "Category")
+                    b.HasOne("API.Data.BookCategory", "BookCategory")
                         .WithMany("Books")
                         .HasForeignKey("CategoryID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Author");
+                    b.HasOne("API.Data.BookPublisher", "BookPublisher")
+                        .WithMany("Books")
+                        .HasForeignKey("PublisherID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("BookAuthor");
+
+                    b.Navigation("BookCategory");
+
+                    b.Navigation("BookPublisher");
                 });
 
             modelBuilder.Entity("API.Data.BookInstance", b =>
                 {
-                    b.HasOne("API.Data.BookStatus", "Status")
+                    b.HasOne("API.Data.Book", "Book")
+                        .WithMany("BookInstances")
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("API.Data.BookStatus", "BookStatus")
                         .WithMany("BookInstances")
                         .HasForeignKey("StatusID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Status");
+                    b.Navigation("Book");
+
+                    b.Navigation("BookStatus");
                 });
 
             modelBuilder.Entity("API.Data.Loan", b =>
@@ -432,6 +607,11 @@ namespace API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("API.Data.Book", b =>
+                {
+                    b.Navigation("BookInstances");
+                });
+
             modelBuilder.Entity("API.Data.BookAuthor", b =>
                 {
                     b.Navigation("Books");
@@ -445,6 +625,11 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.BookInstance", b =>
                 {
                     b.Navigation("Loans");
+                });
+
+            modelBuilder.Entity("API.Data.BookPublisher", b =>
+                {
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("API.Data.BookStatus", b =>

@@ -1,5 +1,6 @@
 using API.Data;
 using API.Helpers;
+using API.Repos;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,8 @@ builder.Services.AddDbContext<DataContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("BookStore")));
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+builder.Services.AddScoped<IBookIndexRepository, BookIndexRepository>();
 
 var app = builder.Build();
 

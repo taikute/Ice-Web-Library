@@ -1,15 +1,16 @@
 ﻿using API.Data;
 using API.Models.BookModels;
+using API.Models;
 using AutoMapper;
 
 namespace API.Helpers
 {
     public class MappingProfile : Profile
     {
-        MappingProfile() 
+        public MappingProfile()
         {
-            CreateMap<Book, BookIndexM>();
-
+            CreateMap<Book, BookIndexM>().ReverseMap();
+            CreateMap<BookAuthor, TestM>().ReverseMap();
         }
     }
 }
