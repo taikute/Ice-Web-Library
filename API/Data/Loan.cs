@@ -3,21 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data
 {
-    [Table("Loan")]
     public class Loan
     {
-        [Key]
-        public int ID { get; set; }
-        [Required]
-        public int BookCode { get; set; }
-        [Required]
-        public int ReaderID { get; set; }
+        public int Id { get; set; }
+        public int InstanceId { get; set; }
+        public virtual Instance? Instance { get; set; }
+        public int ReaderId { get; set; }
+        public virtual Reader? Reader { get; set; }
         public DateTime BorrowedDate { get; set; } = DateTime.Now;
         public DateTime? ReturnedDate { get; set; } = null;
-
-        [ForeignKey("BookCode")]
-        public virtual BookInstance? BookInstance { get; set; }
-        [ForeignKey("ReaderID")]
-        public virtual Reader? Reader { get; set; }
     }
 }

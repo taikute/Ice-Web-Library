@@ -1,6 +1,7 @@
 using API.Data;
 using API.Helpers;
 using API.Repos;
+using API.Repos.Interfaces;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +19,10 @@ builder.Services.AddDbContext<DataContext>(options =>
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-builder.Services.AddScoped<BookRepo>();
+//Repositories
+builder.Services.AddScoped<BookRepos>();
+builder.Services.AddScoped<BookAuthorRepos>();
+//
 
 var app = builder.Build();
 

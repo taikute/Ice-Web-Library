@@ -3,11 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Data
 {
-    [Table("UserRole")]
-    public class UserRole
+    public class Role
     {
-        [Key]
-        public int ID { get; set; }
+        public int RoleId { get; set; }
         [Required]
         public string? Name { get; set; }
         public virtual ICollection<User>? Users { get; set; }

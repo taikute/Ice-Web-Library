@@ -4,115 +4,120 @@ namespace API.Data
 {
     public class DataContext : DbContext
     {
-        public DbSet<BookPublisher> BookPublishers { get; set; }
-        public DbSet<BookInstance> BookInstances { get; set; }
+        public DbSet<Publisher> Publishers { get; set; }
+        public DbSet<Instance> Instances { get; set; }
         public DbSet<Book> Books { get; set; }
-        public DbSet<BookCategory> BookCategories { get; set; }
-        public DbSet<BookAuthor> BookAuthors { get; set; }
-        public DbSet<BookStatus> BookStatuses { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Status> Statuses { get; set; }
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Loan> Loans { get; set; }
         public DbSet<Librarian> Librarians { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
 
-        //public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        /*public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+            
+        }*/
         protected readonly IConfiguration Configuration;
         public DataContext(IConfiguration configuration)
         {
             Configuration = configuration;
+            ChangeTracker.LazyLoadingEnabled = true;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to sql server with connection string from app settings
             options.UseSqlServer(Configuration.GetConnectionString("IceLibraryConnectionString"));
+            options.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            #region AddRelationShip
-            modelBuilder.Entity<Book>()
-                .HasOne(b => b.BookPublisher)
-                .WithMany(c => c.Books)
-                .OnDelete(DeleteBehavior.Restrict);
+            /*            #region AddRelationShip
+                        modelBuilder.Entity<Book>()
+                            .HasOne(b => b.Publisher)
+                            .WithMany(c => c.Books)
+                            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Book>()
-                .HasOne(b => b.BookCategory)
-                .WithMany(c => c.Books)
-                .OnDelete(DeleteBehavior.Restrict);
+                        modelBuilder.Entity<Book>()
+                            .HasOne(b => b.Category)
+                            .WithMany(c => c.Books)
+                            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Book>()
-                .HasOne(b => b.BookAuthor)
-                .WithMany(a => a.Books)
-                .OnDelete(DeleteBehavior.Restrict);
+                        modelBuilder.Entity<Book>()
+                            .HasOne(b => b.Author)
+                            .WithMany(a => a.Books)
+                            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<BookInstance>()
-                .HasOne(b => b.BookStatus)
-                .WithMany(a => a.BookInstances)
-                .OnDelete(DeleteBehavior.Restrict);
+                        modelBuilder.Entity<Instance>()
+                            .HasOne(b => b.Status)
+                            .WithMany(a => a.Instances)
+                            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<BookInstance>()
-                .HasOne(b => b.Book)
-                .WithMany(a => a.BookInstances)
-                .OnDelete(DeleteBehavior.Restrict);
+                        modelBuilder.Entity<Instance>()
+                            .HasOne(b => b.Book)
+                            .WithMany()
+                            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Loan>()
-                .HasOne(l => l.BookInstance)
-                .WithMany(b => b.Loans)
-                .OnDelete(DeleteBehavior.Restrict);
+                        modelBuilder.Entity<Loan>()
+                            .HasOne(l => l.Instance)
+                            .WithMany(b => b.Loans)
+                            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Loan>()
-                .HasOne(l => l.Reader)
-                .WithMany(r => r.Loans)
-                .OnDelete(DeleteBehavior.Restrict);
+                        modelBuilder.Entity<Loan>()
+                            .HasOne(l => l.Reader)
+                            .WithMany(r => r.Loans)
+                            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<User>()
-                .HasOne(l => l.Role)
-                .WithMany(r => r.Users)
-                .OnDelete(DeleteBehavior.Restrict);
-            #endregion
+                        modelBuilder.Entity<User>()
+                            .HasOne(l => l.Role)
+                            .WithMany(r => r.Users)
+                            .OnDelete(DeleteBehavior.Restrict);
+                        #endregion*/
 
             #region AddSeedData
-            modelBuilder.Entity<BookStatus>().HasData(
-                new BookStatus { ID = 1, Name = "Available" },
-                new BookStatus { ID = 2, Name = "On Loan" },
-                new BookStatus { ID = 3, Name = "Broken" });
+            modelBuilder.Entity<Status>().HasData(
+                new Status { StatusId = 1, Description = "Available" },
+                new Status { StatusId = 2, Description = "On Loan" },
+                new Status { StatusId = 3, Description = "Broken" });
 
-            modelBuilder.Entity<UserRole>().HasData(
-                new UserRole { ID = 1, Name = "Reader" },
-                new UserRole { ID = 2, Name = "Librarian" });
+            modelBuilder.Entity<Role>().HasData(
+                new Role { RoleId = 1, Name = "Reader" },
+                new Role { RoleId = 2, Name = "Librarian" });
 
-            modelBuilder.Entity<BookCategory>().HasData(
-                new BookCategory { ID = 1, Name = "Detective" },
-                new BookCategory { ID = 2, Name = "Art" },
-                new BookCategory { ID = 3, Name = "Science" });
+            modelBuilder.Entity<Category>().HasData(
+                new Category { CategoryId = 1, CategoryName = "Detective" },
+                new Category { CategoryId = 2, CategoryName = "Art" },
+                new Category { CategoryId = 3, CategoryName = "Science" });
 
-            modelBuilder.Entity<BookAuthor>().HasData(
-                new BookAuthor { ID = 1, Name = "Albert Einstein" },
-                new BookAuthor { ID = 2, Name = "Jane Austen" },
-                new BookAuthor { ID = 3, Name = "Stephen Hawking" },
-                new BookAuthor { ID = 4, Name = "J.K. Rowling" },
-                new BookAuthor { ID = 5, Name = "Agatha Christie" },
-                new BookAuthor { ID = 6, Name = "Neil deGrasse Tyson" },
-                new BookAuthor { ID = 7, Name = "Isaac Asimov" },
-                new BookAuthor { ID = 8, Name = "Dan Brown" },
-                new BookAuthor { ID = 9, Name = "Michelle Obama" });
+            modelBuilder.Entity<Author>().HasData(
+                new Author { AuthorId = 1, AuthorName = "Albert Einstein" },
+                new Author { AuthorId = 2, AuthorName = "Jane Austen" },
+                new Author { AuthorId = 3, AuthorName = "Stephen Hawking" },
+                new Author { AuthorId = 4, AuthorName = "J.K. Rowling" },
+                new Author { AuthorId = 5, AuthorName = "Agatha Christie" },
+                new Author { AuthorId = 6, AuthorName = "Neil deGrasse Tyson" },
+                new Author { AuthorId = 7, AuthorName = "Isaac Asimov" },
+                new Author { AuthorId = 8, AuthorName = "Dan Brown" },
+                new Author { AuthorId = 9, AuthorName = "Michelle Obama" });
 
-            modelBuilder.Entity<BookPublisher>().HasData(
-                new BookPublisher { ID = 1, Name = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
-                new BookPublisher { ID = 2, Name = "HarperCollins", Description = "An American publishing company, one of the world's largest." },
-                new BookPublisher { ID = 3, Name = "Random House", Description = "An American book publisher and the largest general-interest paperback publisher in the world." },
-                new BookPublisher { ID = 4, Name = "Simon & Schuster", Description = "An American publishing company and a division of ViacomCBS." },
-                new BookPublisher { ID = 5, Name = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." }
+            modelBuilder.Entity<Publisher>().HasData(
+                new Publisher { PublisherID = 1, PublisherName = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
+                new Publisher { PublisherID = 2, PublisherName = "HarperCollins", Description = "An American publishing company, one of the world's largest." },
+                new Publisher { PublisherID = 3, PublisherName = "Random House", Description = "An American book publisher and the largest general-interest paperback publisher in the world." },
+                new Publisher { PublisherID = 4, PublisherName = "Simon & Schuster", Description = "An American publishing company and a division of ViacomCBS." },
+                new Publisher { PublisherID = 5, PublisherName = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." }
             );
 
             modelBuilder.Entity<Book>().HasData(
-                new Book { ID = 1, AuthorID = 2, CategoryID = 1, PublisherID = 3, Title = "To Kill a Mockingbird" },
-                new Book { ID = 2, AuthorID = 4, CategoryID = 2, PublisherID = 1, Title = "The Great Gatsby" },
-                new Book { ID = 3, AuthorID = 6, CategoryID = 3, PublisherID = 4, Title = "Animal Farm" },
-                new Book { ID = 4, AuthorID = 7, CategoryID = 2, PublisherID = 2, Title = "Nineteen Eighty-Four" },
-                new Book { ID = 5, AuthorID = 8, CategoryID = 1, PublisherID = 5, Title = "The Catcher in the Rye" }
+                new Book { BookId = 1, AuthorId = 2, CategoryId = 1, PublisherId = 3, Title = "To Kill a Mockingbird" },
+                new Book { BookId = 2, AuthorId = 4, CategoryId = 2, PublisherId = 1, Title = "The Great Gatsby" },
+                new Book { BookId = 3, AuthorId = 6, CategoryId = 3, PublisherId = 4, Title = "Animal Farm" },
+                new Book { BookId = 4, AuthorId = 7, CategoryId = 2, PublisherId = 2, Title = "Nineteen Eighty-Four" },
+                new Book { BookId = 5, AuthorId = 8, CategoryId = 1, PublisherId = 5, Title = "The Catcher in the Rye" }
             );
 
             #endregion

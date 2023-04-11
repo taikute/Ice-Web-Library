@@ -16,69 +16,51 @@ namespace API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        readonly BookRepo _bookRepo;
+        readonly BookRepos _bookRepos;
         readonly DataContext _context;
-        public BooksController(DataContext context, BookRepo bookRepo)
+        public BooksController(DataContext context, BookRepos bookRepos)
         {
             _context = context;
-            _bookRepo = bookRepo;
+            _bookRepos = bookRepos;
         }
 
         [HttpGet("GetListBookIndex")]
         public async Task<ActionResult<List<BookIndexModel>>> GetListBookIndex()
         {
-            return Ok(await _bookRepo.GetListBookIndexModel());
+            return Ok(await _bookRepos.GetListBookIndex());
         }
 
-        [HttpGet("GetBookEditModel/{id}")]
-        public async Task<ActionResult<BookEditModel>> GetBookEditModel(int id)
+        [HttpGet("GetBook/{id}")]
+        public async Task<ActionResult<BookModel>> GetBook(int id)
         {
-            return Ok(await _bookRepo.GetBookEditModel(id));
+            return Ok(await _bookRepos.GetBook(id));
+        }
+
+        [HttpGet("GetBookDetail/{id}")]
+        public async Task<ActionResult<BookDetailModel>> GetBookDetail(int id)
+        {
+            return Ok(await _bookRepos.GetBookDetail(id));
         }
 
         [HttpPut]
-        public async Task<IActionResult> PutBook(BookEditModel bookEditModel)
+        public async Task<IActionResult> PutBook(BookModel bookModel)
         {
-            await _bookRepo.UpdateBookEditModel(bookEditModel);
+            await _bookRepos.UpdateBook(bookModel);
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<ActionResult<Book>> PostBook(Book book)
+        public async Task<IActionResult> PostBook(BookModel bookModel)
         {
-            if (_context.Books == null)
-            {
-                return Problem("Entity set 'DataContext.Books'  is null.");
-            }
-            _context.Books.Add(book);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBook", new { id = book.ID }, book);
-        }
-
-        // DELETE: api/Books/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBook(int id)
-        {
-            if (_context.Books == null)
-            {
-                return NotFound();
-            }
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
-            {
-                return NotFound();
-            }
-
-            _context.Books.Remove(book);
-            await _context.SaveChangesAsync();
-
+            await _bookRepos.CreateBook(bookModel);
             return NoContent();
         }
 
-        private bool BookExists(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteBook(int id)
         {
-            return (_context.Books?.Any(e => e.ID == id)).GetValueOrDefault();
+            await _bookRepos.DeleteBook(id);
+            return NoContent();
         }
     }
 }
