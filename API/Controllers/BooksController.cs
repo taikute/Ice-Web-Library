@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using API.Data;
-using AutoMapper;
 using API.Repos;
 using API.Models;
 
@@ -21,39 +14,33 @@ namespace API.Controllers
         {
             _genericRepos = genericRepos;
         }
-
         [HttpGet("GetListBookIndex")]
         public async Task<ActionResult<List<BookIndexModel>>> GetListBookIndex()
         {
             return Ok(await _genericRepos.GetListAsync<BookIndexModel, Book>());
         }
-
         [HttpGet("GetBook/{id}")]
         public async Task<ActionResult<BookModel>> GetBook(int id)
         {
             return Ok(await _genericRepos.GetByIdAsync<BookModel, Book>(id));
         }
-
         [HttpGet("GetBookDetail/{id}")]
         public async Task<ActionResult<BookDetailModel>> GetBookDetail(int id)
         {
             return Ok(await _genericRepos.GetByIdAsync<BookDetailModel, Book>(id));
         }
-
         [HttpPut]
         public async Task<IActionResult> PutBook(BookModel bookModel)
         {
             await _genericRepos.UpdateAsync<Book, BookModel>(bookModel);
             return NoContent();
         }
-
         [HttpPost]
         public async Task<IActionResult> PostBook(BookModel bookModel)
         {
             await _genericRepos.CreateAsync<Book, BookModel>(bookModel);
             return NoContent();
         }
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {

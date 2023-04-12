@@ -19,10 +19,7 @@ builder.Services.AddDbContext<DataContext>(options =>
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 //Repositories
-builder.Services.AddScoped<BookRepos>();
-builder.Services.AddScoped<BookAuthorRepos>();
 builder.Services.AddScoped<GenericRepos>();
-//
 
 var app = builder.Build();
 
