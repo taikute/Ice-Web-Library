@@ -16,50 +16,48 @@ namespace API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        readonly BookRepos _bookRepos;
-        readonly DataContext _context;
-        public BooksController(DataContext context, BookRepos bookRepos)
+        readonly GenericRepos _genericRepos;
+        public BooksController(GenericRepos genericRepos)
         {
-            _context = context;
-            _bookRepos = bookRepos;
+            _genericRepos = genericRepos;
         }
 
         [HttpGet("GetListBookIndex")]
         public async Task<ActionResult<List<BookIndexModel>>> GetListBookIndex()
         {
-            return Ok(await _bookRepos.GetListBookIndex());
+            return Ok(await _genericRepos.GetListAsync<BookIndexModel, Book>());
         }
 
         [HttpGet("GetBook/{id}")]
         public async Task<ActionResult<BookModel>> GetBook(int id)
         {
-            return Ok(await _bookRepos.GetBook(id));
+            return Ok(await _genericRepos.GetByIdAsync<BookModel, Book>(id));
         }
 
         [HttpGet("GetBookDetail/{id}")]
         public async Task<ActionResult<BookDetailModel>> GetBookDetail(int id)
         {
-            return Ok(await _bookRepos.GetBookDetail(id));
+            return Ok(await _genericRepos.GetByIdAsync<BookDetailModel, Book>(id));
         }
 
         [HttpPut]
         public async Task<IActionResult> PutBook(BookModel bookModel)
         {
-            await _bookRepos.UpdateBook(bookModel);
+            await _genericRepos.UpdateAsync<Book, BookModel>(bookModel);
             return NoContent();
         }
 
         [HttpPost]
         public async Task<IActionResult> PostBook(BookModel bookModel)
         {
-            await _bookRepos.CreateBook(bookModel);
+            await _genericRepos.CreateAsync<Book, BookModel>(bookModel);
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
-            await _bookRepos.DeleteBook(id);
+            await _genericRepos.DeleteAsync<Book>(id);
             return NoContent();
         }
     }

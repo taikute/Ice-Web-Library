@@ -2,7 +2,6 @@ using API.Data;
 using API.Helpers;
 using API.Repos;
 using API.Repos.Interfaces;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +21,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 //Repositories
 builder.Services.AddScoped<BookRepos>();
 builder.Services.AddScoped<BookAuthorRepos>();
+builder.Services.AddScoped<GenericRepos>();
 //
 
 var app = builder.Build();

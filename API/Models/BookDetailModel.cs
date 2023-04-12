@@ -1,14 +1,13 @@
-﻿namespace API.Models
+﻿using API.Data;
+
+namespace API.Models
 {
     public class BookDetailModel
     {
         public int BookId { get; set; }
-        public int AuthorId { get; set; }
-        public string? AuthorName { get; set; }
-        public int CategoryId { get; set; }
-        public string? CategoryName { get; set; }
-        public int PublisherId { get; set; }
-        public string? PublisherName { get; set; }
+        public AuthorModel? Author { get; set; }
+        public CategoryModel? Category { get; set; }
+        public PublisherModel? Publisher { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
         public string? PublishYear { get; set; }

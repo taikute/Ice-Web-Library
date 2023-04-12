@@ -4,6 +4,7 @@ namespace API.Data
 {
     public class DataContext : DbContext
     {
+        #region DbSet
         public DbSet<Publisher> Publishers { get; set; }
         public DbSet<Instance> Instances { get; set; }
         public DbSet<Book> Books { get; set; }
@@ -15,11 +16,8 @@ namespace API.Data
         public DbSet<Librarian> Librarians { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        #endregion
 
-        /*public DataContext(DbContextOptions<DataContext> options) : base(options)
-        {
-            
-        }*/
         protected readonly IConfiguration Configuration;
         public DataContext(IConfiguration configuration)
         {
@@ -28,55 +26,12 @@ namespace API.Data
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            // connect to sql server with connection string from app settings
             options.UseSqlServer(Configuration.GetConnectionString("IceLibraryConnectionString"));
             options.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            /*            #region AddRelationShip
-                        modelBuilder.Entity<Book>()
-                            .HasOne(b => b.Publisher)
-                            .WithMany(c => c.Books)
-                            .OnDelete(DeleteBehavior.Restrict);
-
-                        modelBuilder.Entity<Book>()
-                            .HasOne(b => b.Category)
-                            .WithMany(c => c.Books)
-                            .OnDelete(DeleteBehavior.Restrict);
-
-                        modelBuilder.Entity<Book>()
-                            .HasOne(b => b.Author)
-                            .WithMany(a => a.Books)
-                            .OnDelete(DeleteBehavior.Restrict);
-
-                        modelBuilder.Entity<Instance>()
-                            .HasOne(b => b.Status)
-                            .WithMany(a => a.Instances)
-                            .OnDelete(DeleteBehavior.Restrict);
-
-                        modelBuilder.Entity<Instance>()
-                            .HasOne(b => b.Book)
-                            .WithMany()
-                            .OnDelete(DeleteBehavior.Restrict);
-
-                        modelBuilder.Entity<Loan>()
-                            .HasOne(l => l.Instance)
-                            .WithMany(b => b.Loans)
-                            .OnDelete(DeleteBehavior.Restrict);
-
-                        modelBuilder.Entity<Loan>()
-                            .HasOne(l => l.Reader)
-                            .WithMany(r => r.Loans)
-                            .OnDelete(DeleteBehavior.Restrict);
-
-                        modelBuilder.Entity<User>()
-                            .HasOne(l => l.Role)
-                            .WithMany(r => r.Users)
-                            .OnDelete(DeleteBehavior.Restrict);
-                        #endregion*/
 
             #region AddSeedData
             modelBuilder.Entity<Status>().HasData(
@@ -109,17 +64,14 @@ namespace API.Data
                 new Publisher { PublisherID = 2, PublisherName = "HarperCollins", Description = "An American publishing company, one of the world's largest." },
                 new Publisher { PublisherID = 3, PublisherName = "Random House", Description = "An American book publisher and the largest general-interest paperback publisher in the world." },
                 new Publisher { PublisherID = 4, PublisherName = "Simon & Schuster", Description = "An American publishing company and a division of ViacomCBS." },
-                new Publisher { PublisherID = 5, PublisherName = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." }
-            );
+                new Publisher { PublisherID = 5, PublisherName = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." });
 
             modelBuilder.Entity<Book>().HasData(
                 new Book { BookId = 1, AuthorId = 2, CategoryId = 1, PublisherId = 3, Title = "To Kill a Mockingbird" },
                 new Book { BookId = 2, AuthorId = 4, CategoryId = 2, PublisherId = 1, Title = "The Great Gatsby" },
                 new Book { BookId = 3, AuthorId = 6, CategoryId = 3, PublisherId = 4, Title = "Animal Farm" },
                 new Book { BookId = 4, AuthorId = 7, CategoryId = 2, PublisherId = 2, Title = "Nineteen Eighty-Four" },
-                new Book { BookId = 5, AuthorId = 8, CategoryId = 1, PublisherId = 5, Title = "The Catcher in the Rye" }
-            );
-
+                new Book { BookId = 5, AuthorId = 8, CategoryId = 1, PublisherId = 5, Title = "The Catcher in the Rye" });
             #endregion
         }
     }

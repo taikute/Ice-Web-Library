@@ -11,12 +11,10 @@ namespace API.Controllers
     public class AuthorsController : ControllerBase
     {
         readonly BookAuthorRepos _bookAuthorRepos;
-        readonly DataContext _dataContext;
 
-        public AuthorsController(BookAuthorRepos bookAuthorRepos, DataContext dataContext)
+        public AuthorsController(BookAuthorRepos bookAuthorRepos)
         {
             _bookAuthorRepos = bookAuthorRepos;
-            _dataContext = dataContext;
         }
         [HttpGet]
         public async Task<ActionResult<List<AuthorModel>>> GetListAuthor()

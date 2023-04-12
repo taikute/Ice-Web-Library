@@ -26,8 +26,8 @@ namespace API.Data
         public byte[]? CoverImage { get; set; } = null;
         public string? ContentType { get; set; } = ".img";
         [StringLength(10)]
-        public string ISBN { get; set; } = "ISBN";
-        public string Language { get; set; } = "English";
+        public string? ISBN { get; set; } = "ISBN";
+        public string? Language { get; set; } = "English";
         public int PageCount { get; set; } = 99;
         public string Edition { get; set; } = "Latest Edition";
     }
