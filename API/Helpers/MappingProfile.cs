@@ -13,7 +13,6 @@ namespace API.Helpers
             CreateMap<Author, AuthorModel>().ReverseMap();
             CreateMap<Category, CategoryModel>().ReverseMap();
             CreateMap<Publisher, PublisherModel>().ReverseMap();
-            CreateMap<Book, BookDetailModel>();
         }
     }
 }

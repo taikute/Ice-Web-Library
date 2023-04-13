@@ -44,27 +44,27 @@ namespace API.Data
                 new Role { RoleId = 2, Name = "Librarian" });
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { CategoryId = 1, CategoryName = "Detective" },
-                new Category { CategoryId = 2, CategoryName = "Art" },
-                new Category { CategoryId = 3, CategoryName = "Science" });
+                new Category { CategoryId = 1, Name = "Detective" },
+                new Category { CategoryId = 2, Name = "Art" },
+                new Category { CategoryId = 3, Name = "Science" });
 
             modelBuilder.Entity<Author>().HasData(
-                new Author { AuthorId = 1, AuthorName = "Albert Einstein" },
-                new Author { AuthorId = 2, AuthorName = "Jane Austen" },
-                new Author { AuthorId = 3, AuthorName = "Stephen Hawking" },
-                new Author { AuthorId = 4, AuthorName = "J.K. Rowling" },
-                new Author { AuthorId = 5, AuthorName = "Agatha Christie" },
-                new Author { AuthorId = 6, AuthorName = "Neil deGrasse Tyson" },
-                new Author { AuthorId = 7, AuthorName = "Isaac Asimov" },
-                new Author { AuthorId = 8, AuthorName = "Dan Brown" },
-                new Author { AuthorId = 9, AuthorName = "Michelle Obama" });
+                new Author { AuthorId = 1, Name = "Albert Einstein" },
+                new Author { AuthorId = 2, Name = "Jane Austen" },
+                new Author { AuthorId = 3, Name = "Stephen Hawking" },
+                new Author { AuthorId = 4, Name = "J.K. Rowling" },
+                new Author { AuthorId = 5, Name = "Agatha Christie" },
+                new Author { AuthorId = 6, Name = "Neil deGrasse Tyson" },
+                new Author { AuthorId = 7, Name = "Isaac Asimov" },
+                new Author { AuthorId = 8, Name = "Dan Brown" },
+                new Author { AuthorId = 9, Name = "Michelle Obama" });
 
             modelBuilder.Entity<Publisher>().HasData(
-                new Publisher { PublisherID = 1, PublisherName = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
-                new Publisher { PublisherID = 2, PublisherName = "HarperCollins", Description = "An American publishing company, one of the world's largest." },
-                new Publisher { PublisherID = 3, PublisherName = "Random House", Description = "An American book publisher and the largest general-interest paperback publisher in the world." },
-                new Publisher { PublisherID = 4, PublisherName = "Simon & Schuster", Description = "An American publishing company and a division of ViacomCBS." },
-                new Publisher { PublisherID = 5, PublisherName = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." });
+                new Publisher { PublisherID = 1, Name = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
+                new Publisher { PublisherID = 2, Name = "HarperCollins", Description = "An American publishing company, one of the world's largest." },
+                new Publisher { PublisherID = 3, Name = "Random House", Description = "An American book publisher and the largest general-interest paperback publisher in the world." },
+                new Publisher { PublisherID = 4, Name = "Simon & Schuster", Description = "An American publishing company and a division of ViacomCBS." },
+                new Publisher { PublisherID = 5, Name = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." });
 
             modelBuilder.Entity<Book>().HasData(
                 new Book { BookId = 1, AuthorId = 2, CategoryId = 1, PublisherId = 3, Title = "To Kill a Mockingbird" },

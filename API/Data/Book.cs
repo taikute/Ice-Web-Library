@@ -23,8 +23,7 @@ namespace API.Data
         public int Price { get; set; } = 100000;
         [Range(1, int.MaxValue, ErrorMessage = "InvalId quantity!")]
         public int Quantity { get; set; } = 1;
-        public byte[]? CoverImage { get; set; } = null;
-        public string? ContentType { get; set; } = ".img";
+        public string CoverImagePath { get; set; } = "~/default-book_cover_image.jpg";
         [StringLength(10)]
         public string? ISBN { get; set; } = "ISBN";
         public string? Language { get; set; } = "English";

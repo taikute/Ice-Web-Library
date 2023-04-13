@@ -24,11 +24,6 @@ namespace API.Controllers
         {
             return Ok(await _genericRepos.GetByIdAsync<BookModel, Book>(id));
         }
-        [HttpGet("GetBookDetail/{id}")]
-        public async Task<ActionResult<BookDetailModel>> GetBookDetail(int id)
-        {
-            return Ok(await _genericRepos.GetByIdAsync<BookDetailModel, Book>(id));
-        }
         [HttpPut]
         public async Task<IActionResult> PutBook(BookModel bookModel)
         {

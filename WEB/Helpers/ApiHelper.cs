@@ -1,22 +1,34 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 using RestSharp;
 
 namespace WEB.Helpers
 {
-    public static class ApiHelper
+    public class ApiHelper
     {
-        public static readonly RestClient client = new RestClient("https://localhost:7042/api/");
-        public static RestRequest? request = null;
+        readonly RestClient client = new RestClient("https://localhost:7042/api/");
         //GetList
-        public static List<T>? GetList<T>(string endpoint)
+        public async Task<List<T>>? GetList<T>(string endpoint)
         {
-            return client.Execute<List<T>>(new RestRequest(endpoint)).Data;
+            var response = await client.ExecuteAsync<List<T>>(new RestRequest(endpoint));
+            return response.Data!;
         }
         //GetByID
-        public static T? GetByID<T>(int id, string endpoint)
+        public async Task<T>? GetByID<T>(int id, string endpoint)
         {
-            return client.Execute<T>(new RestRequest($"{endpoint}/{id}")).Data;
+            var response = await client.ExecuteAsync<T>(new RestRequest($"{endpoint}/{id}"));
+            return response.Data!;
+        }
+        public async Task Put<T>(T data, string endpoint) where T : class
+        {
+            var request = new RestRequest($"{endpoint}", Method.Put);
+            request.AddJsonBody(data);
+            var response = await client.ExecuteAsync(request);
+            if (!response.IsSuccessful)
+            {
+                throw new Exception("Fail!");
+            }
+            return;
         }
     }
 }

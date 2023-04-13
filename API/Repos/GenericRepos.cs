@@ -9,6 +9,7 @@ namespace API.Repos
     {
         readonly DataContext _context;
         readonly IMapper _mapper;
+        //readonly ILogger _logger;
         public GenericRepos(DataContext context, IMapper mapper)
         {
             _context = context;
@@ -40,15 +41,22 @@ namespace API.Repos
             where MainModel : class
             where ItemModel : class
         {
-            var main = _mapper.Map<MainModel>(item);
-            _context.Set<MainModel>().Update(main);
-            await _context.SaveChangesAsync();
+            try
+            {
+                var main = _mapper.Map<MainModel>(item);
+                _context.Set<MainModel>().Update(main);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
         public async Task DeleteAsync<MainModel>(int id) where MainModel : class
         {
-            var item = await _context.Set<MainModel>().FindAsync(id);
-            _context.Set<MainModel>().Remove(item!);
-            await _context.SaveChangesAsync();
+                var item = await _context.Set<MainModel>().FindAsync(id);
+                _context.Set<MainModel>().Remove(item!);
+                await _context.SaveChangesAsync();
         }
     }
 }

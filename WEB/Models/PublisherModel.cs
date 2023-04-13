@@ -1,8 +1,8 @@
-﻿namespace API.Models
+﻿namespace WEB.Models
 {
-    public class CategoryModel
+    public class PublisherModel
     {
-        public int CategoryId { get; set; }
+        public int PublisherID { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
     }

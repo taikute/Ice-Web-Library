@@ -19,7 +19,7 @@ namespace API.Migrations
                 {
                     AuthorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AuthorName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Bio = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -33,7 +33,7 @@ namespace API.Migrations
                 {
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -47,7 +47,7 @@ namespace API.Migrations
                 {
                     PublisherID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PublisherName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -95,8 +95,7 @@ namespace API.Migrations
                     PublishYear = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
-                    CoverImage = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    ContentType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CoverImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ISBN = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PageCount = table.Column<int>(type: "int", nullable: false),
@@ -206,33 +205,33 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Authors",
-                columns: new[] { "AuthorId", "AuthorName", "Bio" },
+                columns: new[] { "AuthorId", "Bio", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Albert Einstein", "Unknow" },
-                    { 2, "Jane Austen", "Unknow" },
-                    { 3, "Stephen Hawking", "Unknow" },
-                    { 4, "J.K. Rowling", "Unknow" },
-                    { 5, "Agatha Christie", "Unknow" },
-                    { 6, "Neil deGrasse Tyson", "Unknow" },
-                    { 7, "Isaac Asimov", "Unknow" },
-                    { 8, "Dan Brown", "Unknow" },
-                    { 9, "Michelle Obama", "Unknow" }
+                    { 1, "Unknow", "Albert Einstein" },
+                    { 2, "Unknow", "Jane Austen" },
+                    { 3, "Unknow", "Stephen Hawking" },
+                    { 4, "Unknow", "J.K. Rowling" },
+                    { 5, "Unknow", "Agatha Christie" },
+                    { 6, "Unknow", "Neil deGrasse Tyson" },
+                    { 7, "Unknow", "Isaac Asimov" },
+                    { 8, "Unknow", "Dan Brown" },
+                    { 9, "Unknow", "Michelle Obama" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "CategoryId", "CategoryName", "Description" },
+                columns: new[] { "CategoryId", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Detective", "Unknow" },
-                    { 2, "Art", "Unknow" },
-                    { 3, "Science", "Unknow" }
+                    { 1, "Unknow", "Detective" },
+                    { 2, "Unknow", "Art" },
+                    { 3, "Unknow", "Science" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Publishers",
-                columns: new[] { "PublisherID", "Description", "PublisherName" },
+                columns: new[] { "PublisherID", "Description", "Name" },
                 values: new object[,]
                 {
                     { 1, "One of the largest and most prestigious English-language publishers.", "Penguin Books" },
@@ -263,14 +262,14 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "BookId", "AuthorId", "CategoryId", "ContentType", "CoverImage", "Description", "Edition", "ISBN", "Language", "PageCount", "Price", "PublishYear", "PublisherId", "Quantity", "Title" },
+                columns: new[] { "BookId", "AuthorId", "CategoryId", "CoverImagePath", "Description", "Edition", "ISBN", "Language", "PageCount", "Price", "PublishYear", "PublisherId", "Quantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, 2, 1, ".img", null, "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 3, 1, "To Kill a Mockingbird" },
-                    { 2, 4, 2, ".img", null, "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 1, 1, "The Great Gatsby" },
-                    { 3, 6, 3, ".img", null, "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 4, 1, "Animal Farm" },
-                    { 4, 7, 2, ".img", null, "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 2, 1, "Nineteen Eighty-Four" },
-                    { 5, 8, 1, ".img", null, "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 5, 1, "The Catcher in the Rye" }
+                    { 1, 2, 1, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 3, 1, "To Kill a Mockingbird" },
+                    { 2, 4, 2, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 1, 1, "The Great Gatsby" },
+                    { 3, 6, 3, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 4, 1, "Animal Farm" },
+                    { 4, 7, 2, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 2, 1, "Nineteen Eighty-Four" },
+                    { 5, 8, 1, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 5, 1, "The Catcher in the Rye" }
                 });
 
             migrationBuilder.CreateIndex(

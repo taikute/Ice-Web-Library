@@ -33,15 +33,15 @@ namespace API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
 
-                    b.Property<string>("AuthorName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<string>("Bio")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("AuthorId");
 
@@ -51,56 +51,56 @@ namespace API.Migrations
                         new
                         {
                             AuthorId = 1,
-                            AuthorName = "Albert Einstein",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "Albert Einstein"
                         },
                         new
                         {
                             AuthorId = 2,
-                            AuthorName = "Jane Austen",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "Jane Austen"
                         },
                         new
                         {
                             AuthorId = 3,
-                            AuthorName = "Stephen Hawking",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "Stephen Hawking"
                         },
                         new
                         {
                             AuthorId = 4,
-                            AuthorName = "J.K. Rowling",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "J.K. Rowling"
                         },
                         new
                         {
                             AuthorId = 5,
-                            AuthorName = "Agatha Christie",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "Agatha Christie"
                         },
                         new
                         {
                             AuthorId = 6,
-                            AuthorName = "Neil deGrasse Tyson",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "Neil deGrasse Tyson"
                         },
                         new
                         {
                             AuthorId = 7,
-                            AuthorName = "Isaac Asimov",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "Isaac Asimov"
                         },
                         new
                         {
                             AuthorId = 8,
-                            AuthorName = "Dan Brown",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "Dan Brown"
                         },
                         new
                         {
                             AuthorId = 9,
-                            AuthorName = "Michelle Obama",
-                            Bio = "Unknow"
+                            Bio = "Unknow",
+                            Name = "Michelle Obama"
                         });
                 });
 
@@ -118,11 +118,9 @@ namespace API.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ContentType")
+                    b.Property<string>("CoverImagePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("CoverImage")
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -178,7 +176,7 @@ namespace API.Migrations
                             BookId = 1,
                             AuthorId = 2,
                             CategoryId = 1,
-                            ContentType = ".img",
+                            CoverImagePath = "~/default-book_cover_image.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -195,7 +193,7 @@ namespace API.Migrations
                             BookId = 2,
                             AuthorId = 4,
                             CategoryId = 2,
-                            ContentType = ".img",
+                            CoverImagePath = "~/default-book_cover_image.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -212,7 +210,7 @@ namespace API.Migrations
                             BookId = 3,
                             AuthorId = 6,
                             CategoryId = 3,
-                            ContentType = ".img",
+                            CoverImagePath = "~/default-book_cover_image.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -229,7 +227,7 @@ namespace API.Migrations
                             BookId = 4,
                             AuthorId = 7,
                             CategoryId = 2,
-                            ContentType = ".img",
+                            CoverImagePath = "~/default-book_cover_image.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -246,7 +244,7 @@ namespace API.Migrations
                             BookId = 5,
                             AuthorId = 8,
                             CategoryId = 1,
-                            ContentType = ".img",
+                            CoverImagePath = "~/default-book_cover_image.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -268,15 +266,15 @@ namespace API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
-                    b.Property<string>("CategoryName")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("CategoryId");
 
@@ -286,20 +284,20 @@ namespace API.Migrations
                         new
                         {
                             CategoryId = 1,
-                            CategoryName = "Detective",
-                            Description = "Unknow"
+                            Description = "Unknow",
+                            Name = "Detective"
                         },
                         new
                         {
                             CategoryId = 2,
-                            CategoryName = "Art",
-                            Description = "Unknow"
+                            Description = "Unknow",
+                            Name = "Art"
                         },
                         new
                         {
                             CategoryId = 3,
-                            CategoryName = "Science",
-                            Description = "Unknow"
+                            Description = "Unknow",
+                            Name = "Science"
                         });
                 });
 
@@ -372,7 +370,7 @@ namespace API.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("PublisherName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -386,31 +384,31 @@ namespace API.Migrations
                         {
                             PublisherID = 1,
                             Description = "One of the largest and most prestigious English-language publishers.",
-                            PublisherName = "Penguin Books"
+                            Name = "Penguin Books"
                         },
                         new
                         {
                             PublisherID = 2,
                             Description = "An American publishing company, one of the world's largest.",
-                            PublisherName = "HarperCollins"
+                            Name = "HarperCollins"
                         },
                         new
                         {
                             PublisherID = 3,
                             Description = "An American book publisher and the largest general-interest paperback publisher in the world.",
-                            PublisherName = "Random House"
+                            Name = "Random House"
                         },
                         new
                         {
                             PublisherID = 4,
                             Description = "An American publishing company and a division of ViacomCBS.",
-                            PublisherName = "Simon & Schuster"
+                            Name = "Simon & Schuster"
                         },
                         new
                         {
                             PublisherID = 5,
                             Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group.",
-                            PublisherName = "Macmillan Publishers"
+                            Name = "Macmillan Publishers"
                         });
                 });
 

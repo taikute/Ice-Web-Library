@@ -1,4 +1,6 @@
-﻿@{
+﻿@using WEB.Models
+@model BookModel
+@{
     ViewData["Title"] = "Detail";
 }
 
@@ -9,7 +11,7 @@
     <table>
         <tr>
             <td>ID:</td>
-            <td>@Model.ID</td>
+            <td>@Model.BookId</td>
         </tr>
         <tr>
             <td>Title:</td>
@@ -17,11 +19,15 @@
         </tr>
         <tr>
             <td>Author:</td>
-            <td>@Model.AuthorName</td>
+            <td>@Model.Author!.Name</td>
         </tr>
         <tr>
             <td>Category:</td>
-            <td>@Model.CategoryName</td>
+            <td>@Model.Category!.Name</td>
+        </tr>
+        <tr>
+            <td>Publisher:</td>
+            <td>@Model.Publisher!.Name</td>
         </tr>
         <tr>
             <td>Price:</td>
@@ -31,10 +37,34 @@
             <td>Quantity:</td>
             <td>@Model.Quantity</td>
         </tr>
+        <tr>
+            <td>Description:</td>
+            <td>@Model.Description</td>
+        </tr>
+        <tr>
+            <td>Publish Year:</td>
+            <td>@Model.PublishYear</td>
+        </tr>
+        <tr>
+            <td>ISBN:</td>
+            <td>@Model.ISBN</td>
+        </tr>
+        <tr>
+            <td>Language:</td>
+            <td>@Model.Language</td>
+        </tr>
+        <tr>
+            <td>Page Count:</td>
+            <td>@Model.PageCount</td>
+        </tr>
+        <tr>
+            <td>Edition:</td>
+            <td>@Model.Edition</td>
+        </tr>
     </table>
     <div style="margin-top: 20px;">
-        <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-primary">Edit</a>
-        <a asp-action="Delete" asp-route-id="@Model.ID" class="btn btn-danger">Delete</a>
+        <a asp-action="Edit" asp-route-id="@Model.BookId" class="btn btn-primary">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.BookId" class="btn btn-danger">Delete</a>
     </div>
 </div>
 
