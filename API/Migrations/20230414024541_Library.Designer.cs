@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230413124926_Library")]
+    [Migration("20230414024541_Library")]
     partial class Library
     {
         /// <inheritdoc />
@@ -362,11 +362,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Publisher", b =>
                 {
-                    b.Property<int>("PublisherID")
+                    b.Property<int>("PublisherId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PublisherID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PublisherId"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -378,38 +378,38 @@ namespace API.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("PublisherID");
+                    b.HasKey("PublisherId");
 
                     b.ToTable("Publishers");
 
                     b.HasData(
                         new
                         {
-                            PublisherID = 1,
+                            PublisherId = 1,
                             Description = "One of the largest and most prestigious English-language publishers.",
                             Name = "Penguin Books"
                         },
                         new
                         {
-                            PublisherID = 2,
+                            PublisherId = 2,
                             Description = "An American publishing company, one of the world's largest.",
                             Name = "HarperCollins"
                         },
                         new
                         {
-                            PublisherID = 3,
+                            PublisherId = 3,
                             Description = "An American book publisher and the largest general-interest paperback publisher in the world.",
                             Name = "Random House"
                         },
                         new
                         {
-                            PublisherID = 4,
+                            PublisherId = 4,
                             Description = "An American publishing company and a division of ViacomCBS.",
                             Name = "Simon & Schuster"
                         },
                         new
                         {
-                            PublisherID = 5,
+                            PublisherId = 5,
                             Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group.",
                             Name = "Macmillan Publishers"
                         });
@@ -424,7 +424,6 @@ namespace API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RoleId");

@@ -60,11 +60,11 @@ namespace API.Data
                 new Author { AuthorId = 9, Name = "Michelle Obama" });
 
             modelBuilder.Entity<Publisher>().HasData(
-                new Publisher { PublisherID = 1, Name = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
-                new Publisher { PublisherID = 2, Name = "HarperCollins", Description = "An American publishing company, one of the world's largest." },
-                new Publisher { PublisherID = 3, Name = "Random House", Description = "An American book publisher and the largest general-interest paperback publisher in the world." },
-                new Publisher { PublisherID = 4, Name = "Simon & Schuster", Description = "An American publishing company and a division of ViacomCBS." },
-                new Publisher { PublisherID = 5, Name = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." });
+                new Publisher { PublisherId = 1, Name = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
+                new Publisher { PublisherId = 2, Name = "HarperCollins", Description = "An American publishing company, one of the world's largest." },
+                new Publisher { PublisherId = 3, Name = "Random House", Description = "An American book publisher and the largest general-interest paperback publisher in the world." },
+                new Publisher { PublisherId = 4, Name = "Simon & Schuster", Description = "An American publishing company and a division of ViacomCBS." },
+                new Publisher { PublisherId = 5, Name = "Macmillan Publishers", Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group." });
 
             modelBuilder.Entity<Book>().HasData(
                 new Book { BookId = 1, AuthorId = 2, CategoryId = 1, PublisherId = 3, Title = "To Kill a Mockingbird" },

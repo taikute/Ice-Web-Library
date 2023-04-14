@@ -11,6 +11,10 @@ namespace WEB.Helpers
         public async Task<List<T>>? GetList<T>(string endpoint)
         {
             var response = await client.ExecuteAsync<List<T>>(new RestRequest(endpoint));
+            if (!response.IsSuccessful)
+            {
+                throw new Exception("Fail!");
+            }
             return response.Data!;
         }
         //GetByID

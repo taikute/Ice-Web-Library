@@ -24,10 +24,15 @@ namespace API.Controllers
         {
             return Ok(await _genericRepos.GetByIdAsync<BookModel, Book>(id));
         }
-        [HttpPut]
-        public async Task<IActionResult> PutBook(BookModel bookModel)
+        [HttpGet("GetBookEdit/{id}")]
+        public async Task<ActionResult<BookEditModel>> GetBookEdit(int id)
         {
-            await _genericRepos.UpdateAsync<Book, BookModel>(bookModel);
+            return Ok(await _genericRepos.GetByIdAsync<BookEditModel, Book>(id));
+        }
+        [HttpPut]
+        public async Task<IActionResult> PutBook(BookEditModel bookModel)
+        {
+            await _genericRepos.UpdateAsync<Book, BookEditModel>(bookModel.BookId, bookModel);
             return NoContent();
         }
         [HttpPost]

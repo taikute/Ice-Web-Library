@@ -45,14 +45,14 @@ namespace API.Migrations
                 name: "Publishers",
                 columns: table => new
                 {
-                    PublisherID = table.Column<int>(type: "int", nullable: false)
+                    PublisherId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Publishers", x => x.PublisherID);
+                    table.PrimaryKey("PK_Publishers", x => x.PublisherId);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,7 +61,7 @@ namespace API.Migrations
                 {
                     RoleId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -120,7 +120,7 @@ namespace API.Migrations
                         name: "FK_Books_Publishers_PublisherId",
                         column: x => x.PublisherId,
                         principalTable: "Publishers",
-                        principalColumn: "PublisherID",
+                        principalColumn: "PublisherId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -231,7 +231,7 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Publishers",
-                columns: new[] { "PublisherID", "Description", "Name" },
+                columns: new[] { "PublisherId", "Description", "Name" },
                 values: new object[,]
                 {
                     { 1, "One of the largest and most prestigious English-language publishers.", "Penguin Books" },

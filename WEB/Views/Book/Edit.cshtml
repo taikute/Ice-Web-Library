@@ -1,30 +1,50 @@
 ﻿@using WEB.Models
-@model BookModel
+@model BookEditModel
 
 @{
     ViewData["Title"] = "Edit";
 }
 
 <h2>Edit Book</h2>
+@{
+    var authors = ViewBag.Authors as List<AuthorModel>;
+    var categories = ViewBag.Categories as List<CategoryModel>;
+    var publishers = ViewBag.Publishers as List<PublisherModel>;
+}
 
-<form asp-action="Edit">
+<form asp-action="Edit" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="BookId" />
+    <div class="form-group">
+        <label asp-for="AuthorId" class="control-label"></label>
+        <select asp-for="AuthorId" asp-items="@(new SelectList(authors, "AuthorId", "Name"))" class="form-control"></select>
+        <span asp-validation-for="AuthorId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryId" class="control-label"></label>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(categories, "CategoryId", "Name"))" class="form-control"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PublisherId" class="control-label"></label>
+        <select asp-for="PublisherId" asp-items="@(new SelectList(publishers, "PublisherId", "Name"))" class="form-control"></select>
+        <span asp-validation-for="PublisherId" class="text-danger"></span>
+    </div>
     <div class="form-group">
         <label asp-for="Title" class="control-label"></label>
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
-@*    <div class="form-group">
-        <label asp-for="Author!.Name" class="control-label"></label>
-        <input asp-for="Author!.Name" class="form-control" />
-        <span asp-validation-for="Author!.Name" class="text-danger"></span>
+    <div class="form-group">
+        <label asp-for="Description" class="control-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Category!.Name" class="control-label"></label>
-        <input asp-for="Category!.Name" class="form-control" />
-        <span asp-validation-for="Category!.Name" class="text-danger"></span>
-    </div>*@
+        <label asp-for="PublishYear" class="control-label"></label>
+        <input asp-for="PublishYear" class="form-control" />
+        <span asp-validation-for="PublishYear" class="text-danger"></span>
+    </div>
     <div class="form-group">
         <label asp-for="Price" class="control-label"></label>
         <input asp-for="Price" class="form-control" />
@@ -34,6 +54,26 @@
         <label asp-for="Quantity" class="control-label"></label>
         <input asp-for="Quantity" class="form-control" />
         <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ISBN" class="control-label"></label>
+        <input asp-for="ISBN" class="form-control" />
+        <span asp-validation-for="ISBN" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Language" class="control-label"></label>
+        <input asp-for="Language" class="form-control" />
+        <span asp-validation-for="Language" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PageCount" class="control-label"></label>
+        <input asp-for="PageCount" class="form-control" />
+        <span asp-validation-for="PageCount" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Edition" class="control-label"></label>
+        <input asp-for="Edition" class="form-control" />
+        <span asp-validation-for="Edition" class="text-danger"></span>
     </div>
     <div class="form-group">
         <input type="submit" value="Save" class="btn btn-primary" />

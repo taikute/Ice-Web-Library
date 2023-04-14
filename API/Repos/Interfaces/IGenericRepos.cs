@@ -11,7 +11,7 @@
         Task CreateAsync<MainModel, ItemModel>(ItemModel item)
             where MainModel : class
             where ItemModel : class;
-        Task UpdateAsync<MainModel, ItemModel>(ItemModel item)
+        Task UpdateAsync<MainModel, ItemModel>(int id, ItemModel item)
             where MainModel : class
             where ItemModel : class;
         Task DeleteAsync<MainModel>(int id) where MainModel : class;

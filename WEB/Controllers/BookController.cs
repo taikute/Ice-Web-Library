@@ -2,6 +2,7 @@
 using RestSharp;
 using WEB.Models;
 using WEB.Helpers;
+using System.Net;
 
 namespace WEB.Controllers
 {
@@ -30,16 +31,19 @@ namespace WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var book = await _apiHelper.GetByID<BookModel>(id, "Books/GetBook")!;
+            var book = await _apiHelper.GetByID<BookEditModel>(id, "Books/GetBookEdit")!;
+            ViewBag.Authors = await _apiHelper.GetList<AuthorModel>("Authors")!;
+            ViewBag.Categories = await _apiHelper.GetList<CategoryModel>("Categories")!;
+            ViewBag.Publishers = await _apiHelper.GetList<PublisherModel>("Publishers")!;
             return View(book);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(BookModel book)
+        public async Task<IActionResult> Edit(BookEditModel book)
         {
             if (ModelState.IsValid)
             {
-                await _apiHelper.Put(book, $"Books");
-                return RedirectToAction("Index");
+                await _apiHelper.Put(book, "Books");
+                return RedirectToAction("Detail", new { id = book.BookId });
             }
             return View(book);
         }

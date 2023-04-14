@@ -8,8 +8,9 @@ namespace API.Helpers
     {
         public MappingProfile()
         {
-            CreateMap<Book, BookIndexModel>();
             CreateMap<Book, BookModel>().ReverseMap();
+            CreateMap<Book, BookIndexModel>().ReverseMap();           
+            CreateMap<Book, BookEditModel>().ReverseMap();
             CreateMap<Author, AuthorModel>().ReverseMap();
             CreateMap<Category, CategoryModel>().ReverseMap();
             CreateMap<Publisher, PublisherModel>().ReverseMap();

@@ -4,7 +4,7 @@ namespace API.Data
 {
     public class Publisher
     {
-        public int PublisherID { get; set; }
+        public int PublisherId { get; set; }
         [StringLength(30, ErrorMessage = "30 characters limited")]
         public string Name { get; set; } = "Unknow";
         [StringLength(100, ErrorMessage = "100 characters limited")]
