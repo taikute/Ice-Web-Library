@@ -11,10 +11,6 @@ namespace WEB.Helpers
         public async Task<List<T>>? GetList<T>(string endpoint)
         {
             var response = await client.ExecuteAsync<List<T>>(new RestRequest(endpoint));
-            if (!response.IsSuccessful)
-            {
-                throw new Exception("Fail!");
-            }
             return response.Data!;
         }
         //GetByID
@@ -23,24 +19,30 @@ namespace WEB.Helpers
             var response = await client.ExecuteAsync<T>(new RestRequest($"{endpoint}/{id}"));
             return response.Data!;
         }
-        public async Task Post<T>(T data, string endpoint) where T : class 
+        public async Task Post<T>(T data, string endpoint) where T : class
         {
             var request = new RestRequest($"{endpoint}", Method.Post);
             request.AddJsonBody(data);
-            var response = await client.ExecuteAsync(request);
-            if (!response.IsSuccessful)
+            try
             {
-                throw new Exception("Fail!");
+                await client.ExecuteAsync(request);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
             }
         }
         public async Task Put<T>(T data, string endpoint) where T : class
         {
             var request = new RestRequest($"{endpoint}", Method.Put);
             request.AddJsonBody(data);
-            var response = await client.ExecuteAsync(request);
-            if (!response.IsSuccessful)
+            try
             {
-                throw new Exception("Fail!");
+                await client.ExecuteAsync(request);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
             }
         }
     }

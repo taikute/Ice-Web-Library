@@ -29,15 +29,18 @@ namespace WEB.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Create(BookEditModel book)
+        public async Task<IActionResult> Create(BookBaseModel book)
         {
+            book.BookId = 0;
             if (ModelState.IsValid)
             {
                 await _apiHelper.Post(book, "Books");
-                return RedirectToAction("Detail", new { id = book.BookId });
+                return RedirectToAction("Index");
             }
-            return View();
+            ViewBag.ErrorMessenger = "Thông tin nhập không hợp lệ!";
+            return View(book);
         }
+
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
@@ -48,14 +51,14 @@ namespace WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var book = await _apiHelper.GetByID<BookEditModel>(id, "Books/GetBookEdit")!;
+            var book = await _apiHelper.GetByID<BookBaseModel>(id, "Books/GetBookEdit")!;
             ViewBag.Authors = await _apiHelper.GetList<AuthorModel>("Authors")!;
             ViewBag.Categories = await _apiHelper.GetList<CategoryModel>("Categories")!;
             ViewBag.Publishers = await _apiHelper.GetList<PublisherModel>("Publishers")!;
             return View(book);
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(BookEditModel book)
+        public async Task<IActionResult> Edit(BookBaseModel book)
         {
             if (ModelState.IsValid)
             {

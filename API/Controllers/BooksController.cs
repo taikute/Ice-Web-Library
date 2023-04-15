@@ -30,20 +30,20 @@ namespace API.Controllers
             return Ok(await _genericRepos.GetByIdAsync<BookModel, Book>(id));
         }
         [HttpGet("GetBookEdit/{id}")]
-        public async Task<ActionResult<BookEditModel>> GetBookEdit(int id)
+        public async Task<ActionResult<BookBaseModel>> GetBookEdit(int id)
         {
-            return Ok(await _genericRepos.GetByIdAsync<BookEditModel, Book>(id));
+            return Ok(await _genericRepos.GetByIdAsync<BookBaseModel, Book>(id));
         }
         [HttpPut]
-        public async Task<IActionResult> PutBook(BookEditModel bookModel)
+        public async Task<IActionResult> PutBook(BookBaseModel bookModel)
         {
-            await _genericRepos.UpdateAsync<Book, BookEditModel>(bookModel.BookId, bookModel);
+            await _genericRepos.UpdateAsync<Book, BookBaseModel>(bookModel.BookId, bookModel);
             return NoContent();
         }
         [HttpPost]
-        public async Task<IActionResult> PostBook(BookCreateModel bookModel)
+        public async Task<IActionResult> PostBook(BookBaseModel bookModel)
         {
-            await _genericRepos.CreateAsync<Book, BookCreateModel>(bookModel);
+            await _genericRepos.CreateAsync<Book, BookBaseModel>(bookModel);
             return NoContent();
         }
         [HttpDelete("{id}")]

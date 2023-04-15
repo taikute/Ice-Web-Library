@@ -1,7 +1,8 @@
 ﻿namespace API.Models
 {
-    public class BookCreateModel
+    public class BookBaseModel
     {
+        public int BookId { get; set; }
         public int AuthorId { get; set; }
         public int CategoryId { get; set; }
         public int PublisherId { get; set; }

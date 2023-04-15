@@ -1,6 +1,6 @@
 ﻿namespace WEB.Models
 {
-    public class BookEditModel
+    public class BookBaseModel
     {
         public int BookId { get; set; }
         public int AuthorId { get; set; }

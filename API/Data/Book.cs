@@ -13,9 +13,9 @@ namespace API.Data
         public int PublisherId { get; set; }
         public virtual Publisher? Publisher { get; set; }
 
-        [StringLength(30)]
+        [StringLength(50)]
         public string Title { get; set; } = "Unknown";
-        [StringLength(100)]
+        [StringLength(500)]
         public string Description { get; set; } = "Unknown";
         [StringLength(4, ErrorMessage = "InvalId year!")]
         public string PublishYear { get; set; } = "2023";
@@ -24,7 +24,7 @@ namespace API.Data
         [Range(1, int.MaxValue, ErrorMessage = "InvalId quantity!")]
         public int Quantity { get; set; } = 1;
         public string CoverImagePath { get; set; } = "~/1.jpg";
-        [StringLength(10)]
+        [StringLength(30)]
         public string? ISBN { get; set; } = "ISBN";
         public string? Language { get; set; } = "English";
         public int PageCount { get; set; } = 99;
