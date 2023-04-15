@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230414024541_Library")]
+    [Migration("20230415101644_Library")]
     partial class Library
     {
         /// <inheritdoc />
@@ -179,7 +179,7 @@ namespace API.Migrations
                             BookId = 1,
                             AuthorId = 2,
                             CategoryId = 1,
-                            CoverImagePath = "~/default-book_cover_image.jpg",
+                            CoverImagePath = "~/1.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -196,7 +196,7 @@ namespace API.Migrations
                             BookId = 2,
                             AuthorId = 4,
                             CategoryId = 2,
-                            CoverImagePath = "~/default-book_cover_image.jpg",
+                            CoverImagePath = "~/1.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -213,7 +213,7 @@ namespace API.Migrations
                             BookId = 3,
                             AuthorId = 6,
                             CategoryId = 3,
-                            CoverImagePath = "~/default-book_cover_image.jpg",
+                            CoverImagePath = "~/1.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -230,7 +230,7 @@ namespace API.Migrations
                             BookId = 4,
                             AuthorId = 7,
                             CategoryId = 2,
-                            CoverImagePath = "~/default-book_cover_image.jpg",
+                            CoverImagePath = "~/1.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",
@@ -247,7 +247,7 @@ namespace API.Migrations
                             BookId = 5,
                             AuthorId = 8,
                             CategoryId = 1,
-                            CoverImagePath = "~/default-book_cover_image.jpg",
+                            CoverImagePath = "~/1.jpg",
                             Description = "Unknown",
                             Edition = "Latest Edition",
                             ISBN = "ISBN",

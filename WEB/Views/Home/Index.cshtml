@@ -1,8 +1,10 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div class="text-center"><h1 class="display-4">Welcome to Ice Library</h1></div>
+
+<form asp-action="Search" class="d-flex">
+    <input class="form-control me-2 rounded-pill" type="text" name="searchTerm" placeholder="Search by Author, Title, ..." required>
+    <button class="btn btn-primary" type="submit">Search</button>
+</form>

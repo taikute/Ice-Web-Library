@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit Book</h2>
+<div class="text-center"><h1 class="display-4">Edit Book</h1></div>
 @{
     var authors = ViewBag.Authors as List<AuthorModel>;
     var categories = ViewBag.Categories as List<CategoryModel>;
@@ -16,17 +16,17 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="BookId" />
     <div class="form-group">
-        <label asp-for="AuthorId" class="control-label"></label>
+        <label asp-for="AuthorId" class="control-label">Author Name</label>
         <select asp-for="AuthorId" asp-items="@(new SelectList(authors, "AuthorId", "Name"))" class="form-control"></select>
         <span asp-validation-for="AuthorId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="CategoryId" class="control-label"></label>
+        <label asp-for="CategoryId" class="control-label">Category Name</label>
         <select asp-for="CategoryId" asp-items="@(new SelectList(categories, "CategoryId", "Name"))" class="form-control"></select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="PublisherId" class="control-label"></label>
+        <label asp-for="PublisherId" class="control-label">Publisher Name</label>
         <select asp-for="PublisherId" asp-items="@(new SelectList(publishers, "PublisherId", "Name"))" class="form-control"></select>
         <span asp-validation-for="PublisherId" class="text-danger"></span>
     </div>

@@ -265,11 +265,11 @@ namespace API.Migrations
                 columns: new[] { "BookId", "AuthorId", "CategoryId", "CoverImagePath", "Description", "Edition", "ISBN", "Language", "PageCount", "Price", "PublishYear", "PublisherId", "Quantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, 2, 1, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 3, 1, "To Kill a Mockingbird" },
-                    { 2, 4, 2, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 1, 1, "The Great Gatsby" },
-                    { 3, 6, 3, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 4, 1, "Animal Farm" },
-                    { 4, 7, 2, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 2, 1, "Nineteen Eighty-Four" },
-                    { 5, 8, 1, "~/default-book_cover_image.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 5, 1, "The Catcher in the Rye" }
+                    { 1, 2, 1, "~/1.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 3, 1, "To Kill a Mockingbird" },
+                    { 2, 4, 2, "~/1.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 1, 1, "The Great Gatsby" },
+                    { 3, 6, 3, "~/1.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 4, 1, "Animal Farm" },
+                    { 4, 7, 2, "~/1.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 2, 1, "Nineteen Eighty-Four" },
+                    { 5, 8, 1, "~/1.jpg", "Unknown", "Latest Edition", "ISBN", "English", 99, 100000, "2023", 5, 1, "The Catcher in the Rye" }
                 });
 
             migrationBuilder.CreateIndex(

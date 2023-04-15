@@ -5,13 +5,8 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Books</h1>
+<div class="text-center"><h1 class="display-4">Books</h1></div>
 <a href="@Url.Action("Create")" class="btn btn-primary">Create New Book</a>
-<form class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-</form>
-
 <div class="container">
     <div class="row">
         @foreach (var book in Model)

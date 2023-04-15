@@ -19,6 +19,11 @@ namespace API.Controllers
         {
             return Ok(await _genericRepos.GetListAsync<BookIndexModel, Book>());
         }
+        [HttpGet("GetListBookSearch")]
+        public async Task<ActionResult<List<BookSearchModel>>> GetListBookSearch()
+        {
+            return Ok(await _genericRepos.GetListAsync<BookSearchModel, Book>());
+        }
         [HttpGet("GetBook/{id}")]
         public async Task<ActionResult<BookModel>> GetBook(int id)
         {
@@ -36,9 +41,9 @@ namespace API.Controllers
             return NoContent();
         }
         [HttpPost]
-        public async Task<IActionResult> PostBook(BookModel bookModel)
+        public async Task<IActionResult> PostBook(BookCreateModel bookModel)
         {
-            await _genericRepos.CreateAsync<Book, BookModel>(bookModel);
+            await _genericRepos.CreateAsync<Book, BookCreateModel>(bookModel);
             return NoContent();
         }
         [HttpDelete("{id}")]
