@@ -14,6 +14,11 @@ namespace API.Controllers
         {
             _genericRepos = genericRepos;
         }
+        [HttpGet("GetListBook")]
+        public async Task<ActionResult<List<BookModel>>> GetListBook()
+        {
+            return Ok(await _genericRepos.GetListAsync<BookModel, Book>());
+        }
         [HttpGet("GetListBookIndex")]
         public async Task<ActionResult<List<BookIndexModel>>> GetListBookIndex()
         {
@@ -24,13 +29,18 @@ namespace API.Controllers
         {
             return Ok(await _genericRepos.GetListAsync<BookSearchModel, Book>());
         }
+        [HttpGet("GetListBookBase")]
+        public async Task<ActionResult<List<BookBaseModel>>> GetListBookBase()
+        {
+            return Ok(await _genericRepos.GetListAsync<BookBaseModel, Book>());
+        }
         [HttpGet("GetBook/{id}")]
         public async Task<ActionResult<BookModel>> GetBook(int id)
         {
             return Ok(await _genericRepos.GetByIdAsync<BookModel, Book>(id));
         }
-        [HttpGet("GetBookEdit/{id}")]
-        public async Task<ActionResult<BookBaseModel>> GetBookEdit(int id)
+        [HttpGet("GetBookBase/{id}")]
+        public async Task<ActionResult<BookBaseModel>> GetBookBase(int id)
         {
             return Ok(await _genericRepos.GetByIdAsync<BookBaseModel, Book>(id));
         }

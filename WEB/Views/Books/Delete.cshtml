@@ -1,14 +1,15 @@
-﻿
+﻿@model WEB.Models.BookIndexModel
+
 @{
     ViewData["Title"] = "Delete";
 }
 
 <div class="text-center"><h1 class="display-4">Delete</h1></div>
 
-<h2>Are you sure you want to delete the book "@Model.Title"?</h2>
+<h2>Are you sure you want to delete the book?</h2>
 
-<form method="post" asp-action="Delete" asp-route-id="@Model.ID">
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a asp-action="Index" class="btn btn-default">Cancel</a>
+<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.BookId">
+    <button type="submit" class="btn btn-primary">Delete</button>
+    <a asp-action="Manager" class="btn btn-primary">Cancel</a>
 </form>
 

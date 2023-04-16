@@ -40,6 +40,18 @@ namespace WEB.Helpers
             {
                 await client.ExecuteAsync(request);
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message, ex);
+            }
+        }
+        public async Task Delete(int id, string endpoint)
+        {
+            var request = new RestRequest($"{endpoint}/{id}", Method.Delete);
+            try
+            {
+                await client.ExecuteAsync(request);
+            }
             catch(Exception ex)
             {
                 throw new Exception(ex.Message, ex);
