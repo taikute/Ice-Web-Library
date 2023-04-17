@@ -63,7 +63,7 @@ namespace API.Data
                 new Author { AuthorId = 7, Name = "Isaac Asimov", Bio = "American writer and professor of biochemistry" },
                 new Author { AuthorId = 8, Name = "Dan Brown", Bio = "American author known for his thriller novels" },
                 new Author { AuthorId = 9, Name = "Michelle Obama", Bio = "American lawyer and author who served as the First Lady of the United States from 2009 to 2017" }
-    );
+                );
 
             modelBuilder.Entity<Publisher>().HasData(
                 new Publisher { PublisherId = 1, Name = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },

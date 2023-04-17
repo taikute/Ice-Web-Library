@@ -51,55 +51,55 @@ namespace API.Migrations
                         new
                         {
                             AuthorId = 1,
-                            Bio = "Unknow",
+                            Bio = "German physicist and mathematician who developed the theory of relativity",
                             Name = "Albert Einstein"
                         },
                         new
                         {
                             AuthorId = 2,
-                            Bio = "Unknow",
+                            Bio = "English novelist known for her works of romantic fiction",
                             Name = "Jane Austen"
                         },
                         new
                         {
                             AuthorId = 3,
-                            Bio = "Unknow",
+                            Bio = "English theoretical physicist and cosmologist",
                             Name = "Stephen Hawking"
                         },
                         new
                         {
                             AuthorId = 4,
-                            Bio = "Unknow",
+                            Bio = "British author, philanthropist, film producer, television producer and screenwriter",
                             Name = "J.K. Rowling"
                         },
                         new
                         {
                             AuthorId = 5,
-                            Bio = "Unknow",
+                            Bio = "English writer known for her detective novels",
                             Name = "Agatha Christie"
                         },
                         new
                         {
                             AuthorId = 6,
-                            Bio = "Unknow",
+                            Bio = "American astrophysicist, planetary scientist, author, and science communicator",
                             Name = "Neil deGrasse Tyson"
                         },
                         new
                         {
                             AuthorId = 7,
-                            Bio = "Unknow",
+                            Bio = "American writer and professor of biochemistry",
                             Name = "Isaac Asimov"
                         },
                         new
                         {
                             AuthorId = 8,
-                            Bio = "Unknow",
+                            Bio = "American author known for his thriller novels",
                             Name = "Dan Brown"
                         },
                         new
                         {
                             AuthorId = 9,
-                            Bio = "Unknow",
+                            Bio = "American lawyer and author who served as the First Lady of the United States from 2009 to 2017",
                             Name = "Michelle Obama"
                         });
                 });
@@ -851,19 +851,19 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.Book", b =>
                 {
                     b.HasOne("API.Data.Author", "Author")
-                        .WithMany("Books")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Data.Category", "Category")
-                        .WithMany("Books")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Data.Publisher", "Publisher")
-                        .WithMany("Books")
+                        .WithMany()
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -884,7 +884,7 @@ namespace API.Migrations
                         .IsRequired();
 
                     b.HasOne("API.Data.Status", "Status")
-                        .WithMany("Instances")
+                        .WithMany()
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -897,13 +897,13 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.Loan", b =>
                 {
                     b.HasOne("API.Data.Instance", "Instance")
-                        .WithMany("Loans")
+                        .WithMany()
                         .HasForeignKey("InstanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Data.Reader", "Reader")
-                        .WithMany("Loans")
+                        .WithMany()
                         .HasForeignKey("ReaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -916,47 +916,12 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.User", b =>
                 {
                     b.HasOne("API.Data.Role", "Role")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("API.Data.Author", b =>
-                {
-                    b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("API.Data.Category", b =>
-                {
-                    b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("API.Data.Instance", b =>
-                {
-                    b.Navigation("Loans");
-                });
-
-            modelBuilder.Entity("API.Data.Publisher", b =>
-                {
-                    b.Navigation("Books");
-                });
-
-            modelBuilder.Entity("API.Data.Role", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("API.Data.Status", b =>
-                {
-                    b.Navigation("Instances");
-                });
-
-            modelBuilder.Entity("API.Data.Reader", b =>
-                {
-                    b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618
         }

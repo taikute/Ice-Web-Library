@@ -1,4 +1,4 @@
-﻿namespace API.Models
+﻿namespace API.Data.Models
 {
     public class BookBaseModel
     {
@@ -11,7 +11,7 @@
         public string? PublishYear { get; set; }
         public int Price { get; set; }
         public int Quantity { get; set; }
-        //public string? CoverImagePath { get; set; }
+        public string? CoverImagePath { get; set; }
         public string? ISBN { get; set; }
         public string? Language { get; set; }
         public int PageCount { get; set; }

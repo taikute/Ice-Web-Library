@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using API.Data;
+using API.Data.Models;
 using API.Repos;
-using API.Models;
+using AutoMapper;
 
 namespace API.Controllers
 {
@@ -9,58 +10,54 @@ namespace API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        readonly GenericRepos _genericRepos;
-        public BooksController(GenericRepos genericRepos)
+        readonly BookRepos _bookRepos;
+        //readonly IMapper _mapper;
+        public BooksController(BookRepos bookRepos)
         {
-            _genericRepos = genericRepos;
+            _bookRepos = bookRepos;
         }
-        [HttpGet("GetListBook")]
-        public async Task<ActionResult<List<BookModel>>> GetListBook()
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
-            return Ok(await _genericRepos.GetListAsync<BookModel, Book>());
+            return Ok(await _bookRepos.GetBooks());
         }
-        [HttpGet("GetListBookIndex")]
-        public async Task<ActionResult<List<BookIndexModel>>> GetListBookIndex()
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Book>> GetBook(int id)
         {
-            return Ok(await _genericRepos.GetListAsync<BookIndexModel, Book>());
-        }
-        [HttpGet("GetListBookSearch")]
-        public async Task<ActionResult<List<BookSearchModel>>> GetListBookSearch()
-        {
-            return Ok(await _genericRepos.GetListAsync<BookSearchModel, Book>());
-        }
-        [HttpGet("GetListBookBase")]
-        public async Task<ActionResult<List<BookBaseModel>>> GetListBookBase()
-        {
-            return Ok(await _genericRepos.GetListAsync<BookBaseModel, Book>());
-        }
-        [HttpGet("GetBook/{id}")]
-        public async Task<ActionResult<BookModel>> GetBook(int id)
-        {
-            return Ok(await _genericRepos.GetByIdAsync<BookModel, Book>(id));
-        }
-        [HttpGet("GetBookBase/{id}")]
-        public async Task<ActionResult<BookBaseModel>> GetBookBase(int id)
-        {
-            return Ok(await _genericRepos.GetByIdAsync<BookBaseModel, Book>(id));
-        }
-        [HttpPut]
-        public async Task<IActionResult> PutBook(BookBaseModel bookModel)
-        {
-            await _genericRepos.UpdateAsync<Book, BookBaseModel>(bookModel.BookId, bookModel);
-            return NoContent();
+            if (id == 0) return BadRequest("Id must be different from 0!");
+            var book = await _bookRepos.GetBook(id);
+            if (book == null) return BookNotFound(id);
+            return Ok(book);
         }
         [HttpPost]
-        public async Task<IActionResult> PostBook(BookBaseModel bookModel)
+        public async Task<IActionResult> PostBook(BookBaseModel bookBase)
         {
-            await _genericRepos.CreateAsync<Book, BookBaseModel>(bookModel);
+            //var book = _mapper.Map<Book>(bookBase);
+            //await _bookRepos.Create(book);
+            return NoContent();
+        }
+        [HttpPut]
+        public async Task<IActionResult> PutBook(Book book)
+        {
+            int id = book.BookId;
+            var existingBook = await _bookRepos.GetBook(id);
+            if (existingBook == null) return BookNotFound(id);
+            await _bookRepos.Update(book);
             return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
-            await _genericRepos.DeleteAsync<Book>(id);
+            var book = await _bookRepos.GetBook(id);
+            if (book == null) return BookNotFound(id);
+            await _bookRepos.Delete(book);
             return NoContent();
+        }
+
+        ActionResult BookNotFound(int id)
+        {
+            return NotFound($"Book with id: {id} not found!");
         }
     }
 }

@@ -9,6 +9,6 @@ namespace API.Data
         public string Name { get; set; } = "Unknow";
         [StringLength(300, ErrorMessage = "300 characters limited")]
         public string Bio { get; set; } = "Unknow";
-        public virtual ICollection<Book>? Books { get; set; }
+        //public virtual ICollection<Book>? Books { get; set; }
     }
 }

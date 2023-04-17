@@ -7,7 +7,7 @@ namespace API.Repos
     {
         readonly DataContext _context;
         readonly ILogger _logger;
-        public BookRepos(DataContext context, ILogger logger)
+        public BookRepos(DataContext context, ILogger<BookRepos> logger)
         {
             _context = context;
             _logger = logger;
@@ -23,60 +23,29 @@ namespace API.Repos
         }
         public async Task<Book?> GetBook(int id)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book == null)
-            {
-                BookNotFound(id);
-                return null;
-            }
-            return book;
+            return await _context.Books.FindAsync(id);
         }
         public async Task Create(Book book)
         {
-            int id = book.BookId;
-            var existingBook = await _context.Books.FindAsync(id);
-            if (existingBook != null) BookAlreadyExists(id);
-            else
-            {
-                await _context.Books.AddAsync(book);
-                await ContextSaveChangeAsync();
-            }
+            await _context.Books.AddAsync(book);
+            await ContextSaveChangeAsync();
         }
         public async Task Update(Book book)
         {
-            int id = book.BookId;
-            var existingBook = await _context.Books.FindAsync(id);
-            if (existingBook == null) BookNotFound(id);
-            else
-            {
-                _context.Update(book);
-                await ContextSaveChangeAsync();
-            }
+            _context.Update(book);
+            await ContextSaveChangeAsync();
         }
-        public async Task Delete(int id)
+        public async Task Delete(Book book)
         {
-            var book = await _context.Books.FindAsync(id);
-            if (book != null)
-            {
-                _context.Books.Remove(book);
-                await ContextSaveChangeAsync();
-            }
-            else BookNotFound(id);
-        }
-
-        void BookAlreadyExists(int id)
-        {
-            _logger.LogError($"Book with ID: {id} already exists");
-        }
-        void BookNotFound(int id)
-        {
-            _logger.LogError($"Book with ID: {id} was not found");
+            _context.Books.Remove(book);
+            await ContextSaveChangeAsync();
         }
         async Task ContextSaveChangeAsync()
         {
             try
             {
                 await _context.SaveChangesAsync();
+                _logger.LogInformation("Book saved to database!");
             }
             catch (DbUpdateException ex)
             {

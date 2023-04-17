@@ -208,15 +208,15 @@ namespace API.Migrations
                 columns: new[] { "AuthorId", "Bio", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Unknow", "Albert Einstein" },
-                    { 2, "Unknow", "Jane Austen" },
-                    { 3, "Unknow", "Stephen Hawking" },
-                    { 4, "Unknow", "J.K. Rowling" },
-                    { 5, "Unknow", "Agatha Christie" },
-                    { 6, "Unknow", "Neil deGrasse Tyson" },
-                    { 7, "Unknow", "Isaac Asimov" },
-                    { 8, "Unknow", "Dan Brown" },
-                    { 9, "Unknow", "Michelle Obama" }
+                    { 1, "German physicist and mathematician who developed the theory of relativity", "Albert Einstein" },
+                    { 2, "English novelist known for her works of romantic fiction", "Jane Austen" },
+                    { 3, "English theoretical physicist and cosmologist", "Stephen Hawking" },
+                    { 4, "British author, philanthropist, film producer, television producer and screenwriter", "J.K. Rowling" },
+                    { 5, "English writer known for her detective novels", "Agatha Christie" },
+                    { 6, "American astrophysicist, planetary scientist, author, and science communicator", "Neil deGrasse Tyson" },
+                    { 7, "American writer and professor of biochemistry", "Isaac Asimov" },
+                    { 8, "American author known for his thriller novels", "Dan Brown" },
+                    { 9, "American lawyer and author who served as the First Lady of the United States from 2009 to 2017", "Michelle Obama" }
                 });
 
             migrationBuilder.InsertData(

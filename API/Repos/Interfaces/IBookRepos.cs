@@ -9,6 +9,6 @@ namespace API.Repos.Interfaces
         Task<Book> GetBook(int id);
         Task Create(Book book);
         Task Update(Book book);
-        Task Delete(int id);
+        Task Delete(Book book);
     }
 }

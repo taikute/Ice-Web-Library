@@ -5,6 +5,6 @@ namespace API.Data
 {
     public class Reader: User
     {
-        public virtual ICollection<Loan>? Loans { get; set; }
+        //public virtual ICollection<Loan>? Loans { get; set; }
     }
 }

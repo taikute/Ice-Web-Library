@@ -8,6 +8,6 @@ namespace API.Data
         public int StatusId { get; set; }
         [Required]
         public string? Description { get; set; }
-        public virtual ICollection<Instance>? Instances { get; set; }
+        //public virtual ICollection<Instance>? Instances { get; set; }
     }
 }

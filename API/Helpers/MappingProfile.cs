@@ -1,4 +1,5 @@
 ﻿using API.Data;
+using API.Data.Models;
 using API.Models;
 using AutoMapper;
 

@@ -12,6 +12,6 @@ namespace API.Data
         public virtual Status? Status { get; set; }
         [Required]
         public string BookCode { get; set; } = "DEFAULT-CODE";
-        public virtual ICollection<Loan>? Loans { get; set; }
+        //public virtual ICollection<Loan>? Loans { get; set; }
     }
 }
