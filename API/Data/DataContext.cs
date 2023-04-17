@@ -54,16 +54,16 @@ namespace API.Data
                 );
 
             modelBuilder.Entity<Author>().HasData(
-                new Author { AuthorId = 1, Name = "Albert Einstein" },
-                new Author { AuthorId = 2, Name = "Jane Austen" },
-                new Author { AuthorId = 3, Name = "Stephen Hawking" },
-                new Author { AuthorId = 4, Name = "J.K. Rowling" },
-                new Author { AuthorId = 5, Name = "Agatha Christie" },
-                new Author { AuthorId = 6, Name = "Neil deGrasse Tyson" },
-                new Author { AuthorId = 7, Name = "Isaac Asimov" },
-                new Author { AuthorId = 8, Name = "Dan Brown" },
-                new Author { AuthorId = 9, Name = "Michelle Obama" }
-                );
+                new Author { AuthorId = 1, Name = "Albert Einstein", Bio = "German physicist and mathematician who developed the theory of relativity" },
+                new Author { AuthorId = 2, Name = "Jane Austen", Bio = "English novelist known for her works of romantic fiction" },
+                new Author { AuthorId = 3, Name = "Stephen Hawking", Bio = "English theoretical physicist and cosmologist" },
+                new Author { AuthorId = 4, Name = "J.K. Rowling", Bio = "British author, philanthropist, film producer, television producer and screenwriter" },
+                new Author { AuthorId = 5, Name = "Agatha Christie", Bio = "English writer known for her detective novels" },
+                new Author { AuthorId = 6, Name = "Neil deGrasse Tyson", Bio = "American astrophysicist, planetary scientist, author, and science communicator" },
+                new Author { AuthorId = 7, Name = "Isaac Asimov", Bio = "American writer and professor of biochemistry" },
+                new Author { AuthorId = 8, Name = "Dan Brown", Bio = "American author known for his thriller novels" },
+                new Author { AuthorId = 9, Name = "Michelle Obama", Bio = "American lawyer and author who served as the First Lady of the United States from 2009 to 2017" }
+    );
 
             modelBuilder.Entity<Publisher>().HasData(
                 new Publisher { PublisherId = 1, Name = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
