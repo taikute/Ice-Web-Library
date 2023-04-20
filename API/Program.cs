@@ -26,6 +26,7 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 //Repositories
 builder.Services.AddScoped<GenericRepos>();
 builder.Services.AddScoped<BookRepos>();
+builder.Services.AddScoped<AuthorRepos>();
 
 var app = builder.Build();
 

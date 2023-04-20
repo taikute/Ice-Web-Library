@@ -14,12 +14,7 @@ namespace API.Repos
         }
         public async Task<IEnumerable<Book>> GetBooks()
         {
-            var books = await _context.Books.ToListAsync();
-            if (books == null)
-            {
-                return Enumerable.Empty<Book>();
-            }
-            return books;
+            return await _context.Books.ToListAsync();
         }
         public async Task<Book?> GetBook(int id)
         {

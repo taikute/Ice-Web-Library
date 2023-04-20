@@ -8,7 +8,7 @@ namespace WEB.Helpers
     {
         readonly RestClient client = new RestClient("https://localhost:7042/api/");
         //GetList
-        public async Task<IEnumerable<T>>? GetList<T>(string endpoint)
+        public async Task<List<T>>? GetList<T>(string endpoint)
         {
             var response = await client.ExecuteAsync<List<T>>(new RestRequest(endpoint));
             return response.Data!;

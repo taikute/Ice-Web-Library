@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using API.Data;
-using API.Data.Models;
 using API.Repos;
-using AutoMapper;
 
 namespace API.Controllers
 {
@@ -11,7 +9,6 @@ namespace API.Controllers
     public class BooksController : ControllerBase
     {
         readonly BookRepos _bookRepos;
-        //readonly IMapper _mapper;
         public BooksController(BookRepos bookRepos)
         {
             _bookRepos = bookRepos;
@@ -31,10 +28,13 @@ namespace API.Controllers
             return Ok(book);
         }
         [HttpPost]
-        public async Task<IActionResult> PostBook(BookBaseModel bookBase)
+        public async Task<IActionResult> PostBook(Book book)
         {
-            //var book = _mapper.Map<Book>(bookBase);
-            //await _bookRepos.Create(book);
+            book.BookId = 0;
+            book.Author = null;
+            book.Category = null;
+            book.Publisher = null;
+            await _bookRepos.Create(book);
             return NoContent();
         }
         [HttpPut]
@@ -54,7 +54,6 @@ namespace API.Controllers
             await _bookRepos.Delete(book);
             return NoContent();
         }
-
         ActionResult BookNotFound(int id)
         {
             return NotFound($"Book with id: {id} not found!");

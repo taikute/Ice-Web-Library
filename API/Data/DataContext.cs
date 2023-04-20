@@ -22,12 +22,12 @@ namespace API.Data
         public DataContext(IConfiguration configuration)
         {
             Configuration = configuration;
-            ChangeTracker.LazyLoadingEnabled = true;
+            //ChangeTracker.LazyLoadingEnabled = true;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseSqlServer(Configuration.GetConnectionString("IceLibraryConnectionString"));
-            options.UseLazyLoadingProxies();
+            //options.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
