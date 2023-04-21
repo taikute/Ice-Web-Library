@@ -8,13 +8,13 @@ namespace WEB.Helpers
     {
         readonly RestClient client = new RestClient("https://localhost:7042/api/");
         //GetList
-        public async Task<List<T>>? GetList<T>(string endpoint)
+        public async Task<IEnumerable<T>>? GetAll<T>(string endpoint) where T : class
         {
             var response = await client.ExecuteAsync<List<T>>(new RestRequest(endpoint));
             return response.Data!;
         }
         //GetByID
-        public async Task<T>? GetByID<T>(int id, string endpoint)
+        public async Task<T>? GetByID<T>(int id, string endpoint) where T : class
         {
             var response = await client.ExecuteAsync<T>(new RestRequest($"{endpoint}/{id}"));
             return response.Data!;
@@ -45,14 +45,14 @@ namespace WEB.Helpers
                 throw new Exception(ex.Message, ex);
             }
         }
-        public async Task Delete(int id, string endpoint)
+        public async Task Delete<T>(int id, string endpoint) where T : class
         {
             var request = new RestRequest($"{endpoint}/{id}", Method.Delete);
             try
             {
                 await client.ExecuteAsync(request);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message, ex);
             }

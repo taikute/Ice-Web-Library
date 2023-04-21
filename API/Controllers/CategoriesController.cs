@@ -1,6 +1,5 @@
 ﻿using API.Data;
-using API.Models;
-using API.Repos;
+using API.Repos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,22 +9,20 @@ namespace API.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        readonly GenericRepos _genericRepos;
-
-        public CategoriesController(GenericRepos genericRepos)
+        readonly IGenericRepos<Category> _categoryRepos;
+        public CategoriesController(IGenericRepos<Category> categoryRepos)
         {
-            _genericRepos = genericRepos;
+            _categoryRepos = categoryRepos;
         }
         [HttpGet]
-        public async Task<ActionResult<List<CategoryModel>>> GetCategories()
+        public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return Ok(await _genericRepos.GetListAsync<CategoryModel, Category>());
+            return Ok(await _categoryRepos.GetAll());
         }
-
         [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryModel>> GetCategory(int id)
+        public async Task<ActionResult<Category>> GetCategory(int id)
         {
-            return Ok(await _genericRepos.GetByIdAsync<CategoryModel, Category>(id));
+            return Ok(await _categoryRepos.GetById(id));
         }
     }
 }

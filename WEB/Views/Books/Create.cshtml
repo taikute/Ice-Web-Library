@@ -1,5 +1,4 @@
-﻿@using WEB.Models
-@model BookBaseModel
+﻿@model WEB.Models.Book
 
 @{
     ViewData["Title"] = "Create";
@@ -7,9 +6,9 @@
 
 <div class="text-center"><h1 class="display-4">Create Book</h1></div>
 @{
-    var authors = ViewBag.Authors as List<AuthorModel>;
-    var categories = ViewBag.Categories as List<CategoryModel>;
-    var publishers = ViewBag.Publishers as List<PublisherModel>;
+    var authors = ViewBag.Authors as List<Author>;
+    var categories = ViewBag.Categories as List<Category>;
+    var publishers = ViewBag.Publishers as List<Publisher>;
 }
 
 <form asp-action="Create">
@@ -54,11 +53,6 @@
         <label asp-for="Quantity" class="control-label"></label>
         <input asp-for="Quantity" class="form-control" placeholder="Enter quantity" value="1" />
         <span asp-validation-for="Quantity" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="ISBN" class="control-label"></label>
-        <input asp-for="ISBN" class="form-control" placeholder="Enter ISBN" value="ISBN" />
-        <span asp-validation-for="ISBN" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="Language" class="control-label"></label>

@@ -14,7 +14,7 @@ namespace WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var authors = await _apiHelper.GetList<AuthorModel>("Authors")!;
+            var authors = await _apiHelper.GetAll<Author>("Authors")!;
             return View(authors);
         }
     }

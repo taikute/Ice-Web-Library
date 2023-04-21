@@ -1,5 +1,6 @@
 ﻿using API.Data;
-using API.Repos;
+using API.Repos.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -8,20 +9,20 @@ namespace API.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        readonly AuthorRepos _authorRepos;
-        public AuthorsController(AuthorRepos authorRepos)
+        readonly IGenericRepos<Author> _authorRepos;
+        public AuthorsController(IGenericRepos<Author> authorRepos)
         {
             _authorRepos = authorRepos;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Author>>> GetListAuthor()
+        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
-            return Ok(await _authorRepos.GetAuthors());
+            return Ok(await _authorRepos.GetAll());
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Author>> GetAuthor(int id)
         {
-            return Ok(await _authorRepos.GetAuthor(id));
+            return Ok(await _authorRepos.GetById(id));
         }
     }
 }

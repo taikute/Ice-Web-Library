@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Data
+namespace WEB.Models
 {
     public class Publisher
     {

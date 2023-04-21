@@ -1,55 +1,54 @@
 ﻿using API.Data;
 using API.Repos.Interfaces;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Repos
 {
-    public class GenericRepos : IGenericRepos
+    public class GenericRepos<T> : IGenericRepos<T> where T : class
     {
         readonly DataContext _context;
-        readonly IMapper _mapper;
-        public GenericRepos(DataContext context, IMapper mapper)
+        readonly ILogger<GenericRepos<T>> _logger;
+        readonly string _name;
+        public GenericRepos(DataContext context, ILogger<GenericRepos<T>> logger)
         {
             _context = context;
-            _mapper = mapper;
+            _logger = logger;
+            _name = typeof(T).Name;
         }
-        public async Task<List<MainModel>> GetListAsync<MainModel, ItemModel>()
-            where MainModel : class
-            where ItemModel : class
+        public async Task<IEnumerable<T>> GetAll()
         {
-            var items = await _context.Set<ItemModel>().ToListAsync();
-            return _mapper.Map<List<MainModel>>(items);
+            return await _context.Set<T>().ToListAsync();
         }
-        public async Task<MainModel> GetByIdAsync<MainModel, ItemModel>(int id)
-            where MainModel : class
-            where ItemModel : class
+        public async Task<T?> GetById(int id)
         {
-            var item = await _context.Set<ItemModel>().FindAsync(id);
-            return _mapper.Map<MainModel>(item);
+            return await _context.Set<T>().FindAsync(id);
         }
-        public async Task CreateAsync<MainModel, ItemModel>(ItemModel item)
-            where MainModel : class
-            where ItemModel : class
+        public async Task Create(T model)
         {
-            var main = _mapper.Map<MainModel>(item);
-            await _context.Set<MainModel>().AddAsync(main);
-            await _context.SaveChangesAsync();
+            await _context.Set<T>().AddAsync(model);
+            await ContextSaveChangeAsync();
         }
-        public async Task UpdateAsync<MainModel, ItemModel>(int id, ItemModel item)
-            where MainModel : class
-            where ItemModel : class
+        public async Task Update(T model)
         {
-            var main = await _context.Set<MainModel>().FindAsync(id);
-            _mapper.Map(item, main);
-            _context.Set<MainModel>().Update(main!);
-            await _context.SaveChangesAsync();
+            _context.Set<T>().Update(model);
+            await ContextSaveChangeAsync();
         }
-        public async Task DeleteAsync<MainModel>(int id) where MainModel : class
+        public async Task Delete(T model)
         {
-            var main = await _context.Set<MainModel>().FindAsync(id);
-            _context.Set<MainModel>().Remove(main!);
-            await _context.SaveChangesAsync();
+            _context.Set<T>().Remove(model);
+            await ContextSaveChangeAsync();
+        }
+        async Task ContextSaveChangeAsync()
+        {
+            try
+            {
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"{_name}: Save changes successfull!");
+            }
+            catch (DbUpdateException ex)
+            {
+                _logger.LogError(ex, $"{_name}: Error while save change to database!");
+            }
         }
     }
 }

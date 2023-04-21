@@ -1,19 +1,11 @@
 ﻿namespace API.Repos.Interfaces
 {
-    interface IGenericRepos
+    public interface IGenericRepos<T> where T : class
     {
-        Task<List<MainModel>> GetListAsync<MainModel, ItemModel>()
-            where MainModel : class
-            where ItemModel : class;
-        Task<MainModel> GetByIdAsync<MainModel, ItemModel>(int id)
-            where MainModel : class
-            where ItemModel : class;
-        Task CreateAsync<MainModel, ItemModel>(ItemModel item)
-            where MainModel : class
-            where ItemModel : class;
-        Task UpdateAsync<MainModel, ItemModel>(int id, ItemModel item)
-            where MainModel : class
-            where ItemModel : class;
-        Task DeleteAsync<MainModel>(int id) where MainModel : class;
+        Task<IEnumerable<T>> GetAll();
+        Task<T?> GetById(int id);
+        Task Create(T model);
+        Task Update(T model);
+        Task Delete(T model);
     }
 }

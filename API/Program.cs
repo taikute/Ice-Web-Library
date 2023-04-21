@@ -1,14 +1,13 @@
 using API.Data;
-using API.Helpers;
 using API.Repos;
 using API.Repos.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System.Configuration;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
+var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
+    .SetMinimumLevel(LogLevel.Trace)
+    .AddConsole());
 
 // Add services to the container.
 
@@ -17,18 +16,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//ADD
+//DbContext
 builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("IceLibraryConnectionString")));
 
-builder.Services.AddAutoMapper(typeof(MappingProfile));
+//Logger
+builder.Services.AddLogging();
 
 //Repositories
-builder.Services.AddScoped<GenericRepos>();
-builder.Services.AddScoped<BookRepos>();
-builder.Services.AddScoped<AuthorRepos>();
+builder.Services.AddScoped(typeof(IGenericRepos<>), typeof(GenericRepos<>));
 
 var app = builder.Build();
+app.Logger.LogInformation("Starting Application");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

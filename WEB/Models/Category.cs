@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace API.Data
+namespace WEB.Models
 {
-    public class Publisher
+    public class Category
     {
-        public int PublisherId { get; set; }
+        public int CategoryId { get; set; }
         [StringLength(30, ErrorMessage = "30 characters limited")]
         public string Name { get; set; } = "Unknow";
         [StringLength(300, ErrorMessage = "300 characters limited")]

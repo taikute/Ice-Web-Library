@@ -1,7 +1,5 @@
 ﻿using API.Data;
-using API.Models;
-using API.Repos;
-using Microsoft.AspNetCore.Http;
+using API.Repos.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -10,22 +8,20 @@ namespace API.Controllers
     [ApiController]
     public class PublishersController : ControllerBase
     {
-        readonly GenericRepos _genericRepos;
-
-        public PublishersController(GenericRepos genericRepos)
+        readonly IGenericRepos<Publisher> _publisherRepos;
+        public PublishersController(IGenericRepos<Publisher> publisherRepos)
         {
-            _genericRepos = genericRepos;
+            _publisherRepos = publisherRepos;
         }
         [HttpGet]
-        public async Task<ActionResult<List<PublisherModel>>> GetPublishers()
+        public async Task<ActionResult<IEnumerable<Publisher>>> GetPublishers()
         {
-            return Ok(await _genericRepos.GetListAsync<PublisherModel, Publisher>());
+            return Ok(await _publisherRepos.GetAll());
         }
-
         [HttpGet("{id}")]
-        public async Task<ActionResult<PublisherModel>> GetPublisher(int id)
+        public async Task<ActionResult<Publisher>> GetPublisher(int id)
         {
-            return Ok(await _genericRepos.GetByIdAsync<PublisherModel, Publisher>(id));
+            return Ok(await _publisherRepos.GetById(id));
         }
     }
 }

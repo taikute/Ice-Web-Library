@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using API.Data;
-using API.Repos;
+using API.Repos.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -8,23 +9,23 @@ namespace API.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        readonly BookRepos _bookRepos;
-        public BooksController(BookRepos bookRepos)
+        readonly IGenericRepos<Book> _bookRepos;
+        public BooksController(IGenericRepos<Book> repository )
         {
-            _bookRepos = bookRepos;
+            _bookRepos = repository;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
-            return Ok(await _bookRepos.GetBooks());
+            return Ok(await _bookRepos.GetAll());
         }
         [HttpGet("{id}")]
         public async Task<ActionResult<Book>> GetBook(int id)
         {
             if (id == 0) return BadRequest("Id must be different from 0!");
-            var book = await _bookRepos.GetBook(id);
-            if (book == null) return BookNotFound(id);
+            var book = await _bookRepos.GetById(id);
+            if (book == null) return NotFound(id);
             return Ok(book);
         }
         [HttpPost]
@@ -40,23 +41,23 @@ namespace API.Controllers
         [HttpPut]
         public async Task<IActionResult> PutBook(Book book)
         {
-            int id = book.BookId;
-            var existingBook = await _bookRepos.GetBook(id);
-            if (existingBook == null) return BookNotFound(id);
+            //int id = book.BookId;
+            //var existingBook = await _bookRepos.GetById(id);
+            //if (existingBook == null) return NotFound(id);
             await _bookRepos.Update(book);
             return NoContent();
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBook(int id)
         {
-            var book = await _bookRepos.GetBook(id);
-            if (book == null) return BookNotFound(id);
+            var book = await _bookRepos.GetById(id);
+            if (book == null) return NotFound(id);
             await _bookRepos.Delete(book);
             return NoContent();
         }
-        ActionResult BookNotFound(int id)
+        ActionResult NotFound(int id)
         {
-            return NotFound($"Book with id: {id} not found!");
+            return NotFound($"{_bookRepos.GetType()} with id: {id} not found!");
         }
     }
 }

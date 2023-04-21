@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230417070213_Library")]
+    [Migration("20230420132521_Library")]
     partial class Library
     {
         /// <inheritdoc />
@@ -21,9 +21,6 @@ namespace API.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.4")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -38,8 +35,8 @@ namespace API.Migrations
 
                     b.Property<string>("Bio")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -104,6 +101,12 @@ namespace API.Migrations
                             AuthorId = 9,
                             Bio = "American lawyer and author who served as the First Lady of the United States from 2009 to 2017",
                             Name = "Michelle Obama"
+                        },
+                        new
+                        {
+                            AuthorId = 10,
+                            Bio = "English novelist, essayist, journalist and critic, best known for his dystopian novel 1984 and the allegorical novella Animal Farm",
+                            Name = "George Orwell"
                         });
                 });
 
@@ -127,19 +130,17 @@ namespace API.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Edition")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ISBN")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Language")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("PageCount")
                         .HasColumnType("int");
@@ -177,355 +178,126 @@ namespace API.Migrations
                         new
                         {
                             BookId = 1,
-                            AuthorId = 2,
-                            CategoryId = 1,
+                            AuthorId = 1,
+                            CategoryId = 3,
                             CoverImagePath = "~/1.jpg",
-                            Description = "The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it, To Kill A Mockingbird became both an instant bestseller and a critical success when it was first published in 1960. It went on to win the Pulitzer Prize in 1961 and was later made into an Academy Award-winning film, also a classic.",
-                            Edition = "1st",
-                            ISBN = "0446310786",
+                            Description = "A theoretical physicist's introduction to the theory of relativity",
+                            Edition = "1st edition",
                             Language = "English",
-                            PageCount = 336,
-                            Price = 25000,
-                            PublishYear = "1960",
-                            PublisherId = 3,
-                            Quantity = 10,
-                            Title = "To Kill a Mockingbird"
+                            PageCount = 160,
+                            Price = 150000,
+                            PublishYear = "1916",
+                            PublisherId = 1,
+                            Quantity = 5,
+                            Title = "Relativity: The Special and General Theory"
                         },
                         new
                         {
                             BookId = 2,
-                            AuthorId = 4,
-                            CategoryId = 2,
+                            AuthorId = 2,
+                            CategoryId = 4,
                             CoverImagePath = "~/1.jpg",
-                            Description = "The Great Gatsby is a 1925 novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, the novel depicts narrator Nick Carraway's interactions with mysterious millionaire Jay Gatsby and Gatsby's obsession to reunite with his former lover, Daisy Buchanan.",
-                            Edition = "1st",
-                            ISBN = "978-0-7475-8939-6",
+                            Description = "A romantic novel about the pride and prejudices of the British upper class in the early 19th century",
+                            Edition = "2nd edition",
                             Language = "English",
-                            PageCount = 180,
-                            Price = 20000,
-                            PublishYear = "1925",
-                            PublisherId = 1,
-                            Quantity = 15,
-                            Title = "The Great Gatsby"
+                            PageCount = 279,
+                            Price = 100000,
+                            PublishYear = "1813",
+                            PublisherId = 2,
+                            Quantity = 3,
+                            Title = "Pride and Prejudice"
                         },
                         new
                         {
                             BookId = 3,
-                            AuthorId = 6,
+                            AuthorId = 3,
                             CategoryId = 3,
                             CoverImagePath = "~/1.jpg",
-                            Description = "Animal Farm is an allegorical novella by George Orwell, first published in England on 17 August 1945. The book tells the story of a group of farm animals who rebel against their human farmer, hoping to create a society where the animals can be equal, free, and happy.",
-                            Edition = "1st",
-                            ISBN = "978-0-14-103613-7",
+                            Description = "A popular science book about cosmology and the universe",
+                            Edition = "10th anniversary edition",
                             Language = "English",
-                            PageCount = 112,
-                            Price = 15000,
-                            PublishYear = "1945",
-                            PublisherId = 4,
-                            Quantity = 20,
-                            Title = "Animal Farm"
+                            PageCount = 212,
+                            Price = 120000,
+                            PublishYear = "1988",
+                            PublisherId = 3,
+                            Quantity = 7,
+                            Title = "A Brief History of Time"
                         },
                         new
                         {
                             BookId = 4,
-                            AuthorId = 7,
-                            CategoryId = 2,
+                            AuthorId = 4,
+                            CategoryId = 4,
                             CoverImagePath = "~/1.jpg",
-                            Description = "Nineteen Eighty-Four is a dystopian novel by English author George Orwell, published in 1949. The novel is set in a totalitarian society where the government has complete control over every aspect of people's lives.",
-                            Edition = "1st",
-                            ISBN = "978-0-452-28424-1",
+                            Description = "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry",
+                            Edition = "1st edition",
                             Language = "English",
-                            PageCount = 328,
-                            Price = 18000,
-                            PublishYear = "1949",
-                            PublisherId = 2,
-                            Quantity = 25,
-                            Title = "Nineteen Eighty-Four"
+                            PageCount = 223,
+                            Price = 130000,
+                            PublishYear = "1997",
+                            PublisherId = 4,
+                            Quantity = 2,
+                            Title = "Harry Potter and the Philosopher's Stone"
                         },
                         new
                         {
                             BookId = 5,
-                            AuthorId = 8,
+                            AuthorId = 5,
                             CategoryId = 1,
                             CoverImagePath = "~/1.jpg",
-                            Description = "The story of Holden Caulfield's struggles in New York City after being expelled from his prep school.",
-                            Edition = "1st",
-                            ISBN = "0316769177",
+                            Description = "A detective novel about a murder on a train, featuring famous detective Hercule Poirot",
+                            Edition = "2nd edition",
                             Language = "English",
-                            PageCount = 277,
-                            Price = 120000,
-                            PublishYear = "1951",
-                            PublisherId = 5,
-                            Quantity = 10,
-                            Title = "The Catcher in the Rye"
+                            PageCount = 256,
+                            Price = 110000,
+                            PublishYear = "1934",
+                            PublisherId = 1,
+                            Quantity = 4,
+                            Title = "Murder on the Orient Express"
                         },
                         new
                         {
                             BookId = 6,
-                            AuthorId = 9,
+                            AuthorId = 6,
                             CategoryId = 3,
                             CoverImagePath = "~/1.jpg",
-                            Description = "A dystopian novel set in a future society where people are genetically engineered and conditioned to be happy and conform to social norms.",
-                            Edition = "1st",
-                            ISBN = "0060850523",
+                            Description = "An introduction to astrophysics for laypeople",
+                            Edition = "1st edition",
                             Language = "English",
-                            PageCount = 288,
-                            Price = 150000,
-                            PublishYear = "1932",
-                            PublisherId = 2,
-                            Quantity = 15,
-                            Title = "Brave New World"
+                            PageCount = 224,
+                            Price = 140000,
+                            PublishYear = "2017",
+                            PublisherId = 5,
+                            Quantity = 6,
+                            Title = "Astrophysics for People in a Hurry"
                         },
                         new
                         {
                             BookId = 7,
-                            AuthorId = 1,
+                            AuthorId = 7,
                             CategoryId = 2,
                             CoverImagePath = "~/1.jpg",
-                            Description = "The story of a group of British boys stranded on an uninhabited island and their disastrous attempt to govern themselves.",
-                            Edition = "1st",
-                            ISBN = "0571056865",
+                            Description = "An annotated edition of the classic satire by Jonathan Swift",
+                            Edition = "3rd edition",
                             Language = "English",
-                            PageCount = 224,
-                            Price = 125000,
-                            PublishYear = "1954",
-                            PublisherId = 1,
-                            Quantity = 20,
-                            Title = "Lord of the Flies"
+                            PageCount = 522,
+                            Price = 105000,
+                            PublishYear = "1960",
+                            PublisherId = 2,
+                            Quantity = 1,
+                            Title = "The Annotated Gulliver's Travels"
                         },
                         new
                         {
                             BookId = 8,
-                            AuthorId = 3,
-                            CategoryId = 1,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A novel of manners set in rural England, following the romantic entanglements of the Bennet sisters and their suitors.",
-                            Edition = "1st",
-                            ISBN = "0141439513",
-                            Language = "English",
-                            PageCount = 480,
-                            Price = 100000,
-                            PublishYear = "1813",
-                            PublisherId = 3,
-                            Quantity = 5,
-                            Title = "Pride and Prejudice"
-                        },
-                        new
-                        {
-                            BookId = 9,
-                            AuthorId = 5,
-                            CategoryId = 3,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A dystopian novel set in a future society where books are outlawed and 'firemen' burn any that are found.",
-                            Edition = "1st",
-                            ISBN = "1451673310",
-                            Language = "English",
-                            PageCount = 249,
-                            Price = 130000,
-                            PublishYear = "1953",
-                            PublisherId = 5,
-                            Quantity = 12,
-                            Title = "Fahrenheit 451"
-                        },
-                        new
-                        {
-                            BookId = 10,
-                            AuthorId = 6,
-                            CategoryId = 2,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A fantasy novel following the adventures of hobbit Bilbo Baggins as he accompanies a group of dwarves on a quest to reclaim their treasure from a dragon.",
-                            Edition = "1st",
-                            ISBN = "054792822X",
-                            Language = "English",
-                            PageCount = 310,
-                            Price = 110000,
-                            PublishYear = "1937",
-                            PublisherId = 4,
-                            Quantity = 8,
-                            Title = "The Hobbit"
-                        },
-                        new
-                        {
-                            BookId = 11,
-                            AuthorId = 2,
-                            CategoryId = 2,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A novel about the Lost Generation by Ernest Hemingway",
-                            Edition = "First Edition",
-                            ISBN = "0743277334",
-                            Language = "English",
-                            PageCount = 259,
-                            Price = 150000,
-                            PublishYear = "1926",
-                            PublisherId = 2,
-                            Quantity = 5,
-                            Title = "The Sun Also Rises"
-                        },
-                        new
-                        {
-                            BookId = 12,
-                            AuthorId = 1,
-                            CategoryId = 1,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A fantasy novel by J.R.R. Tolkien",
-                            Edition = "Revised Edition",
-                            ISBN = "9780547928227",
-                            Language = "English",
-                            PageCount = 310,
-                            Price = 175000,
-                            PublishYear = "1937",
-                            PublisherId = 2,
-                            Quantity = 8,
-                            Title = "The Hobbit"
-                        },
-                        new
-                        {
-                            BookId = 13,
-                            AuthorId = 7,
-                            CategoryId = 3,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A dystopian novel by Aldous Huxley",
-                            Edition = "First Edition",
-                            ISBN = "0060850523",
-                            Language = "English",
-                            PageCount = 288,
-                            Price = 135000,
-                            PublishYear = "1932",
-                            PublisherId = 4,
-                            Quantity = 4,
-                            Title = "Brave New World"
-                        },
-                        new
-                        {
-                            BookId = 14,
-                            AuthorId = 9,
-                            CategoryId = 2,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A novel by Gabriel Garcia Marquez",
-                            Edition = "First Edition",
-                            ISBN = "9780060883287",
-                            Language = "Spanish",
-                            PageCount = 417,
-                            Price = 120000,
-                            PublishYear = "1967",
-                            PublisherId = 5,
-                            Quantity = 6,
-                            Title = "One Hundred Years of Solitude"
-                        },
-                        new
-                        {
-                            BookId = 15,
                             AuthorId = 8,
                             CategoryId = 1,
                             CoverImagePath = "~/1.jpg",
-                            Description = "A novel by Arundhati Roy",
-                            Edition = "First Edition",
-                            ISBN = "0812979656",
+                            Description = "A thriller novel by American author Dan Brown",
+                            Edition = "First edition",
                             Language = "English",
-                            PageCount = 369,
-                            Price = 95000,
-                            PublishYear = "1997",
-                            PublisherId = 1,
-                            Quantity = 3,
-                            Title = "The God of Small Things"
-                        },
-                        new
-                        {
-                            BookId = 16,
-                            AuthorId = 4,
-                            CategoryId = 3,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A dystopian novel by Margaret Atwood",
-                            Edition = "First Edition",
-                            ISBN = "9780385490818",
-                            Language = "English",
-                            PageCount = 311,
-                            Price = 125000,
-                            PublishYear = "1985",
-                            PublisherId = 4,
-                            Quantity = 7,
-                            Title = "The Handmaid's Tale"
-                        },
-                        new
-                        {
-                            BookId = 17,
-                            AuthorId = 1,
-                            CategoryId = 2,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A novella by Ernest Hemingway",
-                            Edition = "First Edition",
-                            ISBN = "0684801221",
-                            Language = "English",
-                            PageCount = 128,
-                            Price = 105000,
-                            PublishYear = "1952",
-                            PublisherId = 2,
-                            Quantity = 2,
-                            Title = "The Old Man and the Sea"
-                        },
-                        new
-                        {
-                            BookId = 18,
-                            AuthorId = 3,
-                            CategoryId = 3,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A hilarious and inventive science fiction series that has become a beloved classic.",
-                            Edition = "First Edition",
-                            ISBN = "9780345391803",
-                            Language = "English",
-                            PageCount = 224,
+                            PageCount = 481,
                             Price = 150000,
-                            PublishYear = "1979",
-                            PublisherId = 3,
-                            Quantity = 5,
-                            Title = "The Hitchhiker's Guide to the Galaxy"
-                        },
-                        new
-                        {
-                            BookId = 19,
-                            AuthorId = 4,
-                            CategoryId = 1,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "One of the most popular and enduring works of fantasy literature.",
-                            Edition = "50th Anniversary Edition",
-                            ISBN = "9780547928210",
-                            Language = "English",
-                            PageCount = 1178,
-                            Price = 250000,
-                            PublishYear = "1954",
-                            PublisherId = 3,
-                            Quantity = 3,
-                            Title = "The Lord of the Rings"
-                        },
-                        new
-                        {
-                            BookId = 20,
-                            AuthorId = 5,
-                            CategoryId = 2,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A classic novel of manners that explores themes of love, marriage, and social status.",
-                            Edition = "Revised Edition",
-                            ISBN = "9780141395203",
-                            Language = "English",
-                            PageCount = 432,
-                            Price = 120000,
-                            PublishYear = "1813",
-                            PublisherId = 5,
-                            Quantity = 8,
-                            Title = "Pride and Prejudice"
-                        },
-                        new
-                        {
-                            BookId = 21,
-                            AuthorId = 7,
-                            CategoryId = 4,
-                            CoverImagePath = "~/1.jpg",
-                            Description = "A thriller that follows symbologist Robert Langdon as he investigates a murder in the Louvre Museum.",
-                            Edition = "Special Illustrated Edition",
-                            ISBN = "9780307277671",
-                            Language = "English",
-                            PageCount = 689,
-                            Price = 180000,
                             PublishYear = "2003",
                             PublisherId = 4,
                             Quantity = 10,
@@ -533,37 +305,115 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 22,
-                            AuthorId = 5,
-                            CategoryId = 1,
+                            BookId = 9,
+                            AuthorId = 9,
+                            CategoryId = 5,
                             CoverImagePath = "~/1.jpg",
-                            Description = "A novel that explores the corruption of youth and the dangers of vanity and decadence.",
-                            Edition = "Revised Edition",
-                            ISBN = "9780141442464",
+                            Description = "An autobiography by Michelle Obama",
+                            Edition = "First edition",
                             Language = "English",
-                            PageCount = 256,
-                            Price = 95000,
-                            PublishYear = "1890",
-                            PublisherId = 2,
-                            Quantity = 6,
-                            Title = "The Picture of Dorian Gray"
+                            PageCount = 426,
+                            Price = 250000,
+                            PublishYear = "2018",
+                            PublisherId = 3,
+                            Quantity = 8,
+                            Title = "Becoming"
                         },
                         new
                         {
-                            BookId = 23,
-                            AuthorId = 8,
-                            CategoryId = 2,
+                            BookId = 10,
+                            AuthorId = 9,
+                            CategoryId = 4,
                             CoverImagePath = "~/1.jpg",
-                            Description = "A magical realist novel that tells the story of the Buendía family over several generations.",
-                            Edition = "Revised Edition",
-                            ISBN = "9780060883287",
+                            Description = "A children's fantasy novel by J.R.R. Tolkien",
+                            Edition = "Revised edition",
                             Language = "English",
-                            PageCount = 422,
-                            Price = 160000,
-                            PublishYear = "1967",
+                            PageCount = 310,
+                            Price = 120000,
+                            PublishYear = "1937",
                             PublisherId = 1,
-                            Quantity = 4,
-                            Title = "One Hundred Years of Solitude"
+                            Quantity = 12,
+                            Title = "The Hobbit"
+                        },
+                        new
+                        {
+                            BookId = 11,
+                            AuthorId = 3,
+                            CategoryId = 3,
+                            CoverImagePath = "~/1.jpg",
+                            Description = "A popular science book by British physicist Stephen Hawking",
+                            Edition = "First edition",
+                            Language = "English",
+                            PageCount = 212,
+                            Price = 180000,
+                            PublishYear = "1988",
+                            PublisherId = 2,
+                            Quantity = 5,
+                            Title = "A Brief History of Time"
+                        },
+                        new
+                        {
+                            BookId = 12,
+                            AuthorId = 2,
+                            CategoryId = 4,
+                            CoverImagePath = "~/1.jpg",
+                            Description = "A romantic novel by English author Jane Austen",
+                            Edition = "First edition",
+                            Language = "English",
+                            PageCount = 279,
+                            Price = 90000,
+                            PublishYear = "1813",
+                            PublisherId = 5,
+                            Quantity = 15,
+                            Title = "Pride and Prejudice"
+                        },
+                        new
+                        {
+                            BookId = 13,
+                            AuthorId = 3,
+                            CategoryId = 3,
+                            CoverImagePath = "~/1.jpg",
+                            Description = "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow",
+                            Edition = "First edition",
+                            Language = "English",
+                            PageCount = 198,
+                            Price = 200000,
+                            PublishYear = "2010",
+                            PublisherId = 4,
+                            Quantity = 3,
+                            Title = "The Grand Design"
+                        },
+                        new
+                        {
+                            BookId = 14,
+                            AuthorId = 5,
+                            CategoryId = 1,
+                            CoverImagePath = "~/1.jpg",
+                            Description = "A detective novel by Agatha Christie",
+                            Edition = "First edition",
+                            Language = "English",
+                            PageCount = 288,
+                            Price = 85000,
+                            PublishYear = "1926",
+                            PublisherId = 1,
+                            Quantity = 6,
+                            Title = "The Murder of Roger Ackroyd"
+                        },
+                        new
+                        {
+                            BookId = 15,
+                            AuthorId = 8,
+                            CategoryId = 4,
+                            CoverImagePath = "~/1.jpg",
+                            Description = "A novel by John Green",
+                            Edition = "First edition",
+                            Language = "English",
+                            PageCount = 313,
+                            Price = 170000,
+                            PublishYear = "2012",
+                            PublisherId = 2,
+                            Quantity = 9,
+                            Title = "The Fault in Our Stars"
                         });
                 });
 
@@ -619,6 +469,36 @@ namespace API.Migrations
                             CategoryId = 5,
                             Description = "Books about historical events and figures",
                             Name = "History"
+                        },
+                        new
+                        {
+                            CategoryId = 6,
+                            Description = "Books about people's lives and experiences",
+                            Name = "Biography"
+                        },
+                        new
+                        {
+                            CategoryId = 7,
+                            Description = "Books about travel destinations and experiences",
+                            Name = "Travel"
+                        },
+                        new
+                        {
+                            CategoryId = 8,
+                            Description = "Books about business management, entrepreneurship, and finance",
+                            Name = "Business"
+                        },
+                        new
+                        {
+                            CategoryId = 9,
+                            Description = "Books about cooking techniques, recipes, and ingredients",
+                            Name = "Cooking"
+                        },
+                        new
+                        {
+                            CategoryId = 10,
+                            Description = "Books about personal development, motivation, and success",
+                            Name = "Self-help"
                         });
                 });
 
@@ -630,12 +510,12 @@ namespace API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstanceID"));
 
-                    b.Property<string>("BookCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("BookId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
@@ -730,6 +610,36 @@ namespace API.Migrations
                             PublisherId = 5,
                             Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group.",
                             Name = "Macmillan Publishers"
+                        },
+                        new
+                        {
+                            PublisherId = 6,
+                            Description = "The largest university press in the world, publishing in 70 languages and 190 countries.",
+                            Name = "Oxford University Press"
+                        },
+                        new
+                        {
+                            PublisherId = 7,
+                            Description = "The publishing business of the University of Cambridge, one of the world's oldest universities.",
+                            Name = "Cambridge University Press"
+                        },
+                        new
+                        {
+                            PublisherId = 8,
+                            Description = "A global academic publishing company, the product of a merger between Springer Science+Business Media and Nature Publishing Group.",
+                            Name = "Springer Nature"
+                        },
+                        new
+                        {
+                            PublisherId = 9,
+                            Description = "The world's third-largest trade book publisher, headquartered in France.",
+                            Name = "Hachette Livre"
+                        },
+                        new
+                        {
+                            PublisherId = 10,
+                            Description = "A British independent publishing house, best known for publishing the Harry Potter series.",
+                            Name = "Bloomsbury Publishing"
                         });
                 });
 
@@ -758,6 +668,11 @@ namespace API.Migrations
                         {
                             RoleId = 2,
                             Name = "Librarian"
+                        },
+                        new
+                        {
+                            RoleId = 3,
+                            Name = "Admin"
                         });
                 });
 
@@ -835,6 +750,53 @@ namespace API.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("User");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "ice@gmail.com",
+                            Name = "Ice",
+                            Password = "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=",
+                            RoleId = 3,
+                            Username = "admin"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Email = "ceri@gmail.com",
+                            Name = "Ceri",
+                            Password = "LEReHATfTiR8IIkkW2j8gR9yj30w/xSm1kpPqsWOYnA=",
+                            RoleId = 2,
+                            Username = "librarian"
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            Email = "user1@gmail.com",
+                            Name = "User1",
+                            Password = "CgQblGLKpKMbrDVn4Lbm/ZEAeH2yq0M9lvbReMq/zpA=",
+                            RoleId = 1,
+                            Username = "user1"
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            Email = "user2@gmail.com",
+                            Name = "User2",
+                            Password = "YCXRj+SKvUUWhSjxioLiZd2Y1CGnCEqgn2GzQXA5AaM=",
+                            RoleId = 1,
+                            Username = "user2"
+                        },
+                        new
+                        {
+                            UserId = 5,
+                            Email = "user3@gmail.com",
+                            Name = "User3",
+                            Password = "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=",
+                            RoleId = 1,
+                            Username = "user3"
+                        });
                 });
 
             modelBuilder.Entity("API.Data.Librarian", b =>
@@ -854,19 +816,19 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.Book", b =>
                 {
                     b.HasOne("API.Data.Author", "Author")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Data.Category", "Category")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Data.Publisher", "Publisher")
-                        .WithMany()
+                        .WithMany("Books")
                         .HasForeignKey("PublisherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -881,13 +843,13 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.Instance", b =>
                 {
                     b.HasOne("API.Data.Book", "Book")
-                        .WithMany()
+                        .WithMany("Instance")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Data.Status", "Status")
-                        .WithMany()
+                        .WithMany("Instances")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -900,13 +862,13 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.Loan", b =>
                 {
                     b.HasOne("API.Data.Instance", "Instance")
-                        .WithMany()
+                        .WithMany("Loans")
                         .HasForeignKey("InstanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("API.Data.Reader", "Reader")
-                        .WithMany()
+                        .WithMany("Loans")
                         .HasForeignKey("ReaderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -919,12 +881,52 @@ namespace API.Migrations
             modelBuilder.Entity("API.Data.User", b =>
                 {
                     b.HasOne("API.Data.Role", "Role")
-                        .WithMany()
+                        .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("API.Data.Author", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("API.Data.Book", b =>
+                {
+                    b.Navigation("Instance");
+                });
+
+            modelBuilder.Entity("API.Data.Category", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("API.Data.Instance", b =>
+                {
+                    b.Navigation("Loans");
+                });
+
+            modelBuilder.Entity("API.Data.Publisher", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("API.Data.Role", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("API.Data.Status", b =>
+                {
+                    b.Navigation("Instances");
+                });
+
+            modelBuilder.Entity("API.Data.Reader", b =>
+                {
+                    b.Navigation("Loans");
                 });
 #pragma warning restore 612, 618
         }

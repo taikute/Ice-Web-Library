@@ -20,7 +20,7 @@ namespace API.Migrations
                     AuthorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
+                    Bio = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -91,15 +91,14 @@ namespace API.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     PublisherId = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     PublishYear = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
                     Price = table.Column<int>(type: "int", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     CoverImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ISBN = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Language = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     PageCount = table.Column<int>(type: "int", nullable: false),
-                    Edition = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Edition = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -156,7 +155,7 @@ namespace API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BookId = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    BookCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ISBN = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,7 +215,8 @@ namespace API.Migrations
                     { 6, "American astrophysicist, planetary scientist, author, and science communicator", "Neil deGrasse Tyson" },
                     { 7, "American writer and professor of biochemistry", "Isaac Asimov" },
                     { 8, "American author known for his thriller novels", "Dan Brown" },
-                    { 9, "American lawyer and author who served as the First Lady of the United States from 2009 to 2017", "Michelle Obama" }
+                    { 9, "American lawyer and author who served as the First Lady of the United States from 2009 to 2017", "Michelle Obama" },
+                    { 10, "English novelist, essayist, journalist and critic, best known for his dystopian novel 1984 and the allegorical novella Animal Farm", "George Orwell" }
                 });
 
             migrationBuilder.InsertData(
@@ -228,7 +228,12 @@ namespace API.Migrations
                     { 2, "Books about art, artists and art history", "Art" },
                     { 3, "Books about natural science, mathematics, and technology", "Science" },
                     { 4, "Books about imaginary people and events", "Fiction" },
-                    { 5, "Books about historical events and figures", "History" }
+                    { 5, "Books about historical events and figures", "History" },
+                    { 6, "Books about people's lives and experiences", "Biography" },
+                    { 7, "Books about travel destinations and experiences", "Travel" },
+                    { 8, "Books about business management, entrepreneurship, and finance", "Business" },
+                    { 9, "Books about cooking techniques, recipes, and ingredients", "Cooking" },
+                    { 10, "Books about personal development, motivation, and success", "Self-help" }
                 });
 
             migrationBuilder.InsertData(
@@ -240,7 +245,12 @@ namespace API.Migrations
                     { 2, "An American publishing company, one of the world's largest.", "HarperCollins" },
                     { 3, "An American book publisher and the largest general-interest paperback publisher in the world.", "Random House" },
                     { 4, "An American publishing company and a division of ViacomCBS.", "Simon & Schuster" },
-                    { 5, "A global trade publishing company, owned by Holtzbrinck Publishing Group.", "Macmillan Publishers" }
+                    { 5, "A global trade publishing company, owned by Holtzbrinck Publishing Group.", "Macmillan Publishers" },
+                    { 6, "The largest university press in the world, publishing in 70 languages and 190 countries.", "Oxford University Press" },
+                    { 7, "The publishing business of the University of Cambridge, one of the world's oldest universities.", "Cambridge University Press" },
+                    { 8, "A global academic publishing company, the product of a merger between Springer Science+Business Media and Nature Publishing Group.", "Springer Nature" },
+                    { 9, "The world's third-largest trade book publisher, headquartered in France.", "Hachette Livre" },
+                    { 10, "A British independent publishing house, best known for publishing the Harry Potter series.", "Bloomsbury Publishing" }
                 });
 
             migrationBuilder.InsertData(
@@ -249,7 +259,8 @@ namespace API.Migrations
                 values: new object[,]
                 {
                     { 1, "Reader" },
-                    { 2, "Librarian" }
+                    { 2, "Librarian" },
+                    { 3, "Admin" }
                 });
 
             migrationBuilder.InsertData(
@@ -264,32 +275,36 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "BookId", "AuthorId", "CategoryId", "CoverImagePath", "Description", "Edition", "ISBN", "Language", "PageCount", "Price", "PublishYear", "PublisherId", "Quantity", "Title" },
+                columns: new[] { "BookId", "AuthorId", "CategoryId", "CoverImagePath", "Description", "Edition", "Language", "PageCount", "Price", "PublishYear", "PublisherId", "Quantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, 2, 1, "~/1.jpg", "The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it, To Kill A Mockingbird became both an instant bestseller and a critical success when it was first published in 1960. It went on to win the Pulitzer Prize in 1961 and was later made into an Academy Award-winning film, also a classic.", "1st", "0446310786", "English", 336, 25000, "1960", 3, 10, "To Kill a Mockingbird" },
-                    { 2, 4, 2, "~/1.jpg", "The Great Gatsby is a 1925 novel by American writer F. Scott Fitzgerald. Set in the Jazz Age on Long Island, the novel depicts narrator Nick Carraway's interactions with mysterious millionaire Jay Gatsby and Gatsby's obsession to reunite with his former lover, Daisy Buchanan.", "1st", "978-0-7475-8939-6", "English", 180, 20000, "1925", 1, 15, "The Great Gatsby" },
-                    { 3, 6, 3, "~/1.jpg", "Animal Farm is an allegorical novella by George Orwell, first published in England on 17 August 1945. The book tells the story of a group of farm animals who rebel against their human farmer, hoping to create a society where the animals can be equal, free, and happy.", "1st", "978-0-14-103613-7", "English", 112, 15000, "1945", 4, 20, "Animal Farm" },
-                    { 4, 7, 2, "~/1.jpg", "Nineteen Eighty-Four is a dystopian novel by English author George Orwell, published in 1949. The novel is set in a totalitarian society where the government has complete control over every aspect of people's lives.", "1st", "978-0-452-28424-1", "English", 328, 18000, "1949", 2, 25, "Nineteen Eighty-Four" },
-                    { 5, 8, 1, "~/1.jpg", "The story of Holden Caulfield's struggles in New York City after being expelled from his prep school.", "1st", "0316769177", "English", 277, 120000, "1951", 5, 10, "The Catcher in the Rye" },
-                    { 6, 9, 3, "~/1.jpg", "A dystopian novel set in a future society where people are genetically engineered and conditioned to be happy and conform to social norms.", "1st", "0060850523", "English", 288, 150000, "1932", 2, 15, "Brave New World" },
-                    { 7, 1, 2, "~/1.jpg", "The story of a group of British boys stranded on an uninhabited island and their disastrous attempt to govern themselves.", "1st", "0571056865", "English", 224, 125000, "1954", 1, 20, "Lord of the Flies" },
-                    { 8, 3, 1, "~/1.jpg", "A novel of manners set in rural England, following the romantic entanglements of the Bennet sisters and their suitors.", "1st", "0141439513", "English", 480, 100000, "1813", 3, 5, "Pride and Prejudice" },
-                    { 9, 5, 3, "~/1.jpg", "A dystopian novel set in a future society where books are outlawed and 'firemen' burn any that are found.", "1st", "1451673310", "English", 249, 130000, "1953", 5, 12, "Fahrenheit 451" },
-                    { 10, 6, 2, "~/1.jpg", "A fantasy novel following the adventures of hobbit Bilbo Baggins as he accompanies a group of dwarves on a quest to reclaim their treasure from a dragon.", "1st", "054792822X", "English", 310, 110000, "1937", 4, 8, "The Hobbit" },
-                    { 11, 2, 2, "~/1.jpg", "A novel about the Lost Generation by Ernest Hemingway", "First Edition", "0743277334", "English", 259, 150000, "1926", 2, 5, "The Sun Also Rises" },
-                    { 12, 1, 1, "~/1.jpg", "A fantasy novel by J.R.R. Tolkien", "Revised Edition", "9780547928227", "English", 310, 175000, "1937", 2, 8, "The Hobbit" },
-                    { 13, 7, 3, "~/1.jpg", "A dystopian novel by Aldous Huxley", "First Edition", "0060850523", "English", 288, 135000, "1932", 4, 4, "Brave New World" },
-                    { 14, 9, 2, "~/1.jpg", "A novel by Gabriel Garcia Marquez", "First Edition", "9780060883287", "Spanish", 417, 120000, "1967", 5, 6, "One Hundred Years of Solitude" },
-                    { 15, 8, 1, "~/1.jpg", "A novel by Arundhati Roy", "First Edition", "0812979656", "English", 369, 95000, "1997", 1, 3, "The God of Small Things" },
-                    { 16, 4, 3, "~/1.jpg", "A dystopian novel by Margaret Atwood", "First Edition", "9780385490818", "English", 311, 125000, "1985", 4, 7, "The Handmaid's Tale" },
-                    { 17, 1, 2, "~/1.jpg", "A novella by Ernest Hemingway", "First Edition", "0684801221", "English", 128, 105000, "1952", 2, 2, "The Old Man and the Sea" },
-                    { 18, 3, 3, "~/1.jpg", "A hilarious and inventive science fiction series that has become a beloved classic.", "First Edition", "9780345391803", "English", 224, 150000, "1979", 3, 5, "The Hitchhiker's Guide to the Galaxy" },
-                    { 19, 4, 1, "~/1.jpg", "One of the most popular and enduring works of fantasy literature.", "50th Anniversary Edition", "9780547928210", "English", 1178, 250000, "1954", 3, 3, "The Lord of the Rings" },
-                    { 20, 5, 2, "~/1.jpg", "A classic novel of manners that explores themes of love, marriage, and social status.", "Revised Edition", "9780141395203", "English", 432, 120000, "1813", 5, 8, "Pride and Prejudice" },
-                    { 21, 7, 4, "~/1.jpg", "A thriller that follows symbologist Robert Langdon as he investigates a murder in the Louvre Museum.", "Special Illustrated Edition", "9780307277671", "English", 689, 180000, "2003", 4, 10, "The Da Vinci Code" },
-                    { 22, 5, 1, "~/1.jpg", "A novel that explores the corruption of youth and the dangers of vanity and decadence.", "Revised Edition", "9780141442464", "English", 256, 95000, "1890", 2, 6, "The Picture of Dorian Gray" },
-                    { 23, 8, 2, "~/1.jpg", "A magical realist novel that tells the story of the Buendía family over several generations.", "Revised Edition", "9780060883287", "English", 422, 160000, "1967", 1, 4, "One Hundred Years of Solitude" }
+                    { 1, 1, 3, "~/1.jpg", "A theoretical physicist's introduction to the theory of relativity", "1st edition", "English", 160, 150000, "1916", 1, 5, "Relativity: The Special and General Theory" },
+                    { 2, 2, 4, "~/1.jpg", "A romantic novel about the pride and prejudices of the British upper class in the early 19th century", "2nd edition", "English", 279, 100000, "1813", 2, 3, "Pride and Prejudice" },
+                    { 3, 3, 3, "~/1.jpg", "A popular science book about cosmology and the universe", "10th anniversary edition", "English", 212, 120000, "1988", 3, 7, "A Brief History of Time" },
+                    { 4, 4, 4, "~/1.jpg", "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry", "1st edition", "English", 223, 130000, "1997", 4, 2, "Harry Potter and the Philosopher's Stone" },
+                    { 5, 5, 1, "~/1.jpg", "A detective novel about a murder on a train, featuring famous detective Hercule Poirot", "2nd edition", "English", 256, 110000, "1934", 1, 4, "Murder on the Orient Express" },
+                    { 6, 6, 3, "~/1.jpg", "An introduction to astrophysics for laypeople", "1st edition", "English", 224, 140000, "2017", 5, 6, "Astrophysics for People in a Hurry" },
+                    { 7, 7, 2, "~/1.jpg", "An annotated edition of the classic satire by Jonathan Swift", "3rd edition", "English", 522, 105000, "1960", 2, 1, "The Annotated Gulliver's Travels" },
+                    { 8, 8, 1, "~/1.jpg", "A thriller novel by American author Dan Brown", "First edition", "English", 481, 150000, "2003", 4, 10, "The Da Vinci Code" },
+                    { 9, 9, 5, "~/1.jpg", "An autobiography by Michelle Obama", "First edition", "English", 426, 250000, "2018", 3, 8, "Becoming" },
+                    { 10, 9, 4, "~/1.jpg", "A children's fantasy novel by J.R.R. Tolkien", "Revised edition", "English", 310, 120000, "1937", 1, 12, "The Hobbit" },
+                    { 11, 3, 3, "~/1.jpg", "A popular science book by British physicist Stephen Hawking", "First edition", "English", 212, 180000, "1988", 2, 5, "A Brief History of Time" },
+                    { 12, 2, 4, "~/1.jpg", "A romantic novel by English author Jane Austen", "First edition", "English", 279, 90000, "1813", 5, 15, "Pride and Prejudice" },
+                    { 13, 3, 3, "~/1.jpg", "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow", "First edition", "English", 198, 200000, "2010", 4, 3, "The Grand Design" },
+                    { 14, 5, 1, "~/1.jpg", "A detective novel by Agatha Christie", "First edition", "English", 288, 85000, "1926", 1, 6, "The Murder of Roger Ackroyd" },
+                    { 15, 8, 4, "~/1.jpg", "A novel by John Green", "First edition", "English", 313, 170000, "2012", 2, 9, "The Fault in Our Stars" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Discriminator", "Email", "Name", "Password", "RoleId", "Username" },
+                values: new object[,]
+                {
+                    { 1, "User", "ice@gmail.com", "Ice", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", 3, "admin" },
+                    { 2, "User", "ceri@gmail.com", "Ceri", "LEReHATfTiR8IIkkW2j8gR9yj30w/xSm1kpPqsWOYnA=", 2, "librarian" },
+                    { 3, "User", "user1@gmail.com", "User1", "CgQblGLKpKMbrDVn4Lbm/ZEAeH2yq0M9lvbReMq/zpA=", 1, "user1" },
+                    { 4, "User", "user2@gmail.com", "User2", "YCXRj+SKvUUWhSjxioLiZd2Y1CGnCEqgn2GzQXA5AaM=", 1, "user2" },
+                    { 5, "User", "user3@gmail.com", "User3", "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=", 1, "user3" }
                 });
 
             migrationBuilder.CreateIndex(

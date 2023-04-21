@@ -27,7 +27,13 @@ namespace WEB.Controllers
         public async Task<IActionResult> Search(string searchTerm)
         {
             ViewBag.SearchTerm = searchTerm;
-            var books = await _apiHelper.GetList<BookSearchModel>("Books/GetListBookSearch")!;
+            var books = await _apiHelper.GetAll<Book>("Books")!;
+            foreach (var book in books)
+            {
+                book.Author = await _apiHelper.GetByID<Author>(book.AuthorId, "Authors")!;
+                book.Category = await _apiHelper.GetByID<Category>(book.CategoryId, "Categories")!;
+                book.Publisher = await _apiHelper.GetByID<Publisher>(book.PublisherId, "Publishers")!;
+            }
             var lowerSearchTerm = searchTerm.ToLower();
             var result = books.Where(b =>
                 b.Title!.ToLower().Contains(lowerSearchTerm)
