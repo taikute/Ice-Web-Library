@@ -8,11 +8,11 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : ControllerBase
+    public class RolesController : ControllerBase
     {
         readonly IGenericRepos<Role> _roleRepos;
 
-        public RoleController(IGenericRepos<Role> roleRepos)
+        public RolesController(IGenericRepos<Role> roleRepos)
         {
             _roleRepos = roleRepos;
         }

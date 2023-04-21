@@ -57,7 +57,7 @@ namespace API.Controllers
         }
         ActionResult NotFound(int id)
         {
-            return NotFound($"{_bookRepos.GetType()} with id: {id} not found!");
+            return NotFound($"Book with id: {id} not found!");
         }
     }
 }

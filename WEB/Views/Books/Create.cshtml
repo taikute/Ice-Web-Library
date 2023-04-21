@@ -6,9 +6,9 @@
 
 <div class="text-center"><h1 class="display-4">Create Book</h1></div>
 @{
-    var authors = ViewBag.Authors as List<Author>;
-    var categories = ViewBag.Categories as List<Category>;
-    var publishers = ViewBag.Publishers as List<Publisher>;
+    var authors = ViewBag.Authors as IEnumerable<Author>;
+    var categories = ViewBag.Categories as IEnumerable<Category>;
+    var publishers = ViewBag.Publishers as IEnumerable<Publisher>;
 }
 
 <form asp-action="Create">

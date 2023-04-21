@@ -8,7 +8,6 @@ namespace WEB.Controllers
 {
     public class BooksController : Controller
     {
-        readonly RestClient client = new RestClient("https://localhost:7042/api/");
         readonly ApiHelper _apiHelper;
         public BooksController(ApiHelper apiHelper)
         {
