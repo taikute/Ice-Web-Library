@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using WEB.Helpers;
+using WEB.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

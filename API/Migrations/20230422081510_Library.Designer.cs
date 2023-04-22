@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230420132521_Library")]
+    [Migration("20230422081510_Library")]
     partial class Library
     {
         /// <inheritdoc />
@@ -543,17 +543,17 @@ namespace API.Migrations
                     b.Property<int>("InstanceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReaderId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("ReturnedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("InstanceId");
 
-                    b.HasIndex("ReaderId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Loans");
                 });
@@ -718,13 +718,15 @@ namespace API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActived")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsOnline")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -747,15 +749,13 @@ namespace API.Migrations
 
                     b.ToTable("Users");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("User");
-
-                    b.UseTphMappingStrategy();
-
                     b.HasData(
                         new
                         {
                             UserId = 1,
                             Email = "ice@gmail.com",
+                            IsActived = true,
+                            IsOnline = false,
                             Name = "Ice",
                             Password = "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=",
                             RoleId = 3,
@@ -765,6 +765,8 @@ namespace API.Migrations
                         {
                             UserId = 2,
                             Email = "ceri@gmail.com",
+                            IsActived = true,
+                            IsOnline = false,
                             Name = "Ceri",
                             Password = "LEReHATfTiR8IIkkW2j8gR9yj30w/xSm1kpPqsWOYnA=",
                             RoleId = 2,
@@ -774,6 +776,8 @@ namespace API.Migrations
                         {
                             UserId = 3,
                             Email = "user1@gmail.com",
+                            IsActived = true,
+                            IsOnline = false,
                             Name = "User1",
                             Password = "CgQblGLKpKMbrDVn4Lbm/ZEAeH2yq0M9lvbReMq/zpA=",
                             RoleId = 1,
@@ -783,6 +787,8 @@ namespace API.Migrations
                         {
                             UserId = 4,
                             Email = "user2@gmail.com",
+                            IsActived = true,
+                            IsOnline = false,
                             Name = "User2",
                             Password = "YCXRj+SKvUUWhSjxioLiZd2Y1CGnCEqgn2GzQXA5AaM=",
                             RoleId = 1,
@@ -792,25 +798,13 @@ namespace API.Migrations
                         {
                             UserId = 5,
                             Email = "user3@gmail.com",
+                            IsActived = true,
+                            IsOnline = false,
                             Name = "User3",
                             Password = "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=",
                             RoleId = 1,
                             Username = "user3"
                         });
-                });
-
-            modelBuilder.Entity("API.Data.Librarian", b =>
-                {
-                    b.HasBaseType("API.Data.User");
-
-                    b.HasDiscriminator().HasValue("Librarian");
-                });
-
-            modelBuilder.Entity("API.Data.Reader", b =>
-                {
-                    b.HasBaseType("API.Data.User");
-
-                    b.HasDiscriminator().HasValue("Reader");
                 });
 
             modelBuilder.Entity("API.Data.Book", b =>
@@ -867,15 +861,15 @@ namespace API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("API.Data.Reader", "Reader")
+                    b.HasOne("API.Data.User", "User")
                         .WithMany("Loans")
-                        .HasForeignKey("ReaderId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Instance");
 
-                    b.Navigation("Reader");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("API.Data.User", b =>
@@ -924,7 +918,7 @@ namespace API.Migrations
                     b.Navigation("Instances");
                 });
 
-            modelBuilder.Entity("API.Data.Reader", b =>
+            modelBuilder.Entity("API.Data.User", b =>
                 {
                     b.Navigation("Loans");
                 });

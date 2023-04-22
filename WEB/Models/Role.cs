@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace WEB.Models
+namespace API.Data
 {
     public class Role
     {

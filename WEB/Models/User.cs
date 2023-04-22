@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,6 +8,8 @@ namespace WEB.Models
     public class User
     {
         public int UserId { get; set; }
+        public bool IsActived { get; set; } = true;
+        public bool IsOnline { get; set; } = false;
         [AllowNull]
         public string Name { get; set; }
         [AllowNull]
@@ -17,28 +17,11 @@ namespace WEB.Models
         [Required]
         public string? Username { get; set; }
         [Required]
-        public string Password
-        {
-            get => _password;
-            set => _password = HashPassword(value);
-        }
+        public string? Password { get; set; }
         [Required]
         public int RoleId { get; set; } = 1;
         public virtual Role? Role { get; set; }
+        public virtual ICollection<Loan>? Loans { get; set; }
 
-        [AllowNull]
-        string _password;
-
-        static string HashPassword(string password)
-        {
-            var hashedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
-            return Convert.ToBase64String(hashedBytes);
-        }
-        public bool VerifyPassword(string password)
-        {
-            var hashedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
-            var hashedPassword = Convert.ToBase64String(hashedBytes);
-            return hashedPassword == _password;
-        }
     }
 }

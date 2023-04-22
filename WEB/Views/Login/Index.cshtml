@@ -4,23 +4,24 @@
 }
 
 <div class="login-container">
-    <form class="login-form" asp-action="Login">       
+    <form class="login-form" asp-action="Login">
         <div class="text-center"><h1 class="display-4">Login</h1></div>
-        @*<input type="hidden" asp-for="UserId" value="0" />*@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Username" class="control-label"></label>
-            <input asp-for="Username" class="form-control" required/>
+            <input asp-for="Username" class="form-control" required />
             <span asp-validation-for="Username" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Password" class="control-label"></label>
-            <input asp-for="Password" type="password" class="form-control" id="password-input" required/>
+            <input asp-for="Password" type="password" class="form-control" id="password-input" required />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="agree-to-terms" required>
-            <label class="form-check-label" for="agree-to-terms">I agree to the terms and conditions</label>
+            <label class="form-check-label" for="agree-to-terms">
+                I agree to the <a asp-controller="Home" asp-action="Privacy">terms and conditions</a>
+            </label>
         </div>
         <div class="form-group">
             <input type="submit" value="Login" class="btn btn-primary" />

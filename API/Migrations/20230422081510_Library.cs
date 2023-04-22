@@ -129,12 +129,13 @@ namespace API.Migrations
                 {
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    IsActived = table.Column<bool>(type: "bit", nullable: false),
+                    IsOnline = table.Column<bool>(type: "bit", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,7 +182,7 @@ namespace API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InstanceId = table.Column<int>(type: "int", nullable: false),
-                    ReaderId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     BorrowedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ReturnedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -195,8 +196,8 @@ namespace API.Migrations
                         principalColumn: "InstanceID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Loans_Users_ReaderId",
-                        column: x => x.ReaderId,
+                        name: "FK_Loans_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -297,14 +298,14 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Discriminator", "Email", "Name", "Password", "RoleId", "Username" },
+                columns: new[] { "UserId", "Email", "IsActived", "IsOnline", "Name", "Password", "RoleId", "Username" },
                 values: new object[,]
                 {
-                    { 1, "User", "ice@gmail.com", "Ice", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", 3, "admin" },
-                    { 2, "User", "ceri@gmail.com", "Ceri", "LEReHATfTiR8IIkkW2j8gR9yj30w/xSm1kpPqsWOYnA=", 2, "librarian" },
-                    { 3, "User", "user1@gmail.com", "User1", "CgQblGLKpKMbrDVn4Lbm/ZEAeH2yq0M9lvbReMq/zpA=", 1, "user1" },
-                    { 4, "User", "user2@gmail.com", "User2", "YCXRj+SKvUUWhSjxioLiZd2Y1CGnCEqgn2GzQXA5AaM=", 1, "user2" },
-                    { 5, "User", "user3@gmail.com", "User3", "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=", 1, "user3" }
+                    { 1, "ice@gmail.com", true, false, "Ice", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", 3, "admin" },
+                    { 2, "ceri@gmail.com", true, false, "Ceri", "LEReHATfTiR8IIkkW2j8gR9yj30w/xSm1kpPqsWOYnA=", 2, "librarian" },
+                    { 3, "user1@gmail.com", true, false, "User1", "CgQblGLKpKMbrDVn4Lbm/ZEAeH2yq0M9lvbReMq/zpA=", 1, "user1" },
+                    { 4, "user2@gmail.com", true, false, "User2", "YCXRj+SKvUUWhSjxioLiZd2Y1CGnCEqgn2GzQXA5AaM=", 1, "user2" },
+                    { 5, "user3@gmail.com", true, false, "User3", "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=", 1, "user3" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -338,9 +339,9 @@ namespace API.Migrations
                 column: "InstanceId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Loans_ReaderId",
+                name: "IX_Loans_UserId",
                 table: "Loans",
-                column: "ReaderId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",

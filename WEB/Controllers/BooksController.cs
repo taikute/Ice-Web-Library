@@ -3,6 +3,7 @@ using RestSharp;
 using WEB.Models;
 using WEB.Helpers;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WEB.Controllers
 {
@@ -21,6 +22,7 @@ namespace WEB.Controllers
             return View(books);
         }
         [HttpGet]
+        //[Authorize(Roles = "Librarian")]
         public async Task<IActionResult> Manager()
         {
             var books = await _apiHelper.GetAll<Book>("Books")!;

@@ -11,9 +11,7 @@ namespace API.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<Reader> Readers { get; set; }
         public DbSet<Loan> Loans { get; set; }
-        public DbSet<Librarian> Librarians { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         #endregion
@@ -22,12 +20,10 @@ namespace API.Data
         public DataContext(IConfiguration configuration)
         {
             Configuration = configuration;
-            //ChangeTracker.LazyLoadingEnabled = true;
         }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseSqlServer(Configuration.GetConnectionString("IceLibraryConnectionString"));
-            //options.UseLazyLoadingProxies();
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,6 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
@@ -10,6 +8,8 @@ namespace API.Data
     public class User
     {
         public int UserId { get; set; }
+        public bool IsActived { get; set; } = true;
+        public bool IsOnline { get; set; } = false;
         [AllowNull]
         public string Name { get; set; }
         [AllowNull]
@@ -25,7 +25,7 @@ namespace API.Data
         [Required]
         public int RoleId { get; set; } = 1;
         public virtual Role? Role { get; set; }
-
+        public virtual ICollection<Loan>? Loans { get; set; }
         [AllowNull]
         string _password;
 

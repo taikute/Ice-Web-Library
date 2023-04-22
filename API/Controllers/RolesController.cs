@@ -1,8 +1,6 @@
 ﻿using API.Data;
 using API.Repos.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
@@ -11,7 +9,6 @@ namespace API.Controllers
     public class RolesController : ControllerBase
     {
         readonly IGenericRepos<Role> _roleRepos;
-
         public RolesController(IGenericRepos<Role> roleRepos)
         {
             _roleRepos = roleRepos;
@@ -19,7 +16,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Role>>> Index()
         {
-            return Ok();
+            return Ok(await _roleRepos.GetAll());
         }
     }
 }
