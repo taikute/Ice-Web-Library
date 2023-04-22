@@ -37,8 +37,8 @@ namespace WEB.Controllers
             if (!isPassWordCorrect) return BadRequest($"Password does not correct!");
 
             //HttpContext.Session.SetString("username", username!);
-            //HttpContext.Session.SetInt32("roleId", roleId);
-            var changeOnline = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"))
+            //HttpContext.Session.SetInt3//leId);
+            var changeOnline = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
             return RedirectToAction("Index", "Home");
         }
     }
