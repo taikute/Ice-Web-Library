@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RestSharp;
-using System.Reflection;
 using WEB.Helpers;
 using WEB.Models;
 
@@ -36,9 +34,16 @@ namespace WEB.Controllers
             bool isPassWordCorrect = bool.Parse(checkPassword.Content!);
             if (!isPassWordCorrect) return BadRequest($"Password does not correct!");
 
-            //HttpContext.Session.SetString("username", username!);
-            //HttpContext.Session.SetInt3//leId);
             var changeOnline = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
+            HttpContext.Session.SetString("IsLogin", "true");
+            HttpContext.Session.SetString("Username", username!);
+            HttpContext.Session.SetInt32("RoleId", userExists.RoleId);
+            return RedirectToAction("Index", "Home");
+        }
+        
+        public IActionResult Logout()
+        {
+            HttpContext.Session.SetString("IsLogin", "false");
             return RedirectToAction("Index", "Home");
         }
     }

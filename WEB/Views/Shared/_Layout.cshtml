@@ -24,10 +24,29 @@
                         <a class="nav-link text-light" asp-controller="Publishers" asp-action="Index">Publishers</a>
                         <a class="nav-link text-light" asp-controller="Books" asp-action="Manager">Manager</a>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <a class="nav-link text-light" asp-controller="Login" asp-action="Index">Login</a>
-                        <a class="nav-link text-light" asp-controller="Register" asp-action="Index">Register</a>
-                    </ul>
+                    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                    @{
+                        var HttpContext = HttpContextAccessor.HttpContext;
+                        bool IsLogin = bool.Parse(HttpContext!.Session.GetString("IsLogin") ?? "false");
+                        int roleId = HttpContext!.Session.GetInt32("RoleId") ?? 0;
+                        @if (IsLogin)
+                        {
+                            string username = HttpContext.Session.GetString("Username")!;
+                            <ul class="navbar-nav ms-auto">
+                                <p class="nav-link text-light">RoleId: @roleId</p>
+                                <a class="nav-link text-light" asp-controller="" asp-action="">Hello @username!</a>
+                                <a class="nav-link text-light" asp-controller="Login" asp-action="Logout">Logout</a>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="navbar-nav ms-auto">
+                                <a class="nav-link text-light" asp-controller="Login" asp-action="Index">Login</a>
+                                <a class="nav-link text-light" asp-controller="Register" asp-action="Index">Register</a>
+                            </ul>
+                        }
+                    }
+
                 </div>
             </div>
         </nav>

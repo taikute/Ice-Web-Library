@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WEB.Helpers;
 using WEB.Models;
@@ -10,10 +11,12 @@ namespace WEB.Controllers
     {
         readonly ILogger<HomeController> _logger;
         readonly ApiHelper _apiHelper;
+        
         public HomeController(ILogger<HomeController> logger, ApiHelper apiHelper)
         {
             _logger = logger;
             _apiHelper = apiHelper;
+
         }
         public IActionResult Index()
         {

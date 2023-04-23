@@ -10,7 +10,7 @@ namespace API.Controllers
     public class UsersController : ControllerBase
     {
         readonly IGenericRepos<User> _userRepos;
-        public UsersController(IGenericRepos<User> userRepos, DataContext context)
+        public UsersController(IGenericRepos<User> userRepos)
         {
             _userRepos = userRepos;
         }

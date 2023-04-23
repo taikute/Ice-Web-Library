@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RestSharp;
 using WEB.Models;
 using WEB.Helpers;
-using System.Net;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WEB.Controllers
 {
@@ -22,7 +19,7 @@ namespace WEB.Controllers
             return View(books);
         }
         [HttpGet]
-        //[Authorize(Roles = "Librarian")]
+        [MyAuthorization(2)]
         public async Task<IActionResult> Manager()
         {
             var books = await _apiHelper.GetAll<Book>("Books")!;
@@ -36,6 +33,7 @@ namespace WEB.Controllers
             return View(books);
         }
         [HttpGet]
+        [MyAuthorization(2)]
         public async Task<IActionResult> Create()
         {
             ViewBag.Authors = await _apiHelper.GetAll<Author>("Authors")!;
@@ -44,6 +42,7 @@ namespace WEB.Controllers
             return View();
         }
         [HttpPost]
+        [MyAuthorization(2)]
         public async Task<IActionResult> Create(Book book)
         {
             book.BookId = 0;
@@ -67,6 +66,7 @@ namespace WEB.Controllers
         }
 
         [HttpGet]
+        [MyAuthorization(2)]
         public async Task<IActionResult> Edit(int id)
         {
             var book = await _apiHelper.GetByID<Book>(id, "Books")!;
@@ -76,6 +76,7 @@ namespace WEB.Controllers
             return View(book);
         }
         [HttpPost]
+        [MyAuthorization(2)]
         public async Task<IActionResult> Edit(Book book)
         {
             if (ModelState.IsValid)
@@ -86,6 +87,7 @@ namespace WEB.Controllers
             return View(book);
         }
         [HttpGet]
+        [MyAuthorization(2)]
         public async Task<IActionResult> Delete(int id)
         {
             var book = await _apiHelper.GetByID<Book>(id, "Books")!;
@@ -93,6 +95,7 @@ namespace WEB.Controllers
         }
 
         [HttpPost]
+        [MyAuthorization(2)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _apiHelper.Delete<Book>(id, "Books");

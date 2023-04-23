@@ -1,6 +1,7 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json;
 
-namespace API.Data
+namespace WEB.Models
 {
     public class Role
     {
