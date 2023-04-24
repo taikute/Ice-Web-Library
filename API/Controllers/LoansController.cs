@@ -32,7 +32,7 @@ namespace API.Controllers
             return Ok(loan);
         }
         [HttpPost]
-        public async Task<IActionResult> PostBook(Loan loan)
+        public async Task<IActionResult> PostLoan(Loan loan)
         {
             await _loanRepos.Create(loan);
             //var instance = await _instanceRepos.GetById(loan.InstanceId)!;

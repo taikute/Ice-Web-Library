@@ -8,7 +8,7 @@
 
 <h2>Are you sure you want to delete the book?</h2>
 
-<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.BookId">
+<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
     <button type="submit" class="btn btn-primary">Delete</button>
     <a asp-action="Manager" class="btn btn-primary">Cancel</a>
 </form>

@@ -17,14 +17,14 @@ namespace API.Migrations
                 name: "Authors",
                 columns: table => new
                 {
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Bio = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Authors", x => x.AuthorId);
+                    table.PrimaryKey("PK_Authors", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -34,7 +34,7 @@ namespace API.Migrations
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,69 +45,70 @@ namespace API.Migrations
                 name: "Publishers",
                 columns: table => new
                 {
-                    PublisherId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Publishers", x => x.PublisherId);
+                    table.PrimaryKey("PK_Publishers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Roles", x => x.RoleId);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Statuses",
                 columns: table => new
                 {
-                    StatusId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Statuses", x => x.StatusId);
+                    table.PrimaryKey("PK_Statuses", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
-                    BookId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AuthorId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     PublisherId = table.Column<int>(type: "int", nullable: false),
+                    ISBN = table.Column<string>(type: "nvarchar(12)", maxLength: 12, nullable: false),
+                    PageCount = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     PublishYear = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
-                    Price = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
                     CoverImagePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Language = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    PageCount = table.Column<int>(type: "int", nullable: false),
+                    Language = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Edition = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.BookId);
+                    table.PrimaryKey("PK_Books", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Books_Authors_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Authors",
-                        principalColumn: "AuthorId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Books_Categories_CategoryId",
@@ -119,7 +120,7 @@ namespace API.Migrations
                         name: "FK_Books_Publishers_PublisherId",
                         column: x => x.PublisherId,
                         principalTable: "Publishers",
-                        principalColumn: "PublisherId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -127,24 +128,24 @@ namespace API.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     IsActived = table.Column<bool>(type: "bit", nullable: false),
                     IsOnline = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoleId = table.Column<int>(type: "int", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Users_Roles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "Roles",
-                        principalColumn: "RoleId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -152,26 +153,25 @@ namespace API.Migrations
                 name: "Instances",
                 columns: table => new
                 {
-                    InstanceID = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BookId = table.Column<int>(type: "int", nullable: false),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
-                    ISBN = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    StatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Instances", x => x.InstanceID);
+                    table.PrimaryKey("PK_Instances", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Instances_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "BookId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Instances_Statuses_StatusId",
                         column: x => x.StatusId,
                         principalTable: "Statuses",
-                        principalColumn: "StatusId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -184,7 +184,7 @@ namespace API.Migrations
                     InstanceId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     BorrowedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReturnedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ReturnedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -193,19 +193,19 @@ namespace API.Migrations
                         name: "FK_Loans_Instances_InstanceId",
                         column: x => x.InstanceId,
                         principalTable: "Instances",
-                        principalColumn: "InstanceID",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Loans_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "Authors",
-                columns: new[] { "AuthorId", "Bio", "Name" },
+                columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
                     { 1, "German physicist and mathematician who developed the theory of relativity", "Albert Einstein" },
@@ -239,7 +239,7 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Publishers",
-                columns: new[] { "PublisherId", "Description", "Name" },
+                columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
                     { 1, "One of the largest and most prestigious English-language publishers.", "Penguin Books" },
@@ -256,7 +256,7 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Roles",
-                columns: new[] { "RoleId", "Name" },
+                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
                     { 1, "Reader" },
@@ -266,7 +266,7 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Statuses",
-                columns: new[] { "StatusId", "Description" },
+                columns: new[] { "Id", "Name" },
                 values: new object[,]
                 {
                     { 1, "Available" },
@@ -276,29 +276,29 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Books",
-                columns: new[] { "BookId", "AuthorId", "CategoryId", "CoverImagePath", "Description", "Edition", "Language", "PageCount", "Price", "PublishYear", "PublisherId", "Quantity", "Title" },
+                columns: new[] { "Id", "AuthorId", "CategoryId", "CoverImagePath", "Description", "Edition", "ISBN", "Language", "PageCount", "Price", "PublishYear", "PublisherId", "Quantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, 1, 3, "~/1.jpg", "A theoretical physicist's introduction to the theory of relativity", "1st edition", "English", 160, 150000, "1916", 1, 5, "Relativity: The Special and General Theory" },
-                    { 2, 2, 4, "~/1.jpg", "A romantic novel about the pride and prejudices of the British upper class in the early 19th century", "2nd edition", "English", 279, 100000, "1813", 2, 3, "Pride and Prejudice" },
-                    { 3, 3, 3, "~/1.jpg", "A popular science book about cosmology and the universe", "10th anniversary edition", "English", 212, 120000, "1988", 3, 7, "A Brief History of Time" },
-                    { 4, 4, 4, "~/1.jpg", "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry", "1st edition", "English", 223, 130000, "1997", 4, 2, "Harry Potter and the Philosopher's Stone" },
-                    { 5, 5, 1, "~/1.jpg", "A detective novel about a murder on a train, featuring famous detective Hercule Poirot", "2nd edition", "English", 256, 110000, "1934", 1, 4, "Murder on the Orient Express" },
-                    { 6, 6, 3, "~/1.jpg", "An introduction to astrophysics for laypeople", "1st edition", "English", 224, 140000, "2017", 5, 6, "Astrophysics for People in a Hurry" },
-                    { 7, 7, 2, "~/1.jpg", "An annotated edition of the classic satire by Jonathan Swift", "3rd edition", "English", 522, 105000, "1960", 2, 1, "The Annotated Gulliver's Travels" },
-                    { 8, 8, 1, "~/1.jpg", "A thriller novel by American author Dan Brown", "First edition", "English", 481, 150000, "2003", 4, 10, "The Da Vinci Code" },
-                    { 9, 9, 5, "~/1.jpg", "An autobiography by Michelle Obama", "First edition", "English", 426, 250000, "2018", 3, 8, "Becoming" },
-                    { 10, 9, 4, "~/1.jpg", "A children's fantasy novel by J.R.R. Tolkien", "Revised edition", "English", 310, 120000, "1937", 1, 12, "The Hobbit" },
-                    { 11, 3, 3, "~/1.jpg", "A popular science book by British physicist Stephen Hawking", "First edition", "English", 212, 180000, "1988", 2, 5, "A Brief History of Time" },
-                    { 12, 2, 4, "~/1.jpg", "A romantic novel by English author Jane Austen", "First edition", "English", 279, 90000, "1813", 5, 15, "Pride and Prejudice" },
-                    { 13, 3, 3, "~/1.jpg", "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow", "First edition", "English", 198, 200000, "2010", 4, 3, "The Grand Design" },
-                    { 14, 5, 1, "~/1.jpg", "A detective novel by Agatha Christie", "First edition", "English", 288, 85000, "1926", 1, 6, "The Murder of Roger Ackroyd" },
-                    { 15, 8, 4, "~/1.jpg", "A novel by John Green", "First edition", "English", 313, 170000, "2012", 2, 9, "The Fault in Our Stars" }
+                    { 1, 1, 3, "~/1.jpg", "A theoretical physicist's introduction to the theory of relativity", "1st edition", "812147409117", "English", 160, 150000, "1916", 1, 5, "Relativity: The Special and General Theory" },
+                    { 2, 2, 4, "~/1.jpg", "A romantic novel about the pride and prejudices of the British upper class in the early 19th century", "2nd edition", "031578731037", "English", 279, 100000, "1813", 2, 3, "Pride and Prejudice" },
+                    { 3, 3, 3, "~/1.jpg", "A popular science book about cosmology and the universe", "10th anniversary edition", "651061038029", "English", 212, 120000, "1988", 3, 7, "A Brief History of Time" },
+                    { 4, 4, 4, "~/1.jpg", "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry", "1st edition", "331976562909", "English", 223, 130000, "1997", 4, 2, "Harry Potter and the Philosopher's Stone" },
+                    { 5, 5, 1, "~/1.jpg", "A detective novel about a murder on a train, featuring famous detective Hercule Poirot", "2nd edition", "151983459085", "English", 256, 110000, "1934", 1, 4, "Murder on the Orient Express" },
+                    { 6, 6, 3, "~/1.jpg", "An introduction to astrophysics for laypeople", "1st edition", "879969938708", "English", 224, 140000, "2017", 5, 6, "Astrophysics for People in a Hurry" },
+                    { 7, 7, 2, "~/1.jpg", "An annotated edition of the classic satire by Jonathan Swift", "3rd edition", "719751729826", "English", 522, 105000, "1960", 2, 1, "The Annotated Gulliver's Travels" },
+                    { 8, 8, 1, "~/1.jpg", "A thriller novel by American author Dan Brown", "First edition", "915817301724", "English", 481, 150000, "2003", 4, 10, "The Da Vinci Code" },
+                    { 9, 9, 5, "~/1.jpg", "An autobiography by Michelle Obama", "First edition", "814172283437", "English", 426, 250000, "2018", 3, 8, "Becoming" },
+                    { 10, 9, 4, "~/1.jpg", "A children's fantasy novel by J.R.R. Tolkien", "Revised edition", "221239864699", "English", 310, 120000, "1937", 1, 12, "The Hobbit" },
+                    { 11, 3, 3, "~/1.jpg", "A popular science book by British physicist Stephen Hawking", "First edition", "314467000238", "English", 212, 180000, "1988", 2, 5, "A Brief History of Time" },
+                    { 12, 2, 4, "~/1.jpg", "A romantic novel by English author Jane Austen", "First edition", "299561579059", "English", 279, 90000, "1813", 5, 15, "Pride and Prejudice" },
+                    { 13, 3, 3, "~/1.jpg", "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow", "First edition", "608194139567", "English", 198, 200000, "2010", 4, 3, "The Grand Design" },
+                    { 14, 5, 1, "~/1.jpg", "A detective novel by Agatha Christie", "First edition", "899539460748", "English", 288, 85000, "1926", 1, 6, "The Murder of Roger Ackroyd" },
+                    { 15, 8, 4, "~/1.jpg", "A novel by John Green", "First edition", "297136524734", "English", 313, 170000, "2012", 2, 9, "The Fault in Our Stars" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Email", "IsActived", "IsOnline", "Name", "Password", "RoleId", "Username" },
+                columns: new[] { "Id", "Email", "IsActived", "IsOnline", "Name", "Password", "RoleId", "Username" },
                 values: new object[,]
                 {
                     { 1, "ice@gmail.com", true, false, "Ice", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", 3, "admin" },
@@ -310,159 +310,159 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Instances",
-                columns: new[] { "InstanceID", "BookId", "ISBN", "StatusId" },
+                columns: new[] { "Id", "BookId", "StatusId" },
                 values: new object[,]
                 {
-                    { 1, 1, "ISBN", 1 },
-                    { 2, 2, "ISBN", 1 },
-                    { 3, 3, "ISBN", 1 },
-                    { 4, 4, "ISBN", 1 },
-                    { 5, 5, "ISBN", 1 },
-                    { 6, 6, "ISBN", 1 },
-                    { 7, 7, "ISBN", 1 },
-                    { 8, 8, "ISBN", 1 },
-                    { 9, 9, "ISBN", 1 },
-                    { 10, 10, "ISBN", 1 },
-                    { 11, 11, "ISBN", 1 },
-                    { 12, 12, "ISBN", 1 },
-                    { 13, 13, "ISBN", 1 },
-                    { 14, 14, "ISBN", 1 },
-                    { 15, 15, "ISBN", 1 },
-                    { 16, 1, "ISBN", 1 },
-                    { 17, 2, "ISBN", 1 },
-                    { 18, 3, "ISBN", 1 },
-                    { 19, 4, "ISBN", 1 },
-                    { 20, 5, "ISBN", 1 },
-                    { 21, 6, "ISBN", 1 },
-                    { 22, 7, "ISBN", 1 },
-                    { 23, 8, "ISBN", 1 },
-                    { 24, 9, "ISBN", 1 },
-                    { 25, 10, "ISBN", 1 },
-                    { 26, 11, "ISBN", 1 },
-                    { 27, 12, "ISBN", 1 },
-                    { 28, 13, "ISBN", 1 },
-                    { 29, 14, "ISBN", 1 },
-                    { 30, 15, "ISBN", 1 },
-                    { 31, 1, "ISBN", 1 },
-                    { 32, 2, "ISBN", 1 },
-                    { 33, 3, "ISBN", 1 },
-                    { 34, 4, "ISBN", 1 },
-                    { 35, 5, "ISBN", 1 },
-                    { 36, 6, "ISBN", 1 },
-                    { 37, 7, "ISBN", 1 },
-                    { 38, 8, "ISBN", 1 },
-                    { 39, 9, "ISBN", 1 },
-                    { 40, 10, "ISBN", 1 },
-                    { 41, 11, "ISBN", 1 },
-                    { 42, 12, "ISBN", 1 },
-                    { 43, 13, "ISBN", 1 },
-                    { 44, 14, "ISBN", 1 },
-                    { 45, 15, "ISBN", 1 },
-                    { 46, 1, "ISBN", 1 },
-                    { 47, 2, "ISBN", 1 },
-                    { 48, 3, "ISBN", 1 },
-                    { 49, 4, "ISBN", 1 },
-                    { 50, 5, "ISBN", 1 },
-                    { 51, 6, "ISBN", 1 },
-                    { 52, 7, "ISBN", 1 },
-                    { 53, 8, "ISBN", 1 },
-                    { 54, 9, "ISBN", 1 },
-                    { 55, 10, "ISBN", 1 },
-                    { 56, 11, "ISBN", 1 },
-                    { 57, 12, "ISBN", 1 },
-                    { 58, 13, "ISBN", 1 },
-                    { 59, 14, "ISBN", 1 },
-                    { 60, 15, "ISBN", 1 },
-                    { 61, 1, "ISBN", 1 },
-                    { 62, 2, "ISBN", 1 },
-                    { 63, 3, "ISBN", 1 },
-                    { 64, 4, "ISBN", 1 },
-                    { 65, 5, "ISBN", 1 },
-                    { 66, 6, "ISBN", 1 },
-                    { 67, 7, "ISBN", 1 },
-                    { 68, 8, "ISBN", 1 },
-                    { 69, 9, "ISBN", 1 },
-                    { 70, 10, "ISBN", 1 },
-                    { 71, 11, "ISBN", 1 },
-                    { 72, 12, "ISBN", 1 },
-                    { 73, 13, "ISBN", 1 },
-                    { 74, 14, "ISBN", 1 },
-                    { 75, 15, "ISBN", 1 },
-                    { 76, 1, "ISBN", 1 },
-                    { 77, 2, "ISBN", 1 },
-                    { 78, 3, "ISBN", 1 },
-                    { 79, 4, "ISBN", 1 },
-                    { 80, 5, "ISBN", 1 },
-                    { 81, 6, "ISBN", 1 },
-                    { 82, 7, "ISBN", 1 },
-                    { 83, 8, "ISBN", 1 },
-                    { 84, 9, "ISBN", 1 },
-                    { 85, 10, "ISBN", 1 },
-                    { 86, 11, "ISBN", 1 },
-                    { 87, 12, "ISBN", 1 },
-                    { 88, 13, "ISBN", 1 },
-                    { 89, 14, "ISBN", 1 },
-                    { 90, 15, "ISBN", 1 },
-                    { 91, 1, "ISBN", 1 },
-                    { 92, 2, "ISBN", 1 },
-                    { 93, 3, "ISBN", 1 },
-                    { 94, 4, "ISBN", 1 },
-                    { 95, 5, "ISBN", 1 },
-                    { 96, 6, "ISBN", 1 },
-                    { 97, 7, "ISBN", 1 },
-                    { 98, 8, "ISBN", 1 },
-                    { 99, 9, "ISBN", 1 },
-                    { 100, 10, "ISBN", 1 },
-                    { 101, 11, "ISBN", 1 },
-                    { 102, 12, "ISBN", 1 },
-                    { 103, 13, "ISBN", 1 },
-                    { 104, 14, "ISBN", 1 },
-                    { 105, 15, "ISBN", 1 },
-                    { 106, 1, "ISBN", 1 },
-                    { 107, 2, "ISBN", 1 },
-                    { 108, 3, "ISBN", 1 },
-                    { 109, 4, "ISBN", 1 },
-                    { 110, 5, "ISBN", 1 },
-                    { 111, 6, "ISBN", 1 },
-                    { 112, 7, "ISBN", 1 },
-                    { 113, 8, "ISBN", 1 },
-                    { 114, 9, "ISBN", 1 },
-                    { 115, 10, "ISBN", 1 },
-                    { 116, 11, "ISBN", 1 },
-                    { 117, 12, "ISBN", 1 },
-                    { 118, 13, "ISBN", 1 },
-                    { 119, 14, "ISBN", 1 },
-                    { 120, 15, "ISBN", 1 },
-                    { 121, 1, "ISBN", 1 },
-                    { 122, 2, "ISBN", 1 },
-                    { 123, 3, "ISBN", 1 },
-                    { 124, 4, "ISBN", 1 },
-                    { 125, 5, "ISBN", 1 },
-                    { 126, 6, "ISBN", 1 },
-                    { 127, 7, "ISBN", 1 },
-                    { 128, 8, "ISBN", 1 },
-                    { 129, 9, "ISBN", 1 },
-                    { 130, 10, "ISBN", 1 },
-                    { 131, 11, "ISBN", 1 },
-                    { 132, 12, "ISBN", 1 },
-                    { 133, 13, "ISBN", 1 },
-                    { 134, 14, "ISBN", 1 },
-                    { 135, 15, "ISBN", 1 },
-                    { 136, 1, "ISBN", 1 },
-                    { 137, 2, "ISBN", 1 },
-                    { 138, 3, "ISBN", 1 },
-                    { 139, 4, "ISBN", 1 },
-                    { 140, 5, "ISBN", 1 },
-                    { 141, 6, "ISBN", 1 },
-                    { 142, 7, "ISBN", 1 },
-                    { 143, 8, "ISBN", 1 },
-                    { 144, 9, "ISBN", 1 },
-                    { 145, 10, "ISBN", 1 },
-                    { 146, 11, "ISBN", 1 },
-                    { 147, 12, "ISBN", 1 },
-                    { 148, 13, "ISBN", 1 },
-                    { 149, 14, "ISBN", 1 },
-                    { 150, 15, "ISBN", 1 }
+                    { 1, 1, 1 },
+                    { 2, 2, 1 },
+                    { 3, 3, 1 },
+                    { 4, 4, 1 },
+                    { 5, 5, 1 },
+                    { 6, 6, 1 },
+                    { 7, 7, 1 },
+                    { 8, 8, 1 },
+                    { 9, 9, 1 },
+                    { 10, 10, 1 },
+                    { 11, 11, 1 },
+                    { 12, 12, 1 },
+                    { 13, 13, 1 },
+                    { 14, 14, 1 },
+                    { 15, 15, 1 },
+                    { 16, 1, 1 },
+                    { 17, 2, 1 },
+                    { 18, 3, 1 },
+                    { 19, 4, 1 },
+                    { 20, 5, 1 },
+                    { 21, 6, 1 },
+                    { 22, 7, 1 },
+                    { 23, 8, 1 },
+                    { 24, 9, 1 },
+                    { 25, 10, 1 },
+                    { 26, 11, 1 },
+                    { 27, 12, 1 },
+                    { 28, 13, 1 },
+                    { 29, 14, 1 },
+                    { 30, 15, 1 },
+                    { 31, 1, 1 },
+                    { 32, 2, 1 },
+                    { 33, 3, 1 },
+                    { 34, 4, 1 },
+                    { 35, 5, 1 },
+                    { 36, 6, 1 },
+                    { 37, 7, 1 },
+                    { 38, 8, 1 },
+                    { 39, 9, 1 },
+                    { 40, 10, 1 },
+                    { 41, 11, 1 },
+                    { 42, 12, 1 },
+                    { 43, 13, 1 },
+                    { 44, 14, 1 },
+                    { 45, 15, 1 },
+                    { 46, 1, 1 },
+                    { 47, 2, 1 },
+                    { 48, 3, 1 },
+                    { 49, 4, 1 },
+                    { 50, 5, 1 },
+                    { 51, 6, 1 },
+                    { 52, 7, 1 },
+                    { 53, 8, 1 },
+                    { 54, 9, 1 },
+                    { 55, 10, 1 },
+                    { 56, 11, 1 },
+                    { 57, 12, 1 },
+                    { 58, 13, 1 },
+                    { 59, 14, 1 },
+                    { 60, 15, 1 },
+                    { 61, 1, 1 },
+                    { 62, 2, 1 },
+                    { 63, 3, 1 },
+                    { 64, 4, 1 },
+                    { 65, 5, 1 },
+                    { 66, 6, 1 },
+                    { 67, 7, 1 },
+                    { 68, 8, 1 },
+                    { 69, 9, 1 },
+                    { 70, 10, 1 },
+                    { 71, 11, 1 },
+                    { 72, 12, 1 },
+                    { 73, 13, 1 },
+                    { 74, 14, 1 },
+                    { 75, 15, 1 },
+                    { 76, 1, 1 },
+                    { 77, 2, 1 },
+                    { 78, 3, 1 },
+                    { 79, 4, 1 },
+                    { 80, 5, 1 },
+                    { 81, 6, 1 },
+                    { 82, 7, 1 },
+                    { 83, 8, 1 },
+                    { 84, 9, 1 },
+                    { 85, 10, 1 },
+                    { 86, 11, 1 },
+                    { 87, 12, 1 },
+                    { 88, 13, 1 },
+                    { 89, 14, 1 },
+                    { 90, 15, 1 },
+                    { 91, 1, 1 },
+                    { 92, 2, 1 },
+                    { 93, 3, 1 },
+                    { 94, 4, 1 },
+                    { 95, 5, 1 },
+                    { 96, 6, 1 },
+                    { 97, 7, 1 },
+                    { 98, 8, 1 },
+                    { 99, 9, 1 },
+                    { 100, 10, 1 },
+                    { 101, 11, 1 },
+                    { 102, 12, 1 },
+                    { 103, 13, 1 },
+                    { 104, 14, 1 },
+                    { 105, 15, 1 },
+                    { 106, 1, 1 },
+                    { 107, 2, 1 },
+                    { 108, 3, 1 },
+                    { 109, 4, 1 },
+                    { 110, 5, 1 },
+                    { 111, 6, 1 },
+                    { 112, 7, 1 },
+                    { 113, 8, 1 },
+                    { 114, 9, 1 },
+                    { 115, 10, 1 },
+                    { 116, 11, 1 },
+                    { 117, 12, 1 },
+                    { 118, 13, 1 },
+                    { 119, 14, 1 },
+                    { 120, 15, 1 },
+                    { 121, 1, 1 },
+                    { 122, 2, 1 },
+                    { 123, 3, 1 },
+                    { 124, 4, 1 },
+                    { 125, 5, 1 },
+                    { 126, 6, 1 },
+                    { 127, 7, 1 },
+                    { 128, 8, 1 },
+                    { 129, 9, 1 },
+                    { 130, 10, 1 },
+                    { 131, 11, 1 },
+                    { 132, 12, 1 },
+                    { 133, 13, 1 },
+                    { 134, 14, 1 },
+                    { 135, 15, 1 },
+                    { 136, 1, 1 },
+                    { 137, 2, 1 },
+                    { 138, 3, 1 },
+                    { 139, 4, 1 },
+                    { 140, 5, 1 },
+                    { 141, 6, 1 },
+                    { 142, 7, 1 },
+                    { 143, 8, 1 },
+                    { 144, 9, 1 },
+                    { 145, 10, 1 },
+                    { 146, 11, 1 },
+                    { 147, 12, 1 },
+                    { 148, 13, 1 },
+                    { 149, 14, 1 },
+                    { 150, 15, 1 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -474,6 +474,12 @@ namespace API.Migrations
                 name: "IX_Books_CategoryId",
                 table: "Books",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Books_ISBN",
+                table: "Books",
+                column: "ISBN",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_PublisherId",
@@ -504,6 +510,12 @@ namespace API.Migrations
                 name: "IX_Users_RoleId",
                 table: "Users",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />

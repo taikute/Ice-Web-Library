@@ -42,7 +42,7 @@ namespace WEB.Controllers
             var loan = new Loan()
             {
                 Id = 0,
-                InstanceId = instance.InstanceID,
+                InstanceId = instance.Id,
                 UserId = userId
             };
             await _apiHelper.Post(loan, "Loans");

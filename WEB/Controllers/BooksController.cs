@@ -46,7 +46,7 @@ namespace WEB.Controllers
         [HttpPost, Route("Create"), MyAuthorization(2)]
         public async Task<IActionResult> Create(Book book)
         {
-            book.BookId = 0;
+            book.Id = 0;
             if (ModelState.IsValid)
             {
                 await _apiHelper.Post(book, "Books");
@@ -83,7 +83,7 @@ namespace WEB.Controllers
             if (ModelState.IsValid)
             {
                 await _apiHelper.Put(book, "Books");
-                return RedirectToAction("Detail", new { id = book.BookId });
+                return RedirectToAction("Detail", new { id = book.Id });
             }
             return View(book);
         }

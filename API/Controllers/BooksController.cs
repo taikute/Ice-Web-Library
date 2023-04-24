@@ -30,7 +30,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBook(Book book)
         {
-            book.BookId = 0;
+            book.Id = 0;
             book.Author = null;
             book.Category = null;
             book.Publisher = null;

@@ -9,13 +9,72 @@
     <input class="form-control me-2 rounded-pill" type="text" name="searchTerm" placeholder="Search by Author, Title, ..." required>
     <button class="btn btn-primary" type="submit">Search</button>
 </form>
-<div id="alert" class="alert alert-success position-fixed bottom-0 end-0" style="display:none;">
-    Thông báo của bạn ở đây.
+<div id="alert-container">
+    <div id="alert" class="alert alert-success position-fixed bottom-0 end-0" style="display:none;">
+        Thông báo của bạn ở đây.
+    </div>
 </div>
+
+
+<style>
+    .alert {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        margin: 10px;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .alert-show {
+        opacity: 1;
+    }
+</style>
 
 <script>
     $(document).ready(function () {
-        // Hiển thị hộp thông báo trong 5 giây.
-        $("#alert").fadeIn().delay(5000).fadeOut();
+        var alertList = [];
+
+        function showAlert(message, type, duration) {
+            // Thêm thông báo mới vào danh sách và xác định chỉ mục của nó.
+            var alertIndex = alertList.push({
+                message: message,
+                type: type,
+                duration: duration
+            }) - 1;
+
+            // Tạo đối tượng thông báo và thêm vào container.
+            var alertEl = $('<div class="alert alert-' + type + '">' + message + '</div>').appendTo('#alert-container');
+
+            // Đặt chỉ mục của đối tượng thông báo vào thuộc tính data.
+            alertEl.data('alertIndex', alertIndex);
+
+            // Hiển thị đối tượng thông báo.
+            setTimeout(function () {
+                alertEl.addClass('alert-show');
+            }, 100);
+
+            // Xóa đối tượng thông báo và thay thế vị trí của thông báo cũ bằng vị trí thông báo mới.
+            setTimeout(function () {
+                alertEl.removeClass('alert-show');
+
+                // Xóa đối tượng thông báo khỏi container và danh sách.
+                setTimeout(function () {
+                    alertEl.remove();
+                    alertList.splice(alertIndex, 1);
+
+                    // Cập nhật chỉ mục của các đối tượng thông báo còn lại.
+                    $('#alert-container .alert').each(function (index, el) {
+                        $(el).data('alertIndex', index);
+                    });
+                }, 500);
+            }, duration);
+        }
+
+        // Sử dụng hàm showAlert để hiển thị thông báo.
+        showAlert('Thông báo số 1', 'success', 5000);
+        showAlert('Thông báo số 2', 'warning', 5000);
+        showAlert('Thông báo số 3', 'danger', 5000);
     });
 </script>

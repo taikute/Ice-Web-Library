@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230424070806_Library")]
+    [Migration("20230424204445_Library")]
     partial class Library
     {
         /// <inheritdoc />
@@ -27,13 +27,13 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Author", b =>
                 {
-                    b.Property<int>("AuthorId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AuthorId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Bio")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
@@ -43,80 +43,80 @@ namespace API.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("AuthorId");
+                    b.HasKey("Id");
 
                     b.ToTable("Authors");
 
                     b.HasData(
                         new
                         {
-                            AuthorId = 1,
-                            Bio = "German physicist and mathematician who developed the theory of relativity",
+                            Id = 1,
+                            Description = "German physicist and mathematician who developed the theory of relativity",
                             Name = "Albert Einstein"
                         },
                         new
                         {
-                            AuthorId = 2,
-                            Bio = "English novelist known for her works of romantic fiction",
+                            Id = 2,
+                            Description = "English novelist known for her works of romantic fiction",
                             Name = "Jane Austen"
                         },
                         new
                         {
-                            AuthorId = 3,
-                            Bio = "English theoretical physicist and cosmologist",
+                            Id = 3,
+                            Description = "English theoretical physicist and cosmologist",
                             Name = "Stephen Hawking"
                         },
                         new
                         {
-                            AuthorId = 4,
-                            Bio = "British author, philanthropist, film producer, television producer and screenwriter",
+                            Id = 4,
+                            Description = "British author, philanthropist, film producer, television producer and screenwriter",
                             Name = "J.K. Rowling"
                         },
                         new
                         {
-                            AuthorId = 5,
-                            Bio = "English writer known for her detective novels",
+                            Id = 5,
+                            Description = "English writer known for her detective novels",
                             Name = "Agatha Christie"
                         },
                         new
                         {
-                            AuthorId = 6,
-                            Bio = "American astrophysicist, planetary scientist, author, and science communicator",
+                            Id = 6,
+                            Description = "American astrophysicist, planetary scientist, author, and science communicator",
                             Name = "Neil deGrasse Tyson"
                         },
                         new
                         {
-                            AuthorId = 7,
-                            Bio = "American writer and professor of biochemistry",
+                            Id = 7,
+                            Description = "American writer and professor of biochemistry",
                             Name = "Isaac Asimov"
                         },
                         new
                         {
-                            AuthorId = 8,
-                            Bio = "American author known for his thriller novels",
+                            Id = 8,
+                            Description = "American author known for his thriller novels",
                             Name = "Dan Brown"
                         },
                         new
                         {
-                            AuthorId = 9,
-                            Bio = "American lawyer and author who served as the First Lady of the United States from 2009 to 2017",
+                            Id = 9,
+                            Description = "American lawyer and author who served as the First Lady of the United States from 2009 to 2017",
                             Name = "Michelle Obama"
                         },
                         new
                         {
-                            AuthorId = 10,
-                            Bio = "English novelist, essayist, journalist and critic, best known for his dystopian novel 1984 and the allegorical novella Animal Farm",
+                            Id = 10,
+                            Description = "English novelist, essayist, journalist and critic, best known for his dystopian novel 1984 and the allegorical novella Animal Farm",
                             Name = "George Orwell"
                         });
                 });
 
             modelBuilder.Entity("API.Data.Book", b =>
                 {
-                    b.Property<int>("BookId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("AuthorId")
                         .HasColumnType("int");
@@ -138,7 +138,13 @@ namespace API.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<string>("ISBN")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nvarchar(12)");
+
                     b.Property<string>("Language")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -164,11 +170,14 @@ namespace API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("BookId");
+                    b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ISBN")
+                        .IsUnique();
 
                     b.HasIndex("PublisherId");
 
@@ -177,12 +186,13 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            BookId = 1,
+                            Id = 1,
                             AuthorId = 1,
                             CategoryId = 3,
                             CoverImagePath = "~/1.jpg",
                             Description = "A theoretical physicist's introduction to the theory of relativity",
                             Edition = "1st edition",
+                            ISBN = "812147409117",
                             Language = "English",
                             PageCount = 160,
                             Price = 150000,
@@ -193,12 +203,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 2,
+                            Id = 2,
                             AuthorId = 2,
                             CategoryId = 4,
                             CoverImagePath = "~/1.jpg",
                             Description = "A romantic novel about the pride and prejudices of the British upper class in the early 19th century",
                             Edition = "2nd edition",
+                            ISBN = "031578731037",
                             Language = "English",
                             PageCount = 279,
                             Price = 100000,
@@ -209,12 +220,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 3,
+                            Id = 3,
                             AuthorId = 3,
                             CategoryId = 3,
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular science book about cosmology and the universe",
                             Edition = "10th anniversary edition",
+                            ISBN = "651061038029",
                             Language = "English",
                             PageCount = 212,
                             Price = 120000,
@@ -225,12 +237,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 4,
+                            Id = 4,
                             AuthorId = 4,
                             CategoryId = 4,
                             CoverImagePath = "~/1.jpg",
                             Description = "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry",
                             Edition = "1st edition",
+                            ISBN = "331976562909",
                             Language = "English",
                             PageCount = 223,
                             Price = 130000,
@@ -241,12 +254,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 5,
+                            Id = 5,
                             AuthorId = 5,
                             CategoryId = 1,
                             CoverImagePath = "~/1.jpg",
                             Description = "A detective novel about a murder on a train, featuring famous detective Hercule Poirot",
                             Edition = "2nd edition",
+                            ISBN = "151983459085",
                             Language = "English",
                             PageCount = 256,
                             Price = 110000,
@@ -257,12 +271,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 6,
+                            Id = 6,
                             AuthorId = 6,
                             CategoryId = 3,
                             CoverImagePath = "~/1.jpg",
                             Description = "An introduction to astrophysics for laypeople",
                             Edition = "1st edition",
+                            ISBN = "879969938708",
                             Language = "English",
                             PageCount = 224,
                             Price = 140000,
@@ -273,12 +288,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 7,
+                            Id = 7,
                             AuthorId = 7,
                             CategoryId = 2,
                             CoverImagePath = "~/1.jpg",
                             Description = "An annotated edition of the classic satire by Jonathan Swift",
                             Edition = "3rd edition",
+                            ISBN = "719751729826",
                             Language = "English",
                             PageCount = 522,
                             Price = 105000,
@@ -289,12 +305,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 8,
+                            Id = 8,
                             AuthorId = 8,
                             CategoryId = 1,
                             CoverImagePath = "~/1.jpg",
                             Description = "A thriller novel by American author Dan Brown",
                             Edition = "First edition",
+                            ISBN = "915817301724",
                             Language = "English",
                             PageCount = 481,
                             Price = 150000,
@@ -305,12 +322,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 9,
+                            Id = 9,
                             AuthorId = 9,
                             CategoryId = 5,
                             CoverImagePath = "~/1.jpg",
                             Description = "An autobiography by Michelle Obama",
                             Edition = "First edition",
+                            ISBN = "814172283437",
                             Language = "English",
                             PageCount = 426,
                             Price = 250000,
@@ -321,12 +339,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 10,
+                            Id = 10,
                             AuthorId = 9,
                             CategoryId = 4,
                             CoverImagePath = "~/1.jpg",
                             Description = "A children's fantasy novel by J.R.R. Tolkien",
                             Edition = "Revised edition",
+                            ISBN = "221239864699",
                             Language = "English",
                             PageCount = 310,
                             Price = 120000,
@@ -337,12 +356,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 11,
+                            Id = 11,
                             AuthorId = 3,
                             CategoryId = 3,
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular science book by British physicist Stephen Hawking",
                             Edition = "First edition",
+                            ISBN = "314467000238",
                             Language = "English",
                             PageCount = 212,
                             Price = 180000,
@@ -353,12 +373,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 12,
+                            Id = 12,
                             AuthorId = 2,
                             CategoryId = 4,
                             CoverImagePath = "~/1.jpg",
                             Description = "A romantic novel by English author Jane Austen",
                             Edition = "First edition",
+                            ISBN = "299561579059",
                             Language = "English",
                             PageCount = 279,
                             Price = 90000,
@@ -369,12 +390,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 13,
+                            Id = 13,
                             AuthorId = 3,
                             CategoryId = 3,
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow",
                             Edition = "First edition",
+                            ISBN = "608194139567",
                             Language = "English",
                             PageCount = 198,
                             Price = 200000,
@@ -385,12 +407,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 14,
+                            Id = 14,
                             AuthorId = 5,
                             CategoryId = 1,
                             CoverImagePath = "~/1.jpg",
                             Description = "A detective novel by Agatha Christie",
                             Edition = "First edition",
+                            ISBN = "899539460748",
                             Language = "English",
                             PageCount = 288,
                             Price = 85000,
@@ -401,12 +424,13 @@ namespace API.Migrations
                         },
                         new
                         {
-                            BookId = 15,
+                            Id = 15,
                             AuthorId = 8,
                             CategoryId = 4,
                             CoverImagePath = "~/1.jpg",
                             Description = "A novel by John Green",
                             Edition = "First edition",
+                            ISBN = "297136524734",
                             Language = "English",
                             PageCount = 313,
                             Price = 170000,
@@ -427,8 +451,8 @@ namespace API.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -504,23 +528,19 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Instance", b =>
                 {
-                    b.Property<int>("InstanceID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstanceID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BookId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.HasKey("InstanceID");
+                    b.HasKey("Id");
 
                     b.HasIndex("BookId");
 
@@ -531,1052 +551,902 @@ namespace API.Migrations
                     b.HasData(
                         new
                         {
-                            InstanceID = 1,
+                            Id = 1,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 2,
+                            Id = 2,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 3,
+                            Id = 3,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 4,
+                            Id = 4,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 5,
+                            Id = 5,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 6,
+                            Id = 6,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 7,
+                            Id = 7,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 8,
+                            Id = 8,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 9,
+                            Id = 9,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 10,
+                            Id = 10,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 11,
+                            Id = 11,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 12,
+                            Id = 12,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 13,
+                            Id = 13,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 14,
+                            Id = 14,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 15,
+                            Id = 15,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 16,
+                            Id = 16,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 17,
+                            Id = 17,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 18,
+                            Id = 18,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 19,
+                            Id = 19,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 20,
+                            Id = 20,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 21,
+                            Id = 21,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 22,
+                            Id = 22,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 23,
+                            Id = 23,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 24,
+                            Id = 24,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 25,
+                            Id = 25,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 26,
+                            Id = 26,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 27,
+                            Id = 27,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 28,
+                            Id = 28,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 29,
+                            Id = 29,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 30,
+                            Id = 30,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 31,
+                            Id = 31,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 32,
+                            Id = 32,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 33,
+                            Id = 33,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 34,
+                            Id = 34,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 35,
+                            Id = 35,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 36,
+                            Id = 36,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 37,
+                            Id = 37,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 38,
+                            Id = 38,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 39,
+                            Id = 39,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 40,
+                            Id = 40,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 41,
+                            Id = 41,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 42,
+                            Id = 42,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 43,
+                            Id = 43,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 44,
+                            Id = 44,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 45,
+                            Id = 45,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 46,
+                            Id = 46,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 47,
+                            Id = 47,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 48,
+                            Id = 48,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 49,
+                            Id = 49,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 50,
+                            Id = 50,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 51,
+                            Id = 51,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 52,
+                            Id = 52,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 53,
+                            Id = 53,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 54,
+                            Id = 54,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 55,
+                            Id = 55,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 56,
+                            Id = 56,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 57,
+                            Id = 57,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 58,
+                            Id = 58,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 59,
+                            Id = 59,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 60,
+                            Id = 60,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 61,
+                            Id = 61,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 62,
+                            Id = 62,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 63,
+                            Id = 63,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 64,
+                            Id = 64,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 65,
+                            Id = 65,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 66,
+                            Id = 66,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 67,
+                            Id = 67,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 68,
+                            Id = 68,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 69,
+                            Id = 69,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 70,
+                            Id = 70,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 71,
+                            Id = 71,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 72,
+                            Id = 72,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 73,
+                            Id = 73,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 74,
+                            Id = 74,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 75,
+                            Id = 75,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 76,
+                            Id = 76,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 77,
+                            Id = 77,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 78,
+                            Id = 78,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 79,
+                            Id = 79,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 80,
+                            Id = 80,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 81,
+                            Id = 81,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 82,
+                            Id = 82,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 83,
+                            Id = 83,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 84,
+                            Id = 84,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 85,
+                            Id = 85,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 86,
+                            Id = 86,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 87,
+                            Id = 87,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 88,
+                            Id = 88,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 89,
+                            Id = 89,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 90,
+                            Id = 90,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 91,
+                            Id = 91,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 92,
+                            Id = 92,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 93,
+                            Id = 93,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 94,
+                            Id = 94,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 95,
+                            Id = 95,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 96,
+                            Id = 96,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 97,
+                            Id = 97,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 98,
+                            Id = 98,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 99,
+                            Id = 99,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 100,
+                            Id = 100,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 101,
+                            Id = 101,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 102,
+                            Id = 102,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 103,
+                            Id = 103,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 104,
+                            Id = 104,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 105,
+                            Id = 105,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 106,
+                            Id = 106,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 107,
+                            Id = 107,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 108,
+                            Id = 108,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 109,
+                            Id = 109,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 110,
+                            Id = 110,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 111,
+                            Id = 111,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 112,
+                            Id = 112,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 113,
+                            Id = 113,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 114,
+                            Id = 114,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 115,
+                            Id = 115,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 116,
+                            Id = 116,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 117,
+                            Id = 117,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 118,
+                            Id = 118,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 119,
+                            Id = 119,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 120,
+                            Id = 120,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 121,
+                            Id = 121,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 122,
+                            Id = 122,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 123,
+                            Id = 123,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 124,
+                            Id = 124,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 125,
+                            Id = 125,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 126,
+                            Id = 126,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 127,
+                            Id = 127,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 128,
+                            Id = 128,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 129,
+                            Id = 129,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 130,
+                            Id = 130,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 131,
+                            Id = 131,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 132,
+                            Id = 132,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 133,
+                            Id = 133,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 134,
+                            Id = 134,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 135,
+                            Id = 135,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 136,
+                            Id = 136,
                             BookId = 1,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 137,
+                            Id = 137,
                             BookId = 2,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 138,
+                            Id = 138,
                             BookId = 3,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 139,
+                            Id = 139,
                             BookId = 4,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 140,
+                            Id = 140,
                             BookId = 5,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 141,
+                            Id = 141,
                             BookId = 6,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 142,
+                            Id = 142,
                             BookId = 7,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 143,
+                            Id = 143,
                             BookId = 8,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 144,
+                            Id = 144,
                             BookId = 9,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 145,
+                            Id = 145,
                             BookId = 10,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 146,
+                            Id = 146,
                             BookId = 11,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 147,
+                            Id = 147,
                             BookId = 12,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 148,
+                            Id = 148,
                             BookId = 13,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 149,
+                            Id = 149,
                             BookId = 14,
-                            ISBN = "ISBN",
                             StatusId = 1
                         },
                         new
                         {
-                            InstanceID = 150,
+                            Id = 150,
                             BookId = 15,
-                            ISBN = "ISBN",
                             StatusId = 1
                         });
                 });
@@ -1595,7 +1465,7 @@ namespace API.Migrations
                     b.Property<int>("InstanceId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("ReturnedDate")
+                    b.Property<DateTime>("ReturnedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -1612,84 +1482,84 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Publisher", b =>
                 {
-                    b.Property<int>("PublisherId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PublisherId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("PublisherId");
+                    b.HasKey("Id");
 
                     b.ToTable("Publishers");
 
                     b.HasData(
                         new
                         {
-                            PublisherId = 1,
+                            Id = 1,
                             Description = "One of the largest and most prestigious English-language publishers.",
                             Name = "Penguin Books"
                         },
                         new
                         {
-                            PublisherId = 2,
+                            Id = 2,
                             Description = "An American publishing company, one of the world's largest.",
                             Name = "HarperCollins"
                         },
                         new
                         {
-                            PublisherId = 3,
+                            Id = 3,
                             Description = "An American book publisher and the largest general-interest paperback publisher in the world.",
                             Name = "Random House"
                         },
                         new
                         {
-                            PublisherId = 4,
+                            Id = 4,
                             Description = "An American publishing company and a division of ViacomCBS.",
                             Name = "Simon & Schuster"
                         },
                         new
                         {
-                            PublisherId = 5,
+                            Id = 5,
                             Description = "A global trade publishing company, owned by Holtzbrinck Publishing Group.",
                             Name = "Macmillan Publishers"
                         },
                         new
                         {
-                            PublisherId = 6,
+                            Id = 6,
                             Description = "The largest university press in the world, publishing in 70 languages and 190 countries.",
                             Name = "Oxford University Press"
                         },
                         new
                         {
-                            PublisherId = 7,
+                            Id = 7,
                             Description = "The publishing business of the University of Cambridge, one of the world's oldest universities.",
                             Name = "Cambridge University Press"
                         },
                         new
                         {
-                            PublisherId = 8,
+                            Id = 8,
                             Description = "A global academic publishing company, the product of a merger between Springer Science+Business Media and Nature Publishing Group.",
                             Name = "Springer Nature"
                         },
                         new
                         {
-                            PublisherId = 9,
+                            Id = 9,
                             Description = "The world's third-largest trade book publisher, headquartered in France.",
                             Name = "Hachette Livre"
                         },
                         new
                         {
-                            PublisherId = 10,
+                            Id = 10,
                             Description = "A British independent publishing house, best known for publishing the Harry Potter series.",
                             Name = "Bloomsbury Publishing"
                         });
@@ -1697,82 +1567,86 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Role", b =>
                 {
-                    b.Property<int>("RoleId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("RoleId");
+                    b.HasKey("Id");
 
                     b.ToTable("Roles");
 
                     b.HasData(
                         new
                         {
-                            RoleId = 1,
+                            Id = 1,
                             Name = "Reader"
                         },
                         new
                         {
-                            RoleId = 2,
+                            Id = 2,
                             Name = "Librarian"
                         },
                         new
                         {
-                            RoleId = 3,
+                            Id = 3,
                             Name = "Admin"
                         });
                 });
 
             modelBuilder.Entity("API.Data.Status", b =>
                 {
-                    b.Property<int>("StatusId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StatusId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
+                    b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("StatusId");
+                    b.HasKey("Id");
 
                     b.ToTable("Statuses");
 
                     b.HasData(
                         new
                         {
-                            StatusId = 1,
-                            Description = "Available"
+                            Id = 1,
+                            Name = "Available"
                         },
                         new
                         {
-                            StatusId = 2,
-                            Description = "On Loan"
+                            Id = 2,
+                            Name = "On Loan"
                         },
                         new
                         {
-                            StatusId = 3,
-                            Description = "Broken"
+                            Id = 3,
+                            Name = "Broken"
                         });
                 });
 
             modelBuilder.Entity("API.Data.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsActived")
                         .HasColumnType("bit");
@@ -1782,7 +1656,8 @@ namespace API.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -1793,18 +1668,21 @@ namespace API.Migrations
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
 
                     b.ToTable("Users");
 
                     b.HasData(
                         new
                         {
-                            UserId = 1,
+                            Id = 1,
                             Email = "ice@gmail.com",
                             IsActived = true,
                             IsOnline = false,
@@ -1815,7 +1693,7 @@ namespace API.Migrations
                         },
                         new
                         {
-                            UserId = 2,
+                            Id = 2,
                             Email = "ceri@gmail.com",
                             IsActived = true,
                             IsOnline = false,
@@ -1826,7 +1704,7 @@ namespace API.Migrations
                         },
                         new
                         {
-                            UserId = 3,
+                            Id = 3,
                             Email = "user1@gmail.com",
                             IsActived = true,
                             IsOnline = false,
@@ -1837,7 +1715,7 @@ namespace API.Migrations
                         },
                         new
                         {
-                            UserId = 4,
+                            Id = 4,
                             Email = "user2@gmail.com",
                             IsActived = true,
                             IsOnline = false,
@@ -1848,7 +1726,7 @@ namespace API.Migrations
                         },
                         new
                         {
-                            UserId = 5,
+                            Id = 5,
                             Email = "user3@gmail.com",
                             IsActived = true,
                             IsOnline = false,

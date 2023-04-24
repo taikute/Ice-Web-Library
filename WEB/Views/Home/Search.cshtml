@@ -34,7 +34,7 @@
                     <tbody>
                         @foreach (var book in Model)
                         {
-                            <tr id="tr-search" onclick="window.location.href='@Url.Action("Detail", "Books", new { id = book.BookId })'">
+                            <tr id="tr-search" onclick="window.location.href='@Url.Action("Detail", "Books", new { id = book.Id })'">
                                 <td>@book.Title</td>
                                 <td>@(book.Author!.Name)</td>
                                 <td>@(book.Publisher!.Name)</td>

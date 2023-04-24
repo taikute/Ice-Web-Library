@@ -35,7 +35,7 @@ namespace API.Controllers
             {
                 return BadRequest("Email or UserName is exists in database!");
             }
-            user.UserId = 0;
+            user.Id = 0;
             user.IsActived = true;
             user.IsOnline = false;
             if (user.RoleId != 1)

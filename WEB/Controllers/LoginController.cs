@@ -28,7 +28,7 @@ namespace WEB.Controllers
             var userExists = users.FirstOrDefault(u => u.Username == username);
             if (userExists == null) return BadRequest("User does not exists!");
 
-            int id = userExists.UserId;
+            int id = userExists.Id;
             int roleId = userExists.RoleId;
             var checkPassword = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
             if (!checkPassword.IsSuccessful) return BadRequest("Fail!");
@@ -39,7 +39,7 @@ namespace WEB.Controllers
             var changeOnline = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
             HttpContext.Session.SetString("IsLogin", "true");
             HttpContext.Session.SetString("Username", username!);
-            HttpContext.Session.SetInt32("UserId", userExists.UserId);
+            HttpContext.Session.SetInt32("UserId", userExists.Id);
             HttpContext.Session.SetInt32("RoleId", userExists.RoleId);
             return RedirectToAction("Index", "Home");
         }

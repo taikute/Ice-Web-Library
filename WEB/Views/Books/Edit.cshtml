@@ -14,7 +14,7 @@
 
 <form asp-action="Edit" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <input type="hidden" asp-for="BookId" />
+    <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="AuthorId" class="control-label">Author Name</label>
         <select asp-for="AuthorId" asp-items="@(new SelectList(authors, "AuthorId", "Name"))" class="form-control"></select>

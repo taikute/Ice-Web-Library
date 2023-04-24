@@ -5,16 +5,10 @@ namespace WEB.Models
 {
     public class Author
     {
-        public int AuthorId { get; set; }
+        public int Id { get; set; }
+        [Required, StringLength(30, ErrorMessage = "30 characters limited!")] public string Name { get; set; } = "";
+        [AllowNull, StringLength(200, ErrorMessage = "200 characters limited!")] public string Description { get; set; }
 
-        [Required]
-        [StringLength(30, ErrorMessage = "30 characters limited")]
-        public string Name { get; set; } = string.Empty;
-
-        [AllowNull]
-        [StringLength(200, ErrorMessage = "300 characters limited")]
-        public string Bio { get; set; }
-
-        public virtual ICollection<Book>? Books { get; set; }
+        [AllowNull] public virtual ICollection<Book> Books { get; set; }
     }
 }
