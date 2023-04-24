@@ -38,6 +38,7 @@ namespace WEB.Controllers
             HttpContext.Session.SetString("IsLogin", "true");
             HttpContext.Session.SetString("Username", username!);
             HttpContext.Session.SetInt32("UserId", userExists.UserId);
+            HttpContext.Session.SetInt32("RoleId", userExists.RoleId);
             return RedirectToAction("Index", "Home");
         }
         

@@ -39,7 +39,7 @@ namespace WEB.Helpers
                 filterContext.Result = new RedirectResult("/Home/Index");
                 return;
             }
-            // Thực hiện các xử lý khác nếu cần
+
             base.OnActionExecuting(filterContext);
         }
     }
