@@ -107,9 +107,17 @@ namespace API.Data
                 new Book { BookId = 15, AuthorId = 8, CategoryId = 4, PublisherId = 2, Title = "The Fault in Our Stars", Description = "A novel by John Green", PublishYear = "2012", Price = 170000, Quantity = 9, Language = "English", PageCount = 313, Edition = "First edition" }
                 );
 
-            modelBuilder.Entity<Instance>().HasData(
-                new Instance { InstanceID = 1, BookId = 1, StatusId = 1}
-                );
+            int id = 1;
+            for (int i = 1; i <= 10; i++)
+            {
+                for (int j = 1; j <= 15; j++)
+                {
+                    modelBuilder.Entity<Instance>().HasData(
+                        new Instance { InstanceID = id, BookId = j, StatusId = 1 }
+                        );
+                    id++;
+                }
+            }
             #endregion
         }
     }

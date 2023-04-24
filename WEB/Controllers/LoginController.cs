@@ -5,6 +5,7 @@ using WEB.Models;
 
 namespace WEB.Controllers
 {
+    [Route("Login")]
     public class LoginController : Controller
     {
         readonly RestClient client = new RestClient("https://localhost:7042/api/");
@@ -13,11 +14,12 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
+        [Route("Index")]
         public IActionResult Index()
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost, Route("Login")]
         public async Task<IActionResult> Login(User user)
         {
             var username = user.Username;
@@ -41,7 +43,8 @@ namespace WEB.Controllers
             HttpContext.Session.SetInt32("RoleId", userExists.RoleId);
             return RedirectToAction("Index", "Home");
         }
-        
+
+        [HttpGet, Route("Logout")]
         public IActionResult Logout()
         {
             HttpContext.Session.SetString("IsLogin", "false");

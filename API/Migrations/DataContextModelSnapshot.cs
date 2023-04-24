@@ -532,6 +532,1049 @@ namespace API.Migrations
                             BookId = 1,
                             ISBN = "ISBN",
                             StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 2,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 3,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 4,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 5,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 6,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 7,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 8,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 9,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 10,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 11,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 12,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 13,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 14,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 15,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 16,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 17,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 18,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 19,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 20,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 21,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 22,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 23,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 24,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 25,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 26,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 27,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 28,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 29,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 30,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 31,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 32,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 33,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 34,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 35,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 36,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 37,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 38,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 39,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 40,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 41,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 42,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 43,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 44,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 45,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 46,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 47,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 48,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 49,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 50,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 51,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 52,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 53,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 54,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 55,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 56,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 57,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 58,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 59,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 60,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 61,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 62,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 63,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 64,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 65,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 66,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 67,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 68,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 69,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 70,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 71,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 72,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 73,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 74,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 75,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 76,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 77,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 78,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 79,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 80,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 81,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 82,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 83,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 84,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 85,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 86,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 87,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 88,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 89,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 90,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 91,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 92,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 93,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 94,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 95,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 96,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 97,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 98,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 99,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 100,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 101,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 102,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 103,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 104,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 105,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 106,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 107,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 108,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 109,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 110,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 111,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 112,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 113,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 114,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 115,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 116,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 117,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 118,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 119,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 120,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 121,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 122,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 123,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 124,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 125,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 126,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 127,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 128,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 129,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 130,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 131,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 132,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 133,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 134,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 135,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 136,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 137,
+                            BookId = 2,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 138,
+                            BookId = 3,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 139,
+                            BookId = 4,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 140,
+                            BookId = 5,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 141,
+                            BookId = 6,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 142,
+                            BookId = 7,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 143,
+                            BookId = 8,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 144,
+                            BookId = 9,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 145,
+                            BookId = 10,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 146,
+                            BookId = 11,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 147,
+                            BookId = 12,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 148,
+                            BookId = 13,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 149,
+                            BookId = 14,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            InstanceID = 150,
+                            BookId = 15,
+                            ISBN = "ISBN",
+                            StatusId = 1
                         });
                 });
 

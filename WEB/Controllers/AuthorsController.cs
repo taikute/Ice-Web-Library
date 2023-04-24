@@ -4,6 +4,7 @@ using WEB.Models;
 
 namespace WEB.Controllers
 {
+    [Route("Authors")]
     public class AuthorsController : Controller
     {
         readonly ApiHelper _apiHelper;
@@ -11,7 +12,7 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
-        [HttpGet]
+        [HttpGet, Route("Index")]
         public async Task<IActionResult> Index()
         {
             var authors = await _apiHelper.GetAll<Author>("Authors")!;

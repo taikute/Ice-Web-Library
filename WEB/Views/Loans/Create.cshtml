@@ -1,4 +1,4 @@
-﻿@model WEB.Models.Loan
+﻿@model WEB.Models.Book
 
 @{
     ViewData["Title"] = "Loan";
@@ -6,9 +6,9 @@
 
 <div class="text-center"><h1 class="display-4">Loan</h1></div>
 
-<h2>Are you sure you want to create the loan?</h2>
+<h2>Are you sure you want to loan the book with title: @Model.Title</h2>
 
-<form method="post" asp-action="CreateConfirm">
+<form method="post" asp-action="CreateConfirmed">
     <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-action="Manager" class="btn btn-primary">Cancel</a>
+    <a asp-controller="Books" asp-action="Index" class="btn btn-primary">Cancel</a>
 </form>

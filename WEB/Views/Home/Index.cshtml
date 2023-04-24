@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Home";
 }
+<div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
 
 <div class="text-center"><h1 class="display-4">Welcome to Ice Library</h1></div>
 
@@ -8,3 +9,13 @@
     <input class="form-control me-2 rounded-pill" type="text" name="searchTerm" placeholder="Search by Author, Title, ..." required>
     <button class="btn btn-primary" type="submit">Search</button>
 </form>
+<div id="alert" class="alert alert-success position-fixed bottom-0 end-0" style="display:none;">
+    Thông báo của bạn ở đây.
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Hiển thị hộp thông báo trong 5 giây.
+        $("#alert").fadeIn().delay(5000).fadeOut();
+    });
+</script>

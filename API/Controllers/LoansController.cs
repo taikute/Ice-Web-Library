@@ -2,6 +2,7 @@
 using API.Repos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 
 namespace API.Controllers
 {
@@ -9,10 +10,12 @@ namespace API.Controllers
     [ApiController]
     public class LoansController : ControllerBase
     {
-        readonly IGenericRepos<Book> _loanRepos;
-        public LoansController(IGenericRepos<Book> repository)
+        readonly IGenericRepos<Loan> _loanRepos;
+        readonly IGenericRepos<Instance> _instanceRepos;
+        public LoansController(IGenericRepos<Loan> repository, IGenericRepos<Instance> instanceRepos)
         {
             _loanRepos = repository;
+            _instanceRepos = instanceRepos;
         }
 
         [HttpGet]
@@ -27,6 +30,15 @@ namespace API.Controllers
             var loan = await _loanRepos.GetById(id);
             if (loan == null) return NotFound(id);
             return Ok(loan);
+        }
+        [HttpPost]
+        public async Task<IActionResult> PostBook(Loan loan)
+        {
+            await _loanRepos.Create(loan);
+            //var instance = await _instanceRepos.GetById(loan.InstanceId)!;
+            //instance!.StatusId = 2;
+            //await _instanceRepos.Update(instance);
+            return NoContent();
         }
     }
 }

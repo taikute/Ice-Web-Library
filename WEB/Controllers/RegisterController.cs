@@ -4,6 +4,7 @@ using WEB.Models;
 
 namespace WEB.Controllers
 {
+    [Route("Register")]
     public class RegisterController : Controller
     {
         readonly ApiHelper _apiHelper;
