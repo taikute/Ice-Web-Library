@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230422081510_Library")]
+    [Migration("20230424032904_Library")]
     partial class Library
     {
         /// <inheritdoc />
@@ -527,6 +527,15 @@ namespace API.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("Instances");
+
+                    b.HasData(
+                        new
+                        {
+                            InstanceID = 1,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        });
                 });
 
             modelBuilder.Entity("API.Data.Loan", b =>

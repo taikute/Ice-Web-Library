@@ -37,7 +37,7 @@ namespace WEB.Controllers
             var changeOnline = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
             HttpContext.Session.SetString("IsLogin", "true");
             HttpContext.Session.SetString("Username", username!);
-            HttpContext.Session.SetInt32("RoleId", userExists.RoleId);
+            HttpContext.Session.SetInt32("UserId", userExists.UserId);
             return RedirectToAction("Index", "Home");
         }
         

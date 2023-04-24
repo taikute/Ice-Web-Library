@@ -49,7 +49,7 @@ namespace WEB.Controllers
             if (ModelState.IsValid)
             {
                 await _apiHelper.Post(book, "Books");
-                return RedirectToAction("Index");
+                return RedirectToAction("Manager");
             }
             ViewBag.ErrorMessenger = "Thông tin nhập không hợp lệ!";
             return View(book);

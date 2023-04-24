@@ -16,7 +16,8 @@
                     <div class="card-body text-center">
                         <h5 class="card-title">@book.Title</h5>
                         <a asp-action="Detail" asp-route-id="@book.BookId" class="btn btn-primary">Detail</a>
-                    </div>
+@*                        <a asp-controller="Loans" asp-action="Create" asp-route-id="@book.BookId" class="btn btn-primary">Loan</a>
+*@                    </div>
                 </div>
             </div>
         }

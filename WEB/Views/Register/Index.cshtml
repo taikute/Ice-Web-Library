@@ -22,7 +22,9 @@
         <input type="password" id="checkpassword" name="checkpassword" required>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="agree-to-terms" required>
-            <label class="form-check-label" for="agree-to-terms">I agree to the terms and conditions</label>
+            <label class="form-check-label" for="agree-to-terms">
+                I agree to the <a asp-controller="Home" asp-action="Privacy">terms and conditions</a>
+            </label>
         </div>
         <button class="btn btn-primary" type="submit">Register</button>
     </form>

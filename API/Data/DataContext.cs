@@ -106,6 +106,10 @@ namespace API.Data
                 new Book { BookId = 14, AuthorId = 5, CategoryId = 1, PublisherId = 1, Title = "The Murder of Roger Ackroyd", Description = "A detective novel by Agatha Christie", PublishYear = "1926", Price = 85000, Quantity = 6, Language = "English", PageCount = 288, Edition = "First edition" },
                 new Book { BookId = 15, AuthorId = 8, CategoryId = 4, PublisherId = 2, Title = "The Fault in Our Stars", Description = "A novel by John Green", PublishYear = "2012", Price = 170000, Quantity = 9, Language = "English", PageCount = 313, Edition = "First edition" }
                 );
+
+            modelBuilder.Entity<Instance>().HasData(
+                new Instance { InstanceID = 1, BookId = 1, StatusId = 1}
+                );
             #endregion
         }
     }

@@ -524,6 +524,15 @@ namespace API.Migrations
                     b.HasIndex("StatusId");
 
                     b.ToTable("Instances");
+
+                    b.HasData(
+                        new
+                        {
+                            InstanceID = 1,
+                            BookId = 1,
+                            ISBN = "ISBN",
+                            StatusId = 1
+                        });
                 });
 
             modelBuilder.Entity("API.Data.Loan", b =>

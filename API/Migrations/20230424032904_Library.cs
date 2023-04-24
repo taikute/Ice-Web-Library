@@ -308,6 +308,11 @@ namespace API.Migrations
                     { 5, "user3@gmail.com", true, false, "User3", "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=", 1, "user3" }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Instances",
+                columns: new[] { "InstanceID", "BookId", "ISBN", "StatusId" },
+                values: new object[] { 1, 1, "ISBN", 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Books_AuthorId",
                 table: "Books",
