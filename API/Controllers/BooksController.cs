@@ -40,9 +40,6 @@ namespace API.Controllers
         [HttpPut]
         public async Task<IActionResult> PutBook(Book book)
         {
-            //int id = book.BookId;
-            //var existingBook = await _bookRepos.GetById(id);
-            //if (existingBook == null) return NotFound(id);
             await _bookRepos.Update(book);
             return NoContent();
         }
