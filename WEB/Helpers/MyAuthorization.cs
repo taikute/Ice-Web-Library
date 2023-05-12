@@ -16,13 +16,14 @@ namespace WEB.Helpers
             bool isLogin = bool.Parse(context.Session.GetString("IsLogin") ?? "false");
             if (!isLogin)
             {
-                filterContext.Result = new RedirectResult("/Login/Index");
+                
+                filterContext.Result = new RedirectResult("/Login/Index/1");
                 return;
             }
             int? roleId = context.Session.GetInt32("RoleId");
             if (roleId == null)
             {
-                filterContext.Result = new RedirectResult("/Home/Index");
+                filterContext.Result = new RedirectResult("/1");
                 return;
             }
             bool isRoleExists = false;
@@ -36,7 +37,7 @@ namespace WEB.Helpers
             }
             if (!isRoleExists)
             {
-                filterContext.Result = new RedirectResult("/Home/Index");
+                filterContext.Result = new RedirectResult("/1");
                 return;
             }
 

@@ -11,9 +11,9 @@ namespace API.Data
         [Required] public int StatusId { get; set; } = 1;
 
         #region ForeignKey
-        [AllowNull] public virtual Book Book { get; set; }
-        [AllowNull] public virtual Status Status { get; set; }
-        [AllowNull] public virtual ICollection<Loan> Loans { get; set; }
+        public virtual Book? Book { get; set; }
+        public virtual Status? Status { get; set; }
+        public virtual ICollection<Loan>? Loans { get; set; }
         #endregion
     }
 }

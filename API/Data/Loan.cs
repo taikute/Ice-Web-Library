@@ -10,11 +10,11 @@ namespace API.Data
         [Required] public int InstanceId { get; set; }
         [Required] public int UserId { get; set; }
         [Required] public DateTime BorrowedDate { get; set; } = DateTime.Now;
-        [AllowNull] public DateTime ReturnedDate { get; set; }
+        public DateTime? ReturnedDate { get; set; } = null;
 
         #region ForeignKey
-        [AllowNull] public virtual Instance? Instance { get; set; }
-        [AllowNull] public virtual User? User { get; set; }
+        public virtual Instance? Instance { get; set; }
+        public virtual User? User { get; set; }
         #endregion
     }
 }

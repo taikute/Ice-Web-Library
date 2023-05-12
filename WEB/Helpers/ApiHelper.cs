@@ -8,16 +8,16 @@ namespace WEB.Helpers
     {
         readonly RestClient client = new RestClient("https://localhost:7042/api/");
         //GetList
-        public async Task<IEnumerable<T>>? GetAll<T>(string endpoint) where T : class
+        public async Task<IEnumerable<T>?> GetAll<T>(string endpoint) where T : class
         {
             var response = await client.ExecuteAsync<List<T>>(new RestRequest(endpoint));
-            return response.Data!;
+            return response.Data;
         }
         //GetByID
-        public async Task<T>? GetByID<T>(int id, string endpoint) where T : class
+        public async Task<T?> GetByID<T>(int id, string endpoint) where T : class
         {
             var response = await client.ExecuteAsync<T>(new RestRequest($"{endpoint}/{id}"));
-            return response.Data!;
+            return response.Data;
         }
         public async Task Post<T>(T data, string endpoint) where T : class
         {

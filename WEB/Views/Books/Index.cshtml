@@ -3,6 +3,10 @@
 
 @{
     ViewData["Title"] = "Index";
+    int pageCount = ViewBag.PageCount ?? 1;
+    var authors = ViewBag.Authors as IEnumerable<Author>;
+    var categories = ViewBag.Categories as IEnumerable<Category>;
+    var publishers = ViewBag.Publishers as IEnumerable<Publisher>;
 }
 
 <div class="text-center"><h1 class="display-4">Books</h1></div>
@@ -10,11 +14,11 @@
     <div class="row">
         @foreach (var book in Model)
         {
-            <div class="col-sm-6 col-md-4">
+            <div class="col-6 col-md-2">
                 <div class="card mb-4">
                     <img class="card-img-top" src=@Url.Content(book.CoverImagePath) alt="@book.Title">
                     <div class="card-body text-center">
-                        <h5 class="card-title">@book.Title</h5>
+                        <h6 class="card-title">@book.Title</h6>
                         <a asp-action="Detail" asp-route-id="@book.Id" class="btn btn-primary">Detail</a>
                         <a asp-controller="Loans" asp-action="Create" asp-route-id="@book.Id" class="btn btn-primary">Loan</a>
                     </div>
@@ -22,4 +26,19 @@
             </div>
         }
     </div>
+
+    <div style="display: flex;">
+        @for (var i = 1; i <= pageCount; i++)
+        {
+            <a asp-controller="Books" asp-action="Index" asp-route-page="@i" class="btn btn-primary" style="margin-right: 5px;">@i</a>
+        }
+    </div>
 </div>
+
+<style>
+    .card-title {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>

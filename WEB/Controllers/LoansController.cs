@@ -14,30 +14,32 @@ namespace WEB.Controllers
         }
 
         [HttpGet, Route("Index")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            ViewBag.LoanIsNull = false;
+            var loans = await _apiHelper.GetAll<Loan>("Loans");
+            if (loans == null) ViewBag.LoanIsNull = true;
+            return View(loans);
         }
 
         [HttpGet("{id}"), Route("Get"), MyAuthorization(1)]
         public async Task<IActionResult> GetLoan(int id)
         {
-            return View(await _apiHelper.GetByID<Loan>(id, "Loans")!);
+            return View(await _apiHelper.GetByID<Loan>(id, "Loans"));
         }
 
         [HttpGet("{id}"), Route("Create"), MyAuthorization(1)]
         public async Task<IActionResult> Create(int id)
         {
-            var book = await _apiHelper.GetByID<Book>(id, "Books")!;
+            var book = await _apiHelper.GetByID<Book>(id, "Books");
             return View(book);
         }
         [HttpPost("{id}"), Route("CreateConfirmed"), MyAuthorization(1)]
         public async Task<IActionResult> CreateConfirmed(int id)
         {
-            id = 1;
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
-            var instances = await _apiHelper.GetAll<Instance>("Instances")!;
-            var instance = instances.Where(i => i.BookId == id).FirstOrDefault();
+            var instances = await _apiHelper.GetAll<Instance>("Instances");
+            var instance = instances!.Where(i => i.BookId == id && i.StatusId == 1).FirstOrDefault();
             if (instance == null) return BadRequest($"Out of book id={id}!");
             var loan = new Loan()
             {
@@ -46,7 +48,9 @@ namespace WEB.Controllers
                 UserId = userId
             };
             await _apiHelper.Post(loan, "Loans");
-            return RedirectToAction("Index", "Home");
+            instance.StatusId = 2;
+            await _apiHelper.Put(instance, "Instances");
+            return RedirectToAction("Index", "Home", new { status = 3 });
         }
     }
 }

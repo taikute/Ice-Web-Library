@@ -9,7 +9,7 @@ namespace API.Controllers
     public class BooksController : ControllerBase
     {
         readonly IGenericRepos<Book> _bookRepos;
-        public BooksController(IGenericRepos<Book> repository )
+        public BooksController(IGenericRepos<Book> repository)
         {
             _bookRepos = repository;
         }

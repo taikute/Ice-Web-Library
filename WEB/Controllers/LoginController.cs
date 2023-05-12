@@ -14,9 +14,20 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
-        [Route("Index")]
-        public IActionResult Index()
+        [HttpGet, Route("Index/{bugCode?}")]
+        public IActionResult Index(int? bugCode)
         {
+            //1: Login Require
+            //2: 
+
+            ViewBag.LoginRequire = false;
+            if (bugCode != null)
+            {
+                if (bugCode == 1)
+                {
+                    ViewBag.LoginRequire = true;
+                }
+            }
             return View();
         }
         [HttpPost, Route("Login")]
@@ -25,14 +36,13 @@ namespace WEB.Controllers
             var username = user.Username;
             var password = user.Password;
             var users = await _apiHelper.GetAll<User>("Users")!;
-            var userExists = users.FirstOrDefault(u => u.Username == username);
+            var userExists = users!.FirstOrDefault(u => u.Username == username);
             if (userExists == null) return BadRequest("User does not exists!");
 
             int id = userExists.Id;
             int roleId = userExists.RoleId;
             var checkPassword = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
             if (!checkPassword.IsSuccessful) return BadRequest("Fail!");
-
             bool isPassWordCorrect = bool.Parse(checkPassword.Content!);
             if (!isPassWordCorrect) return BadRequest($"Password does not correct!");
 

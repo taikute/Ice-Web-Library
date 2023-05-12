@@ -23,7 +23,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { bugCode = (int?)null })"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -35,11 +35,12 @@
                         <a class="nav-link text-light" asp-controller="Publishers" asp-action="Index">Publishers</a>
                         <a class="nav-link text-light" asp-controller="Books" asp-action="Manager">Manager</a>
                     </ul>
+
                     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
                     @{
                         var HttpContext = HttpContextAccessor.HttpContext;
                         bool IsLogin = bool.Parse(HttpContext!.Session.GetString("IsLogin") ?? "false");
-                        @if (IsLogin)
+                        if (IsLogin)
                         {
                             string username = HttpContext.Session.GetString("Username")!;
                             <ul class="navbar-nav ms-auto">
@@ -50,7 +51,9 @@
                         else
                         {
                             <ul class="navbar-nav ms-auto">
-                                <a class="nav-link text-light" asp-controller="Login" asp-action="Index">Login</a>
+                                <li>
+                                    <a class="nav-link text-light" href="@Url.Action("Index", "Login", new { bugCode = (int?)null })">Login</a>
+                                </li>
                                 <a class="nav-link text-light" asp-controller="Register" asp-action="Index">Register</a>
                             </ul>
                         }
@@ -79,6 +82,7 @@
 </body>
 </html>
 
+<!--Catch enter press script-->
 <script>
     var form = document.getElementById("search-form");
     var input = document.getElementById("search-input");
@@ -90,3 +94,69 @@
         }
     });
 </script>
+
+<!--Alert container-->
+<div id="alert-container"></div>
+<!--Alert style-->
+<style>
+    #alert-container {
+        position: fixed;
+        top: 60px;
+        right: 20px;
+        z-index: 9999;
+    }
+
+    .alert {
+        margin-top: 10px;
+    }
+
+    .hide {
+        opacity: 0;
+    }
+
+    .alert-success {
+        background-color: #D4EDDA;
+        color: #155724;
+    }
+
+    .alert-warning {
+        background-color: #FFF3CD;
+        color: #856404;
+    }
+
+    .alert-danger {
+        background-color: #F8D7DA;
+        color: #721C24;
+    }
+
+    .alert-info {
+        background-color: #D1ECF1;
+        color: #0C5460;
+    }
+</style>
+<!--Alert script-->
+<script>
+    function createAlert(message, type) {
+        var alertElement = document.createElement('div');
+        alertElement.classList.add('alert', 'alert-' + type);
+        alertElement.innerText = message;
+
+        var container = document.getElementById('alert-container');
+        container.appendChild(alertElement);
+
+        setTimeout(function () {
+            alertElement.classList.add('hide');
+            setTimeout(function () {
+                container.removeChild(alertElement);
+            }, 10);
+        }, 5000);
+    }
+</script>
+
+
+@*
+<button class="btn btn-primary" onclick="createAlert('Đây là thông báo thành công!', 'success')">Success</button>
+<button class="btn btn-primary" onclick="createAlert('Đây là thông báo cảnh báo!', 'warning')">Warning</button>
+<button class="btn btn-primary" onclick="createAlert('Đây là thông báo lỗi!', 'danger')">Danger</button>
+<button class="btn btn-primary" onclick="createAlert('Đây là thông báo thông tin!', 'info')">Info</button>
+*@

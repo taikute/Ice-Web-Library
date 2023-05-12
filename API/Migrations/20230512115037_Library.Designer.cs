@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230424204445_Library")]
+    [Migration("20230512115037_Library")]
     partial class Library
     {
         /// <inheritdoc />
@@ -34,7 +34,6 @@ namespace API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -125,11 +124,9 @@ namespace API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CoverImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -192,7 +189,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A theoretical physicist's introduction to the theory of relativity",
                             Edition = "1st edition",
-                            ISBN = "812147409117",
+                            ISBN = "286121407018",
                             Language = "English",
                             PageCount = 160,
                             Price = 150000,
@@ -209,7 +206,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A romantic novel about the pride and prejudices of the British upper class in the early 19th century",
                             Edition = "2nd edition",
-                            ISBN = "031578731037",
+                            ISBN = "395604110964",
                             Language = "English",
                             PageCount = 279,
                             Price = 100000,
@@ -226,7 +223,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular science book about cosmology and the universe",
                             Edition = "10th anniversary edition",
-                            ISBN = "651061038029",
+                            ISBN = "620156287559",
                             Language = "English",
                             PageCount = 212,
                             Price = 120000,
@@ -243,7 +240,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry",
                             Edition = "1st edition",
-                            ISBN = "331976562909",
+                            ISBN = "849650785612",
                             Language = "English",
                             PageCount = 223,
                             Price = 130000,
@@ -260,7 +257,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A detective novel about a murder on a train, featuring famous detective Hercule Poirot",
                             Edition = "2nd edition",
-                            ISBN = "151983459085",
+                            ISBN = "483309275569",
                             Language = "English",
                             PageCount = 256,
                             Price = 110000,
@@ -277,7 +274,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "An introduction to astrophysics for laypeople",
                             Edition = "1st edition",
-                            ISBN = "879969938708",
+                            ISBN = "610688609855",
                             Language = "English",
                             PageCount = 224,
                             Price = 140000,
@@ -294,7 +291,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "An annotated edition of the classic satire by Jonathan Swift",
                             Edition = "3rd edition",
-                            ISBN = "719751729826",
+                            ISBN = "175605312458",
                             Language = "English",
                             PageCount = 522,
                             Price = 105000,
@@ -311,7 +308,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A thriller novel by American author Dan Brown",
                             Edition = "First edition",
-                            ISBN = "915817301724",
+                            ISBN = "170779538542",
                             Language = "English",
                             PageCount = 481,
                             Price = 150000,
@@ -328,7 +325,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "An autobiography by Michelle Obama",
                             Edition = "First edition",
-                            ISBN = "814172283437",
+                            ISBN = "399942877594",
                             Language = "English",
                             PageCount = 426,
                             Price = 250000,
@@ -345,7 +342,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A children's fantasy novel by J.R.R. Tolkien",
                             Edition = "Revised edition",
-                            ISBN = "221239864699",
+                            ISBN = "878015788309",
                             Language = "English",
                             PageCount = 310,
                             Price = 120000,
@@ -362,7 +359,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular science book by British physicist Stephen Hawking",
                             Edition = "First edition",
-                            ISBN = "314467000238",
+                            ISBN = "100729394289",
                             Language = "English",
                             PageCount = 212,
                             Price = 180000,
@@ -379,7 +376,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A romantic novel by English author Jane Austen",
                             Edition = "First edition",
-                            ISBN = "299561579059",
+                            ISBN = "502350181852",
                             Language = "English",
                             PageCount = 279,
                             Price = 90000,
@@ -396,7 +393,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow",
                             Edition = "First edition",
-                            ISBN = "608194139567",
+                            ISBN = "441485384332",
                             Language = "English",
                             PageCount = 198,
                             Price = 200000,
@@ -413,7 +410,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A detective novel by Agatha Christie",
                             Edition = "First edition",
-                            ISBN = "899539460748",
+                            ISBN = "674688820142",
                             Language = "English",
                             PageCount = 288,
                             Price = 85000,
@@ -430,7 +427,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A novel by John Green",
                             Edition = "First edition",
-                            ISBN = "297136524734",
+                            ISBN = "924388504937",
                             Language = "English",
                             PageCount = 313,
                             Price = 170000,
@@ -450,7 +447,6 @@ namespace API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -558,91 +554,91 @@ namespace API.Migrations
                         new
                         {
                             Id = 2,
-                            BookId = 2,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 3,
-                            BookId = 3,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 4,
-                            BookId = 4,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 5,
-                            BookId = 5,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 6,
-                            BookId = 6,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 7,
-                            BookId = 7,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 8,
-                            BookId = 8,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 9,
-                            BookId = 9,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 10,
-                            BookId = 10,
+                            BookId = 1,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 11,
-                            BookId = 11,
+                            BookId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 12,
-                            BookId = 12,
+                            BookId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 13,
-                            BookId = 13,
+                            BookId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 14,
-                            BookId = 14,
+                            BookId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 15,
-                            BookId = 15,
+                            BookId = 2,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 16,
-                            BookId = 1,
+                            BookId = 2,
                             StatusId = 1
                         },
                         new
@@ -654,97 +650,97 @@ namespace API.Migrations
                         new
                         {
                             Id = 18,
-                            BookId = 3,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 19,
-                            BookId = 4,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 20,
-                            BookId = 5,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 21,
-                            BookId = 6,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 22,
-                            BookId = 7,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 23,
-                            BookId = 8,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 24,
-                            BookId = 9,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 25,
-                            BookId = 10,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 26,
-                            BookId = 11,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 27,
-                            BookId = 12,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 28,
-                            BookId = 13,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 29,
-                            BookId = 14,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 30,
-                            BookId = 15,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 31,
-                            BookId = 1,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 32,
                             BookId = 2,
                             StatusId = 1
                         },
                         new
                         {
-                            Id = 33,
+                            Id = 19,
+                            BookId = 2,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 20,
+                            BookId = 2,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 21,
                             BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 22,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 23,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 24,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 25,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 26,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 27,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 28,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 29,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 30,
+                            BookId = 3,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 31,
+                            BookId = 4,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 32,
+                            BookId = 4,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 33,
+                            BookId = 4,
                             StatusId = 1
                         },
                         new
@@ -756,91 +752,91 @@ namespace API.Migrations
                         new
                         {
                             Id = 35,
-                            BookId = 5,
+                            BookId = 4,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 36,
-                            BookId = 6,
+                            BookId = 4,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 37,
-                            BookId = 7,
+                            BookId = 4,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 38,
-                            BookId = 8,
+                            BookId = 4,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 39,
-                            BookId = 9,
+                            BookId = 4,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 40,
-                            BookId = 10,
+                            BookId = 4,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 41,
-                            BookId = 11,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 42,
-                            BookId = 12,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 43,
-                            BookId = 13,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 44,
-                            BookId = 14,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 45,
-                            BookId = 15,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 46,
-                            BookId = 1,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 47,
-                            BookId = 2,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 48,
-                            BookId = 3,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 49,
-                            BookId = 4,
+                            BookId = 5,
                             StatusId = 1
                         },
                         new
@@ -858,91 +854,91 @@ namespace API.Migrations
                         new
                         {
                             Id = 52,
-                            BookId = 7,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 53,
-                            BookId = 8,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 54,
-                            BookId = 9,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 55,
-                            BookId = 10,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 56,
-                            BookId = 11,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 57,
-                            BookId = 12,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 58,
-                            BookId = 13,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 59,
-                            BookId = 14,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 60,
-                            BookId = 15,
+                            BookId = 6,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 61,
-                            BookId = 1,
+                            BookId = 7,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 62,
-                            BookId = 2,
+                            BookId = 7,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 63,
-                            BookId = 3,
+                            BookId = 7,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 64,
-                            BookId = 4,
+                            BookId = 7,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 65,
-                            BookId = 5,
+                            BookId = 7,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 66,
-                            BookId = 6,
+                            BookId = 7,
                             StatusId = 1
                         },
                         new
@@ -954,97 +950,97 @@ namespace API.Migrations
                         new
                         {
                             Id = 68,
-                            BookId = 8,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 69,
-                            BookId = 9,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 70,
-                            BookId = 10,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 71,
-                            BookId = 11,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 72,
-                            BookId = 12,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 73,
-                            BookId = 13,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 74,
-                            BookId = 14,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 75,
-                            BookId = 15,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 76,
-                            BookId = 1,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 77,
-                            BookId = 2,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 78,
-                            BookId = 3,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 79,
-                            BookId = 4,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 80,
-                            BookId = 5,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 81,
-                            BookId = 6,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 82,
                             BookId = 7,
                             StatusId = 1
                         },
                         new
                         {
-                            Id = 83,
+                            Id = 69,
+                            BookId = 7,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 70,
+                            BookId = 7,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 71,
                             BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 72,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 73,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 74,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 75,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 76,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 77,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 78,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 79,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 80,
+                            BookId = 8,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 81,
+                            BookId = 9,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 82,
+                            BookId = 9,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 83,
+                            BookId = 9,
                             StatusId = 1
                         },
                         new
@@ -1056,91 +1052,91 @@ namespace API.Migrations
                         new
                         {
                             Id = 85,
-                            BookId = 10,
+                            BookId = 9,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 86,
-                            BookId = 11,
+                            BookId = 9,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 87,
-                            BookId = 12,
+                            BookId = 9,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 88,
-                            BookId = 13,
+                            BookId = 9,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 89,
-                            BookId = 14,
+                            BookId = 9,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 90,
-                            BookId = 15,
+                            BookId = 9,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 91,
-                            BookId = 1,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 92,
-                            BookId = 2,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 93,
-                            BookId = 3,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 94,
-                            BookId = 4,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 95,
-                            BookId = 5,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 96,
-                            BookId = 6,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 97,
-                            BookId = 7,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 98,
-                            BookId = 8,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 99,
-                            BookId = 9,
+                            BookId = 10,
                             StatusId = 1
                         },
                         new
@@ -1158,91 +1154,91 @@ namespace API.Migrations
                         new
                         {
                             Id = 102,
-                            BookId = 12,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 103,
-                            BookId = 13,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 104,
-                            BookId = 14,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 105,
-                            BookId = 15,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 106,
-                            BookId = 1,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 107,
-                            BookId = 2,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 108,
-                            BookId = 3,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 109,
-                            BookId = 4,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 110,
-                            BookId = 5,
+                            BookId = 11,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 111,
-                            BookId = 6,
+                            BookId = 12,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 112,
-                            BookId = 7,
+                            BookId = 12,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 113,
-                            BookId = 8,
+                            BookId = 12,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 114,
-                            BookId = 9,
+                            BookId = 12,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 115,
-                            BookId = 10,
+                            BookId = 12,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 116,
-                            BookId = 11,
+                            BookId = 12,
                             StatusId = 1
                         },
                         new
@@ -1254,97 +1250,97 @@ namespace API.Migrations
                         new
                         {
                             Id = 118,
-                            BookId = 13,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 119,
-                            BookId = 14,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 120,
-                            BookId = 15,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 121,
-                            BookId = 1,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 122,
-                            BookId = 2,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 123,
-                            BookId = 3,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 124,
-                            BookId = 4,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 125,
-                            BookId = 5,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 126,
-                            BookId = 6,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 127,
-                            BookId = 7,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 128,
-                            BookId = 8,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 129,
-                            BookId = 9,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 130,
-                            BookId = 10,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 131,
-                            BookId = 11,
-                            StatusId = 1
-                        },
-                        new
-                        {
-                            Id = 132,
                             BookId = 12,
                             StatusId = 1
                         },
                         new
                         {
-                            Id = 133,
+                            Id = 119,
+                            BookId = 12,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 120,
+                            BookId = 12,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 121,
                             BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 122,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 123,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 124,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 125,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 126,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 127,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 128,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 129,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 130,
+                            BookId = 13,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 131,
+                            BookId = 14,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 132,
+                            BookId = 14,
+                            StatusId = 1
+                        },
+                        new
+                        {
+                            Id = 133,
+                            BookId = 14,
                             StatusId = 1
                         },
                         new
@@ -1356,91 +1352,91 @@ namespace API.Migrations
                         new
                         {
                             Id = 135,
-                            BookId = 15,
+                            BookId = 14,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 136,
-                            BookId = 1,
+                            BookId = 14,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 137,
-                            BookId = 2,
+                            BookId = 14,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 138,
-                            BookId = 3,
+                            BookId = 14,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 139,
-                            BookId = 4,
+                            BookId = 14,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 140,
-                            BookId = 5,
+                            BookId = 14,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 141,
-                            BookId = 6,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 142,
-                            BookId = 7,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 143,
-                            BookId = 8,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 144,
-                            BookId = 9,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 145,
-                            BookId = 10,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 146,
-                            BookId = 11,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 147,
-                            BookId = 12,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 148,
-                            BookId = 13,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
                         {
                             Id = 149,
-                            BookId = 14,
+                            BookId = 15,
                             StatusId = 1
                         },
                         new
@@ -1465,7 +1461,7 @@ namespace API.Migrations
                     b.Property<int>("InstanceId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ReturnedDate")
+                    b.Property<DateTime?>("ReturnedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
@@ -1489,7 +1485,6 @@ namespace API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -1574,7 +1569,6 @@ namespace API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
@@ -1644,7 +1638,6 @@ namespace API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -1655,7 +1648,6 @@ namespace API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 

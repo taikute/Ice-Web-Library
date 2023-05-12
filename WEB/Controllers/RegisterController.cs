@@ -19,6 +19,8 @@ namespace WEB.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(User user)
         {
+            user.IsActived = true;
+            user.IsOnline = false;
             await _apiHelper.Post(user, "Users");
             return RedirectToAction("Index", "Login");
         }

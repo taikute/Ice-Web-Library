@@ -51,16 +51,16 @@ namespace API.Data
                 );
 
             modelBuilder.Entity<Category>().HasData(
-                new Category { CategoryId = 1, Name = "Detective", Description = "Mystery and crime novels" },
-                new Category { CategoryId = 2, Name = "Art", Description = "Books about art, artists and art history" },
-                new Category { CategoryId = 3, Name = "Science", Description = "Books about natural science, mathematics, and technology" },
-                new Category { CategoryId = 4, Name = "Fiction", Description = "Books about imaginary people and events" },
-                new Category { CategoryId = 5, Name = "History", Description = "Books about historical events and figures" },
-                new Category { CategoryId = 6, Name = "Biography", Description = "Books about people's lives and experiences" },
-                new Category { CategoryId = 7, Name = "Travel", Description = "Books about travel destinations and experiences" },
-                new Category { CategoryId = 8, Name = "Business", Description = "Books about business management, entrepreneurship, and finance" },
-                new Category { CategoryId = 9, Name = "Cooking", Description = "Books about cooking techniques, recipes, and ingredients" },
-                new Category { CategoryId = 10, Name = "Self-help", Description = "Books about personal development, motivation, and success" }
+                new Category { Id = 1, Name = "Detective", Description = "Mystery and crime novels" },
+                new Category { Id = 2, Name = "Art", Description = "Books about art, artists and art history" },
+                new Category { Id = 3, Name = "Science", Description = "Books about natural science, mathematics, and technology" },
+                new Category { Id = 4, Name = "Fiction", Description = "Books about imaginary people and events" },
+                new Category { Id = 5, Name = "History", Description = "Books about historical events and figures" },
+                new Category { Id = 6, Name = "Biography", Description = "Books about people's lives and experiences" },
+                new Category { Id = 7, Name = "Travel", Description = "Books about travel destinations and experiences" },
+                new Category { Id = 8, Name = "Business", Description = "Books about business management, entrepreneurship, and finance" },
+                new Category { Id = 9, Name = "Cooking", Description = "Books about cooking techniques, recipes, and ingredients" },
+                new Category { Id = 10, Name = "Self-help", Description = "Books about personal development, motivation, and success" }
             );
 
             modelBuilder.Entity<Author>().HasData(
@@ -118,12 +118,12 @@ namespace API.Data
 
             //Add Instances
             int id = 1;
-            for (int i = 1; i <= 10; i++)
+            for (int i = 1; i <= 15; i++)
             {
-                for (int j = 1; j <= 15; j++)
+                for (int j = 1; j <= 10; j++)
                 {
                     modelBuilder.Entity<Instance>().HasData(
-                        new Instance { Id = id, BookId = j, StatusId = 1 }
+                        new Instance { Id = id, BookId = i, StatusId = 1 }
                         );
                     id++;
                 }

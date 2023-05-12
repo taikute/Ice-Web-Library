@@ -15,21 +15,18 @@ namespace API.Data
         [Required, Range(1, int.MaxValue, ErrorMessage = "Invalid page count!")] public int PageCount { get; set; } = 99;
         [Required, Range(0, int.MaxValue, ErrorMessage = "InvalId price!")] public int Price { get; set; } = 100000;
         [Required, Range(1, int.MaxValue, ErrorMessage = "InvalId quantity!")] public int Quantity { get; set; } = 1;
-
-        #region AllowNull
-        [AllowNull, StringLength(50, ErrorMessage = "Max 50 charactor!")] public string Title { get; set; }
-        [AllowNull, StringLength(200, ErrorMessage = "Max 200 charactor!")] public string Description { get; set; }
-        [AllowNull, StringLength(4, ErrorMessage = "Invalid year!")] public string PublishYear { get; set; }
-        [AllowNull] public string CoverImagePath { get; set; } = "~/1.jpg";
-        [AllowNull, StringLength(30)] public string Language { get; set; } = "English";
-        [AllowNull, StringLength(30, ErrorMessage = "Max 30 charactor!")] public string Edition { get; set; }
-        #endregion
+        [Required, StringLength(50, ErrorMessage = "Max 50 charactor!")] public string Title { get; set; } = "NewTitle";
+        [StringLength(200, ErrorMessage = "Max 200 charactor!")] public string? Description { get; set; }
+        [Required, StringLength(4, ErrorMessage = "Invalid year!")] public string PublishYear { get; set; }
+        public string? CoverImagePath { get; set; } = "~/1.jpg";
+        [Required, StringLength(30)] public string Language { get; set; } = "English";
+        [Required, StringLength(30, ErrorMessage = "Max 30 charactor!")] public string Edition { get; set; }
 
         #region ForeignKey
-        [AllowNull] public virtual Author Author { get; set; }
-        [AllowNull] public virtual Category Category { get; set; }
-        [AllowNull] public virtual Publisher Publisher { get; set; }
-        [AllowNull] public virtual ICollection<Instance> Instance { get; set; }
+        public virtual Author? Author { get; set; }
+        public virtual Category? Category { get; set; }
+        public virtual Publisher? Publisher { get; set; }
+        public virtual ICollection<Instance>? Instance { get; set; }
         #endregion
     }
 }

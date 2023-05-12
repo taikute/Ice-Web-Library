@@ -31,10 +31,10 @@ namespace API.Controllers
         public async Task<IActionResult> PostUser(User user)
         {
             var users = await _userRepos.GetAll();
-            if (users.Any(u => u.Email == user.Email) || users.Any(u => u.Username == user.Username))
-            {
-                return BadRequest("Email or UserName is exists in database!");
-            }
+            if (users.Any(u => u.Email == user.Email))
+                return BadRequest("Email is exists in database!");
+            if (users.Any(u => u.Username == user.Username))
+                return BadRequest("Username is exists in database!");
             user.Id = 0;
             user.IsActived = true;
             user.IsOnline = false;
@@ -45,7 +45,7 @@ namespace API.Controllers
             await _userRepos.Create(user);
             return NoContent();
         }
-        [HttpPut("{id}/{isOnline}")]
+        [HttpPut("ChangeStatus/{id}/{isOnline}")]
         public async Task<IActionResult> ChangeStatus(int id, bool isOnline)
         {
             var user = await _userRepos.GetById(id);

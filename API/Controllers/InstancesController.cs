@@ -24,5 +24,11 @@ namespace API.Controllers
         {
             return Ok(await _instanceRepos.GetById(id));
         }
+        [HttpPut]
+        public async Task<IActionResult> PutInstance(Instance instance)
+        {
+            await _instanceRepos.Update(instance);
+            return NoContent();
+        }
     }
 }

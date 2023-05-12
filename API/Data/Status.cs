@@ -9,6 +9,6 @@ namespace API.Data
         public int Id { get; set; }
         [Required, StringLength(10)] public string Name { get; set; } = "";
 
-        [AllowNull] public virtual ICollection<Instance> Instances { get; set; }
+        public virtual ICollection<Instance>? Instances { get; set; }
     }
 }

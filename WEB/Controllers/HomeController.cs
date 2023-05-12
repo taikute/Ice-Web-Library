@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using System.Diagnostics;
 using WEB.Helpers;
 using WEB.Models;
@@ -11,15 +12,25 @@ namespace WEB.Controllers
     {
         readonly ILogger<HomeController> _logger;
         readonly ApiHelper _apiHelper;
-        
+
         public HomeController(ILogger<HomeController> logger, ApiHelper apiHelper)
         {
             _logger = logger;
             _apiHelper = apiHelper;
 
         }
-        public IActionResult Index()
+        [HttpGet("{status?}")]
+        public IActionResult Index(int? status)
         {
+            ViewBag.RoleInvalid = false;
+            ViewBag.LogoutSuccess = false;
+            ViewBag.LoanSuccess = false;
+            if (status != null)
+            {
+                if (status == 1) ViewBag.RoleInvalid = true;
+                if (status == 2) ViewBag.LogoutSuccess = true;
+                if (status == 3) ViewBag.LoanSuccess = true;
+            }
             return View();
         }
         [Route("Privacy")]
@@ -32,7 +43,7 @@ namespace WEB.Controllers
         {
             ViewBag.SearchTerm = searchTerm;
             var books = await _apiHelper.GetAll<Book>("Books")!;
-            foreach (var book in books)
+            foreach (var book in books!)
             {
                 book.Author = await _apiHelper.GetByID<Author>(book.AuthorId, "Authors")!;
                 book.Category = await _apiHelper.GetByID<Category>(book.CategoryId, "Categories")!;

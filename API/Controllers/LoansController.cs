@@ -35,9 +35,6 @@ namespace API.Controllers
         public async Task<IActionResult> PostLoan(Loan loan)
         {
             await _loanRepos.Create(loan);
-            //var instance = await _instanceRepos.GetById(loan.InstanceId)!;
-            //instance!.StatusId = 2;
-            //await _instanceRepos.Update(instance);
             return NoContent();
         }
     }

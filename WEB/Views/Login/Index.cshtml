@@ -3,6 +3,13 @@
     ViewData["Title"] = "Index";
 }
 
+@if (ViewBag.LoginRequire)
+{
+    <script>
+        $(document).ready(function () { createAlert("Please login to continue.", "warning"); });
+    </script>
+}
+
 <div class="login-container">
     <form class="login-form" asp-action="Login">
         <div class="text-center"><h1 class="display-4">Login</h1></div>
@@ -22,6 +29,8 @@
         </div>
     </form>
 </div>
+
+<!--login-container style-->
 <style>
     .login-container {
         display: flex;
@@ -72,5 +81,4 @@
             .login-form button[type="submit"]:hover {
                 background-color: #0069d9;
             }
-
 </style>
