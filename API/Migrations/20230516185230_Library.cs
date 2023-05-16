@@ -31,14 +31,14 @@ namespace API.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,7 +74,7 @@ namespace API.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -114,7 +114,7 @@ namespace API.Migrations
                         name: "FK_Books_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "CategoryId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Books_Publishers_PublisherId",
@@ -184,7 +184,8 @@ namespace API.Migrations
                     InstanceId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     BorrowedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ReturnedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    ReturnedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    StatusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -222,7 +223,7 @@ namespace API.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "CategoryId", "Description", "Name" },
+                columns: new[] { "Id", "Description", "Name" },
                 values: new object[,]
                 {
                     { 1, "Mystery and crime novels", "Detective" },
@@ -271,7 +272,7 @@ namespace API.Migrations
                 {
                     { 1, "Available" },
                     { 2, "On Loan" },
-                    { 3, "Broken" }
+                    { 3, "Broken or Lost" }
                 });
 
             migrationBuilder.InsertData(
@@ -279,21 +280,21 @@ namespace API.Migrations
                 columns: new[] { "Id", "AuthorId", "CategoryId", "CoverImagePath", "Description", "Edition", "ISBN", "Language", "PageCount", "Price", "PublishYear", "PublisherId", "Quantity", "Title" },
                 values: new object[,]
                 {
-                    { 1, 1, 3, "~/1.jpg", "A theoretical physicist's introduction to the theory of relativity", "1st edition", "286121407018", "English", 160, 150000, "1916", 1, 5, "Relativity: The Special and General Theory" },
-                    { 2, 2, 4, "~/1.jpg", "A romantic novel about the pride and prejudices of the British upper class in the early 19th century", "2nd edition", "395604110964", "English", 279, 100000, "1813", 2, 3, "Pride and Prejudice" },
-                    { 3, 3, 3, "~/1.jpg", "A popular science book about cosmology and the universe", "10th anniversary edition", "620156287559", "English", 212, 120000, "1988", 3, 7, "A Brief History of Time" },
-                    { 4, 4, 4, "~/1.jpg", "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry", "1st edition", "849650785612", "English", 223, 130000, "1997", 4, 2, "Harry Potter and the Philosopher's Stone" },
-                    { 5, 5, 1, "~/1.jpg", "A detective novel about a murder on a train, featuring famous detective Hercule Poirot", "2nd edition", "483309275569", "English", 256, 110000, "1934", 1, 4, "Murder on the Orient Express" },
-                    { 6, 6, 3, "~/1.jpg", "An introduction to astrophysics for laypeople", "1st edition", "610688609855", "English", 224, 140000, "2017", 5, 6, "Astrophysics for People in a Hurry" },
-                    { 7, 7, 2, "~/1.jpg", "An annotated edition of the classic satire by Jonathan Swift", "3rd edition", "175605312458", "English", 522, 105000, "1960", 2, 1, "The Annotated Gulliver's Travels" },
-                    { 8, 8, 1, "~/1.jpg", "A thriller novel by American author Dan Brown", "First edition", "170779538542", "English", 481, 150000, "2003", 4, 10, "The Da Vinci Code" },
-                    { 9, 9, 5, "~/1.jpg", "An autobiography by Michelle Obama", "First edition", "399942877594", "English", 426, 250000, "2018", 3, 8, "Becoming" },
-                    { 10, 9, 4, "~/1.jpg", "A children's fantasy novel by J.R.R. Tolkien", "Revised edition", "878015788309", "English", 310, 120000, "1937", 1, 12, "The Hobbit" },
-                    { 11, 3, 3, "~/1.jpg", "A popular science book by British physicist Stephen Hawking", "First edition", "100729394289", "English", 212, 180000, "1988", 2, 5, "A Brief History of Time" },
-                    { 12, 2, 4, "~/1.jpg", "A romantic novel by English author Jane Austen", "First edition", "502350181852", "English", 279, 90000, "1813", 5, 15, "Pride and Prejudice" },
-                    { 13, 3, 3, "~/1.jpg", "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow", "First edition", "441485384332", "English", 198, 200000, "2010", 4, 3, "The Grand Design" },
-                    { 14, 5, 1, "~/1.jpg", "A detective novel by Agatha Christie", "First edition", "674688820142", "English", 288, 85000, "1926", 1, 6, "The Murder of Roger Ackroyd" },
-                    { 15, 8, 4, "~/1.jpg", "A novel by John Green", "First edition", "924388504937", "English", 313, 170000, "2012", 2, 9, "The Fault in Our Stars" }
+                    { 1, 1, 3, "~/1.jpg", "A theoretical physicist's introduction to the theory of relativity", "1st edition", "558737123944", "English", 160, 150000, "1916", 1, 5, "Relativity: The Special and General Theory" },
+                    { 2, 2, 4, "~/1.jpg", "A romantic novel about the pride and prejudices of the British upper class in the early 19th century", "2nd edition", "537149237955", "English", 279, 100000, "1813", 2, 3, "Pride and Prejudice" },
+                    { 3, 3, 3, "~/1.jpg", "A popular science book about cosmology and the universe", "10th anniversary edition", "857903604410", "English", 212, 120000, "1988", 3, 7, "A Brief History of Time" },
+                    { 4, 4, 4, "~/1.jpg", "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry", "1st edition", "833307576657", "English", 223, 130000, "1997", 4, 2, "Harry Potter and the Philosopher's Stone" },
+                    { 5, 5, 1, "~/1.jpg", "A detective novel about a murder on a train, featuring famous detective Hercule Poirot", "2nd edition", "185584091543", "English", 256, 110000, "1934", 1, 4, "Murder on the Orient Express" },
+                    { 6, 6, 3, "~/1.jpg", "An introduction to astrophysics for laypeople", "1st edition", "541417360386", "English", 224, 140000, "2017", 5, 6, "Astrophysics for People in a Hurry" },
+                    { 7, 7, 2, "~/1.jpg", "An annotated edition of the classic satire by Jonathan Swift", "3rd edition", "095609968399", "English", 522, 105000, "1960", 2, 1, "The Annotated Gulliver's Travels" },
+                    { 8, 8, 1, "~/1.jpg", "A thriller novel by American author Dan Brown", "First edition", "806367510999", "English", 481, 150000, "2003", 4, 10, "The Da Vinci Code" },
+                    { 9, 9, 5, "~/1.jpg", "An autobiography by Michelle Obama", "First edition", "882528455548", "English", 426, 250000, "2018", 3, 8, "Becoming" },
+                    { 10, 9, 4, "~/1.jpg", "A children's fantasy novel by J.R.R. Tolkien", "Revised edition", "856798075539", "English", 310, 120000, "1937", 1, 12, "The Hobbit" },
+                    { 11, 3, 3, "~/1.jpg", "A popular science book by British physicist Stephen Hawking", "First edition", "369164640784", "English", 212, 180000, "1988", 2, 5, "A Brief History of Time" },
+                    { 12, 2, 4, "~/1.jpg", "A romantic novel by English author Jane Austen", "First edition", "859926973766", "English", 279, 90000, "1813", 5, 15, "Pride and Prejudice" },
+                    { 13, 3, 3, "~/1.jpg", "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow", "First edition", "827884499151", "English", 198, 200000, "2010", 4, 3, "The Grand Design" },
+                    { 14, 5, 1, "~/1.jpg", "A detective novel by Agatha Christie", "First edition", "798110363229", "English", 288, 85000, "1926", 1, 6, "The Murder of Roger Ackroyd" },
+                    { 15, 8, 4, "~/1.jpg", "A novel by John Green", "First edition", "086584680771", "English", 313, 170000, "2012", 2, 9, "The Fault in Our Stars" }
                 });
 
             migrationBuilder.InsertData(
@@ -301,11 +302,11 @@ namespace API.Migrations
                 columns: new[] { "Id", "Email", "IsActived", "IsOnline", "Name", "Password", "RoleId", "Username" },
                 values: new object[,]
                 {
-                    { 1, "ice@gmail.com", true, false, "Ice", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", 3, "admin" },
-                    { 2, "ceri@gmail.com", true, false, "Ceri", "LEReHATfTiR8IIkkW2j8gR9yj30w/xSm1kpPqsWOYnA=", 2, "librarian" },
-                    { 3, "user1@gmail.com", true, false, "User1", "CgQblGLKpKMbrDVn4Lbm/ZEAeH2yq0M9lvbReMq/zpA=", 1, "user1" },
-                    { 4, "user2@gmail.com", true, false, "User2", "YCXRj+SKvUUWhSjxioLiZd2Y1CGnCEqgn2GzQXA5AaM=", 1, "user2" },
-                    { 5, "user3@gmail.com", true, false, "User3", "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=", 1, "user3" }
+                    { 1, "admin@gmail.com", true, false, "Admin Name", "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=", 3, "admin" },
+                    { 2, "librarian@gmail.com", true, false, "Librarian Name", "LEReHATfTiR8IIkkW2j8gR9yj30w/xSm1kpPqsWOYnA=", 2, "librarian" },
+                    { 3, "user1@gmail.com", true, false, "User1 Name", "CgQblGLKpKMbrDVn4Lbm/ZEAeH2yq0M9lvbReMq/zpA=", 1, "user1" },
+                    { 4, "user2@gmail.com", true, false, "User2 Name", "YCXRj+SKvUUWhSjxioLiZd2Y1CGnCEqgn2GzQXA5AaM=", 1, "user2" },
+                    { 5, "user3@gmail.com", true, false, "User3 Name", "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=", 1, "user3" }
                 });
 
             migrationBuilder.InsertData(

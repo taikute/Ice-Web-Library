@@ -5,7 +5,7 @@
 }
 
 <div class="login-container">
-    <form class="login-form" asp-action="Register" method="post">
+    <form class="login-form" asp-action="Register" method="post" enctype="multipart/form-data">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" value="0" />
 
@@ -47,6 +47,7 @@
 
 <style>
     .login-container {
+        margin-top: 50px;
         display: flex;
         justify-content: center;
         align-items: center;

@@ -12,17 +12,25 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
+        [Route("Index")]
         public IActionResult Index()
         {
             return View();
         }
-        [HttpPost]
+        [HttpPost, Route("Index")]
         public async Task<IActionResult> Register(User user)
         {
             user.IsActived = true;
             user.IsOnline = false;
-            await _apiHelper.Post(user, "Users");
-            return RedirectToAction("Index", "Login");
+            if (ModelState.IsValid)
+            {
+                await _apiHelper.Post(user, "Users");
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Register", new { user });
+            }
         }
     }
 }

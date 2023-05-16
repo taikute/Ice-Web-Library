@@ -186,7 +186,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A theoretical physicist's introduction to the theory of relativity",
                             Edition = "1st edition",
-                            ISBN = "286121407018",
+                            ISBN = "558737123944",
                             Language = "English",
                             PageCount = 160,
                             Price = 150000,
@@ -203,7 +203,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A romantic novel about the pride and prejudices of the British upper class in the early 19th century",
                             Edition = "2nd edition",
-                            ISBN = "395604110964",
+                            ISBN = "537149237955",
                             Language = "English",
                             PageCount = 279,
                             Price = 100000,
@@ -220,7 +220,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular science book about cosmology and the universe",
                             Edition = "10th anniversary edition",
-                            ISBN = "620156287559",
+                            ISBN = "857903604410",
                             Language = "English",
                             PageCount = 212,
                             Price = 120000,
@@ -237,7 +237,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry",
                             Edition = "1st edition",
-                            ISBN = "849650785612",
+                            ISBN = "833307576657",
                             Language = "English",
                             PageCount = 223,
                             Price = 130000,
@@ -254,7 +254,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A detective novel about a murder on a train, featuring famous detective Hercule Poirot",
                             Edition = "2nd edition",
-                            ISBN = "483309275569",
+                            ISBN = "185584091543",
                             Language = "English",
                             PageCount = 256,
                             Price = 110000,
@@ -271,7 +271,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "An introduction to astrophysics for laypeople",
                             Edition = "1st edition",
-                            ISBN = "610688609855",
+                            ISBN = "541417360386",
                             Language = "English",
                             PageCount = 224,
                             Price = 140000,
@@ -288,7 +288,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "An annotated edition of the classic satire by Jonathan Swift",
                             Edition = "3rd edition",
-                            ISBN = "175605312458",
+                            ISBN = "095609968399",
                             Language = "English",
                             PageCount = 522,
                             Price = 105000,
@@ -305,7 +305,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A thriller novel by American author Dan Brown",
                             Edition = "First edition",
-                            ISBN = "170779538542",
+                            ISBN = "806367510999",
                             Language = "English",
                             PageCount = 481,
                             Price = 150000,
@@ -322,7 +322,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "An autobiography by Michelle Obama",
                             Edition = "First edition",
-                            ISBN = "399942877594",
+                            ISBN = "882528455548",
                             Language = "English",
                             PageCount = 426,
                             Price = 250000,
@@ -339,7 +339,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A children's fantasy novel by J.R.R. Tolkien",
                             Edition = "Revised edition",
-                            ISBN = "878015788309",
+                            ISBN = "856798075539",
                             Language = "English",
                             PageCount = 310,
                             Price = 120000,
@@ -356,7 +356,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular science book by British physicist Stephen Hawking",
                             Edition = "First edition",
-                            ISBN = "100729394289",
+                            ISBN = "369164640784",
                             Language = "English",
                             PageCount = 212,
                             Price = 180000,
@@ -373,7 +373,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A romantic novel by English author Jane Austen",
                             Edition = "First edition",
-                            ISBN = "502350181852",
+                            ISBN = "859926973766",
                             Language = "English",
                             PageCount = 279,
                             Price = 90000,
@@ -390,7 +390,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow",
                             Edition = "First edition",
-                            ISBN = "441485384332",
+                            ISBN = "827884499151",
                             Language = "English",
                             PageCount = 198,
                             Price = 200000,
@@ -407,7 +407,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A detective novel by Agatha Christie",
                             Edition = "First edition",
-                            ISBN = "674688820142",
+                            ISBN = "798110363229",
                             Language = "English",
                             PageCount = 288,
                             Price = 85000,
@@ -424,7 +424,7 @@ namespace API.Migrations
                             CoverImagePath = "~/1.jpg",
                             Description = "A novel by John Green",
                             Edition = "First edition",
-                            ISBN = "924388504937",
+                            ISBN = "086584680771",
                             Language = "English",
                             PageCount = 313,
                             Price = 170000,
@@ -437,11 +437,11 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Data.Category", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(200)
@@ -452,68 +452,68 @@ namespace API.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
-                    b.HasKey("CategoryId");
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
 
                     b.HasData(
                         new
                         {
-                            CategoryId = 1,
+                            Id = 1,
                             Description = "Mystery and crime novels",
                             Name = "Detective"
                         },
                         new
                         {
-                            CategoryId = 2,
+                            Id = 2,
                             Description = "Books about art, artists and art history",
                             Name = "Art"
                         },
                         new
                         {
-                            CategoryId = 3,
+                            Id = 3,
                             Description = "Books about natural science, mathematics, and technology",
                             Name = "Science"
                         },
                         new
                         {
-                            CategoryId = 4,
+                            Id = 4,
                             Description = "Books about imaginary people and events",
                             Name = "Fiction"
                         },
                         new
                         {
-                            CategoryId = 5,
+                            Id = 5,
                             Description = "Books about historical events and figures",
                             Name = "History"
                         },
                         new
                         {
-                            CategoryId = 6,
+                            Id = 6,
                             Description = "Books about people's lives and experiences",
                             Name = "Biography"
                         },
                         new
                         {
-                            CategoryId = 7,
+                            Id = 7,
                             Description = "Books about travel destinations and experiences",
                             Name = "Travel"
                         },
                         new
                         {
-                            CategoryId = 8,
+                            Id = 8,
                             Description = "Books about business management, entrepreneurship, and finance",
                             Name = "Business"
                         },
                         new
                         {
-                            CategoryId = 9,
+                            Id = 9,
                             Description = "Books about cooking techniques, recipes, and ingredients",
                             Name = "Cooking"
                         },
                         new
                         {
-                            CategoryId = 10,
+                            Id = 10,
                             Description = "Books about personal development, motivation, and success",
                             Name = "Self-help"
                         });
@@ -1461,6 +1461,9 @@ namespace API.Migrations
                     b.Property<DateTime?>("ReturnedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -1601,8 +1604,8 @@ namespace API.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -1622,7 +1625,7 @@ namespace API.Migrations
                         new
                         {
                             Id = 3,
-                            Name = "Broken"
+                            Name = "Broken or Lost"
                         });
                 });
 
@@ -1672,10 +1675,10 @@ namespace API.Migrations
                         new
                         {
                             Id = 1,
-                            Email = "ice@gmail.com",
+                            Email = "admin@gmail.com",
                             IsActived = true,
                             IsOnline = false,
-                            Name = "Ice",
+                            Name = "Admin Name",
                             Password = "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=",
                             RoleId = 3,
                             Username = "admin"
@@ -1683,10 +1686,10 @@ namespace API.Migrations
                         new
                         {
                             Id = 2,
-                            Email = "ceri@gmail.com",
+                            Email = "librarian@gmail.com",
                             IsActived = true,
                             IsOnline = false,
-                            Name = "Ceri",
+                            Name = "Librarian Name",
                             Password = "LEReHATfTiR8IIkkW2j8gR9yj30w/xSm1kpPqsWOYnA=",
                             RoleId = 2,
                             Username = "librarian"
@@ -1697,7 +1700,7 @@ namespace API.Migrations
                             Email = "user1@gmail.com",
                             IsActived = true,
                             IsOnline = false,
-                            Name = "User1",
+                            Name = "User1 Name",
                             Password = "CgQblGLKpKMbrDVn4Lbm/ZEAeH2yq0M9lvbReMq/zpA=",
                             RoleId = 1,
                             Username = "user1"
@@ -1708,7 +1711,7 @@ namespace API.Migrations
                             Email = "user2@gmail.com",
                             IsActived = true,
                             IsOnline = false,
-                            Name = "User2",
+                            Name = "User2 Name",
                             Password = "YCXRj+SKvUUWhSjxioLiZd2Y1CGnCEqgn2GzQXA5AaM=",
                             RoleId = 1,
                             Username = "user2"
@@ -1719,7 +1722,7 @@ namespace API.Migrations
                             Email = "user3@gmail.com",
                             IsActived = true,
                             IsOnline = false,
-                            Name = "User3",
+                            Name = "User3 Name",
                             Password = "WGD68CtrxiIrpaylI1YPDjZMzYtnvuSG/ov3wB1JLMs=",
                             RoleId = 1,
                             Username = "user3"

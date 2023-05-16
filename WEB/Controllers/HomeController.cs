@@ -17,7 +17,6 @@ namespace WEB.Controllers
         {
             _logger = logger;
             _apiHelper = apiHelper;
-
         }
         [HttpGet("{status?}")]
         public IActionResult Index(int? status)

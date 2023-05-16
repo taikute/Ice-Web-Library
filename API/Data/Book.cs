@@ -17,10 +17,10 @@ namespace API.Data
         [Required, Range(1, int.MaxValue, ErrorMessage = "InvalId quantity!")] public int Quantity { get; set; } = 1;
         [Required, StringLength(50, ErrorMessage = "Max 50 charactor!")] public string Title { get; set; } = "NewTitle";
         [StringLength(200, ErrorMessage = "Max 200 charactor!")] public string? Description { get; set; }
-        [Required, StringLength(4, ErrorMessage = "Invalid year!")] public string PublishYear { get; set; }
+        [Required, StringLength(4, ErrorMessage = "Invalid year!")] public string? PublishYear { get; set; }
         public string? CoverImagePath { get; set; } = "~/1.jpg";
         [Required, StringLength(30)] public string Language { get; set; } = "English";
-        [Required, StringLength(30, ErrorMessage = "Max 30 charactor!")] public string Edition { get; set; }
+        [Required, StringLength(30, ErrorMessage = "Max 30 charactor!")] public string? Edition { get; set; }
 
         #region ForeignKey
         public virtual Author? Author { get; set; }

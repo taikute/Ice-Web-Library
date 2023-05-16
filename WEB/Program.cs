@@ -1,7 +1,3 @@
-using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 using WEB.Helpers;
 using WEB.Models;
 
@@ -13,12 +9,6 @@ builder.Services.AddSession();
 builder.Services.AddScoped<ApiHelper>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton(new MyAuthorization(1, 2, 3));
-//builder.Services.AddAuthorization();
-
-
-//builder.Services.AddIdentityCore<User>()
-//    .AddRoles<Role>()
-//    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -32,14 +22,21 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
 
-#region Add
-app.UseSession(); //Use TempData
-#endregion
+//Use TempData
+app.UseSession();
+
+//Update Quantity
+var apiHelper = new ApiHelper();
+var books = await apiHelper.GetAll<Book>("Books");
+var instances = await apiHelper.GetAll<Instance>("Instances");
+foreach (var book in books!)
+{
+    book.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
+    await apiHelper.Put(book, "Books");
+}
 
 app.MapControllerRoute(
     name: "default",

@@ -42,9 +42,9 @@
                         bool IsLogin = bool.Parse(HttpContext!.Session.GetString("IsLogin") ?? "false");
                         if (IsLogin)
                         {
-                            string username = HttpContext.Session.GetString("Username")!;
+                            string name = HttpContext.Session.GetString("Name")!;
                             <ul class="navbar-nav ms-auto">
-                                <a class="nav-link text-light" asp-controller="" asp-action="">Hello @username!</a>
+                                <a class="nav-link text-light" asp-controller="User" asp-action="Index">Hello @name!</a>
                                 <a class="nav-link text-light" asp-controller="Login" asp-action="Logout">Logout</a>
                             </ul>
                         }

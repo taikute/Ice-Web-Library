@@ -1,5 +1,4 @@
-﻿@using WEB.Models
-@model Book
+﻿@model WEB.Models.Book
 
 @{
     ViewData["Title"] = "Edit";
@@ -17,17 +16,17 @@
     <input type="hidden" asp-for="Id" />
     <div class="form-group">
         <label asp-for="AuthorId" class="control-label">Author Name</label>
-        <select asp-for="AuthorId" asp-items="@(new SelectList(authors, "AuthorId", "Name"))" class="form-control"></select>
+        <select asp-for="AuthorId" asp-items="@(new SelectList(authors, "Id", "Name"))" class="form-control"></select>
         <span asp-validation-for="AuthorId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="CategoryId" class="control-label">Category Name</label>
-        <select asp-for="CategoryId" asp-items="@(new SelectList(categories, "CategoryId", "Name"))" class="form-control"></select>
+        <select asp-for="CategoryId" asp-items="@(new SelectList(categories, "Id", "Name"))" class="form-control"></select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label asp-for="PublisherId" class="control-label">Publisher Name</label>
-        <select asp-for="PublisherId" asp-items="@(new SelectList(publishers, "PublisherId", "Name"))" class="form-control"></select>
+        <select asp-for="PublisherId" asp-items="@(new SelectList(publishers, "Id", "Name"))" class="form-control"></select>
         <span asp-validation-for="PublisherId" class="text-danger"></span>
     </div>
     <div class="form-group">

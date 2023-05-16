@@ -33,7 +33,7 @@ namespace API.Data
             modelBuilder.Entity<Status>().HasData(
                 new Status { Id = 1, Name = "Available" },
                 new Status { Id = 2, Name = "On Loan" },
-                new Status { Id = 3, Name = "Broken" }
+                new Status { Id = 3, Name = "Broken or Lost" }
                 );
 
             modelBuilder.Entity<Role>().HasData(
@@ -43,11 +43,11 @@ namespace API.Data
                 );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "Ice", Email = "ice@gmail.com", Username = "admin", Password = "admin", RoleId = 3 },
-                new User { Id = 2, Name = "Ceri", Email = "ceri@gmail.com", Username = "librarian", Password = "librarian", RoleId = 2 },
-                new User { Id = 3, Name = "User1", Email = "user1@gmail.com", Username = "user1", Password = "user1", RoleId = 1 },
-                new User { Id = 4, Name = "User2", Email = "user2@gmail.com", Username = "user2", Password = "user2", RoleId = 1 },
-                new User { Id = 5, Name = "User3", Email = "user3@gmail.com", Username = "user3", Password = "user3", RoleId = 1 }
+                new User { Id = 1, Name = "Admin Name", Email = "admin@gmail.com", Username = "admin", Password = "admin", RoleId = 3 },
+                new User { Id = 2, Name = "Librarian Name", Email = "librarian@gmail.com", Username = "librarian", Password = "librarian", RoleId = 2 },
+                new User { Id = 3, Name = "User1 Name", Email = "user1@gmail.com", Username = "user1", Password = "user1", RoleId = 1 },
+                new User { Id = 4, Name = "User2 Name", Email = "user2@gmail.com", Username = "user2", Password = "user2", RoleId = 1 },
+                new User { Id = 5, Name = "User3 Name", Email = "user3@gmail.com", Username = "user3", Password = "user3", RoleId = 1 }
                 );
 
             modelBuilder.Entity<Category>().HasData(

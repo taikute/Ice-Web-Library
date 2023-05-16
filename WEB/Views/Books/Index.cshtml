@@ -1,5 +1,4 @@
-﻿@using WEB.Models
-@model IEnumerable<Book>
+﻿@model IEnumerable<WEB.Models.Book>
 
 @{
     ViewData["Title"] = "Index";
@@ -10,6 +9,39 @@
 }
 
 <div class="text-center"><h1 class="display-4">Books</h1></div>
+
+<form action="/Books/Index" method="get">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <select id="authorId" name="authorId" class="form-control" asp-items="@(new SelectList(authors, "Id", "Name"))">
+                    <option value="">Select author</option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <select id="categoryId" name="categoryId" class="form-control" asp-items="@(new SelectList(categories, "Id", "Name"))">
+                    <option value="">Select category</option>
+                </select>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group">
+                <select id="publisherId" name="publisherId" class="form-control" asp-items="@(new SelectList(publishers, "Id", "Name"))">
+                    <option value="">Select publisher</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
 <div class="container">
     <div class="row">
         @foreach (var book in Model)

@@ -14,11 +14,12 @@ namespace WEB.Controllers
         }
 
         [HttpGet, Route("Index")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? userId)
         {
             ViewBag.LoanIsNull = false;
             var loans = await _apiHelper.GetAll<Loan>("Loans");
             if (loans == null) ViewBag.LoanIsNull = true;
+            if (userId != null) loans = loans!.Where(l => l.UserId == userId);
             return View(loans);
         }
 
@@ -41,6 +42,8 @@ namespace WEB.Controllers
             var instances = await _apiHelper.GetAll<Instance>("Instances");
             var instance = instances!.Where(i => i.BookId == id && i.StatusId == 1).FirstOrDefault();
             if (instance == null) return BadRequest($"Out of book id={id}!");
+
+            //Create Loan
             var loan = new Loan()
             {
                 Id = 0,
@@ -48,8 +51,16 @@ namespace WEB.Controllers
                 UserId = userId
             };
             await _apiHelper.Post(loan, "Loans");
+
+            //Update Status
             instance.StatusId = 2;
             await _apiHelper.Put(instance, "Instances");
+
+            //Update Quantity
+            var book = await _apiHelper.GetByID<Book>(instance.BookId, "Books");
+            book!.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
+            await _apiHelper.Put(book, "Books");
+
             return RedirectToAction("Index", "Home", new { status = 3 });
         }
     }

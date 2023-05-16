@@ -15,8 +15,8 @@ namespace WEB.Controllers
 
         #region Index
         [HttpGet, Route("Index")]
-        public async Task<IActionResult> Index(int limit = 6, int page = 1, bool asc = false,
-             int authorId = 0, int categoryId = 0, int publisherId = 0)
+        public async Task<IActionResult> Index(int? authorId, int? categoryId, int? publisherId,
+            bool? asc, int limit = 6, int page = 1)
         {
             var books = await _apiHelper.GetAll<Book>("Books");
             if (books == null) return BadRequest();
@@ -26,29 +26,32 @@ namespace WEB.Controllers
             ViewBag.PageCount = (bookCount % limit != 0) ? bookCount / limit + 1 : bookCount % limit;
 
             //Filter
-            //if (authorId > 0)
-            //{
-            //    books = books.Where(b => b.AuthorId == authorId);
-            //}
-            //if (categoryId > 0)
-            //{
-            //    books = books.Where(b => b.CategoryId == categoryId);
-            //}
-            //if (publisherId > 0)
-            //{
-            //    books = books.Where(b => b.PublisherId == publisherId);
-            //}
+            if (authorId != null)
+            {
+                books = books.Where(b => b.AuthorId == authorId);
+            }
+            if (categoryId != null)
+            {
+                books = books.Where(b => b.CategoryId == categoryId);
+            }
+            if (publisherId != null)
+            {
+                books = books.Where(b => b.PublisherId == publisherId);
+            }
 
             //Sort
-            //switch (asc)
-            //{
-            //    case true:
-            //        books = books.OrderBy(b => b.Title);
-            //        break;
-            //    case false:
-            //        books = books.OrderByDescending(b => b.Title);
-            //        break;
-            //}
+            if (asc != null)
+            {
+                switch (asc)
+                {
+                    case true:
+                        books = books.OrderBy(b => b.Title);
+                        break;
+                    case false:
+                        books = books.OrderByDescending(b => b.Title);
+                        break;
+                }
+            }
 
             //Paging
             int skip = (page - 1) * limit;
