@@ -1,13 +1,14 @@
-﻿@model WEB.Models.User
-@{
-    ViewData["Title"] = "Index";
-}
-
-@if (ViewBag.LoginRequire)
+﻿@if (ViewBag.LoginRequire)
 {
     <script>
         $(document).ready(function () { createAlert("Please login to continue.", "warning"); });
     </script>
+}
+
+@model WEB.Models.User
+
+@{
+    ViewData["Title"] = "Index";
 }
 
 <div class="login-container">
@@ -16,17 +17,15 @@
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Username" class="control-label"></label>
-            <input asp-for="Username" class="form-control" required />
+            <input value="user1" asp-for="Username" class="form-control" required />
             <span asp-validation-for="Username" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Password" class="control-label"></label>
-            <input asp-for="Password" type="password" class="form-control" id="password-input" required />
+            <input value="user1" asp-for="Password" type="password" class="form-control" id="password-input" required />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <div class="form-group">
-            <input type="submit" value="Login" class="btn btn-primary" />
-        </div>
+        <button class="btn btn-primary" type="submit">Login</button>
     </form>
 </div>
 

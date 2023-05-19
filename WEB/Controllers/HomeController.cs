@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
-using System.Diagnostics;
+﻿using Microsoft.AspNetCore.Mvc;
 using WEB.Helpers;
 using WEB.Models;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace WEB.Controllers
 {
@@ -24,11 +20,13 @@ namespace WEB.Controllers
             ViewBag.RoleInvalid = false;
             ViewBag.LogoutSuccess = false;
             ViewBag.LoanSuccess = false;
+            ViewBag.AlreadyLogin = false;
             if (status != null)
             {
                 if (status == 1) ViewBag.RoleInvalid = true;
                 if (status == 2) ViewBag.LogoutSuccess = true;
                 if (status == 3) ViewBag.LoanSuccess = true;
+                if (status == 4) ViewBag.AlreadyLogin = true;
             }
             return View();
         }

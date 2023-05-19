@@ -14,7 +14,7 @@ namespace WEB.Controllers
         }
 
         [Route("Index"), MyAuthorization(1)]
-        public async Task <IActionResult> Index()
+        public async Task<IActionResult> Index()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
             ViewBag.Username = HttpContext.Session.GetString("Username");

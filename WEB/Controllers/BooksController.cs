@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WEB.Models;
+using Microsoft.AspNetCore.Mvc.Routing;
 using WEB.Helpers;
+using WEB.Models;
 
 namespace WEB.Controllers
 {
@@ -8,36 +9,25 @@ namespace WEB.Controllers
     public class BooksController : Controller
     {
         readonly ApiHelper _apiHelper;
-        public BooksController(ApiHelper apiHelper)
+        readonly IUrlHelperFactory _urlHelperFactory;
+        public BooksController(ApiHelper apiHelper, IUrlHelperFactory urlHelperFactory)
         {
             _apiHelper = apiHelper;
+            _urlHelperFactory = urlHelperFactory;
         }
 
         #region Index
         [HttpGet, Route("Index")]
         public async Task<IActionResult> Index(int? authorId, int? categoryId, int? publisherId,
-            bool? asc, int limit = 6, int page = 1)
+            bool? asc, int limit = 18, int page = 1)
         {
             var books = await _apiHelper.GetAll<Book>("Books");
             if (books == null) return BadRequest();
 
-            //PageCount
-            int bookCount = books.Count();
-            ViewBag.PageCount = (bookCount % limit != 0) ? bookCount / limit + 1 : bookCount % limit;
-
             //Filter
-            if (authorId != null)
-            {
-                books = books.Where(b => b.AuthorId == authorId);
-            }
-            if (categoryId != null)
-            {
-                books = books.Where(b => b.CategoryId == categoryId);
-            }
-            if (publisherId != null)
-            {
-                books = books.Where(b => b.PublisherId == publisherId);
-            }
+            if (authorId != null) books = books.Where(b => b.AuthorId == authorId);
+            if (categoryId != null) books = books.Where(b => b.CategoryId == categoryId);
+            if (publisherId != null) books = books.Where(b => b.PublisherId == publisherId);
 
             //Sort
             if (asc != null)
@@ -53,6 +43,10 @@ namespace WEB.Controllers
                 }
             }
 
+            //PageCount
+            int bookCount = books.Count();
+            ViewBag.PageCount = (bookCount % limit != 0) ? bookCount / limit + 1 : bookCount / limit;
+
             //Paging
             int skip = (page - 1) * limit;
             books = books.Skip(skip).Take(limit);
@@ -60,6 +54,10 @@ namespace WEB.Controllers
             ViewBag.Authors = await _apiHelper.GetAll<Author>("Authors");
             ViewBag.Categories = await _apiHelper.GetAll<Category>("Categories");
             ViewBag.Publishers = await _apiHelper.GetAll<Publisher>("Publishers");
+            ViewBag.AuthorId = authorId;
+            ViewBag.CategoryId = categoryId;
+            ViewBag.PublisherId = publisherId;
+            ViewBag.CurrentPage = page;
             return View(books);
         }
         #endregion

@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Rác\**" />
+    <Content Remove="wwwroot\Rác\**" />
+    <EmbeddedResource Remove="wwwroot\Rác\**" />
+    <None Remove="wwwroot\Rác\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\search-icon.png" />
   </ItemGroup>
 
@@ -15,10 +22,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.6" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\book_cover\" />
   </ItemGroup>
 
 </Project>

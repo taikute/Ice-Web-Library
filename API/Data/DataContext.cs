@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Text;
 
 namespace API.Data
 {
@@ -59,9 +61,8 @@ namespace API.Data
                 new Category { Id = 6, Name = "Biography", Description = "Books about people's lives and experiences" },
                 new Category { Id = 7, Name = "Travel", Description = "Books about travel destinations and experiences" },
                 new Category { Id = 8, Name = "Business", Description = "Books about business management, entrepreneurship, and finance" },
-                new Category { Id = 9, Name = "Cooking", Description = "Books about cooking techniques, recipes, and ingredients" },
-                new Category { Id = 10, Name = "Self-help", Description = "Books about personal development, motivation, and success" }
-            );
+                new Category { Id = 9, Name = "Cooking", Description = "Books about cooking techniques, recipes, and ingredients" }
+                );
 
             modelBuilder.Entity<Author>().HasData(
                 new Author { Id = 1, Name = "Albert Einstein", Description = "German physicist and mathematician who developed the theory of relativity" },
@@ -72,9 +73,8 @@ namespace API.Data
                 new Author { Id = 6, Name = "Neil deGrasse Tyson", Description = "American astrophysicist, planetary scientist, author, and science communicator" },
                 new Author { Id = 7, Name = "Isaac Asimov", Description = "American writer and professor of biochemistry" },
                 new Author { Id = 8, Name = "Dan Brown", Description = "American author known for his thriller novels" },
-                new Author { Id = 9, Name = "Michelle Obama", Description = "American lawyer and author who served as the First Lady of the United States from 2009 to 2017" },
-                new Author { Id = 10, Name = "George Orwell", Description = "English novelist, essayist, journalist and critic, best known for his dystopian novel 1984 and the allegorical novella Animal Farm" }
-            );
+                new Author { Id = 9, Name = "Michelle Obama", Description = "American lawyer and author who served as the First Lady of the United States from 2009 to 2017" }
+                );
 
             modelBuilder.Entity<Publisher>().HasData(
                 new Publisher { Id = 1, Name = "Penguin Books", Description = "One of the largest and most prestigious English-language publishers." },
@@ -85,47 +85,176 @@ namespace API.Data
                 new Publisher { Id = 6, Name = "Oxford University Press", Description = "The largest university press in the world, publishing in 70 languages and 190 countries." },
                 new Publisher { Id = 7, Name = "Cambridge University Press", Description = "The publishing business of the University of Cambridge, one of the world's oldest universities." },
                 new Publisher { Id = 8, Name = "Springer Nature", Description = "A global academic publishing company, the product of a merger between Springer Science+Business Media and Nature Publishing Group." },
-                new Publisher { Id = 9, Name = "Hachette Livre", Description = "The world's third-largest trade book publisher, headquartered in France." },
-                new Publisher { Id = 10, Name = "Bloomsbury Publishing", Description = "A British independent publishing house, best known for publishing the Harry Potter series." }
-            );
-
-            static string RandomIsbn()
-            {
-                const int length = 12;
-                const string chars = "0123456789";
-                var random = new Random();
-                return new string(Enumerable.Repeat(chars, length)
-                  .Select(s => s[random.Next(s.Length)]).ToArray());
-            }
-
-            modelBuilder.Entity<Book>().HasData(
-                new Book { Id = 1, AuthorId = 1, CategoryId = 3, PublisherId = 1, ISBN = RandomIsbn(), Title = "Relativity: The Special and General Theory", Description = "A theoretical physicist's introduction to the theory of relativity", PublishYear = "1916", Price = 150000, Quantity = 5, Language = "English", PageCount = 160, Edition = "1st edition" },
-                new Book { Id = 2, AuthorId = 2, CategoryId = 4, PublisherId = 2, ISBN = RandomIsbn(), Title = "Pride and Prejudice", Description = "A romantic novel about the pride and prejudices of the British upper class in the early 19th century", PublishYear = "1813", Price = 100000, Quantity = 3, Language = "English", PageCount = 279, Edition = "2nd edition" },
-                new Book { Id = 3, AuthorId = 3, CategoryId = 3, PublisherId = 3, ISBN = RandomIsbn(), Title = "A Brief History of Time", Description = "A popular science book about cosmology and the universe", PublishYear = "1988", Price = 120000, Quantity = 7, Language = "English", PageCount = 212, Edition = "10th anniversary edition" },
-                new Book { Id = 4, AuthorId = 4, CategoryId = 4, PublisherId = 4, ISBN = RandomIsbn(), Title = "Harry Potter and the Philosopher's Stone", Description = "The first book in the Harry Potter series, a fantasy novel about a young wizard and his friends at Hogwarts School of Witchcraft and Wizardry", PublishYear = "1997", Price = 130000, Quantity = 2, Language = "English", PageCount = 223, Edition = "1st edition" },
-                new Book { Id = 5, AuthorId = 5, CategoryId = 1, PublisherId = 1, ISBN = RandomIsbn(), Title = "Murder on the Orient Express", Description = "A detective novel about a murder on a train, featuring famous detective Hercule Poirot", PublishYear = "1934", Price = 110000, Quantity = 4, Language = "English", PageCount = 256, Edition = "2nd edition" },
-                new Book { Id = 6, AuthorId = 6, CategoryId = 3, PublisherId = 5, ISBN = RandomIsbn(), Title = "Astrophysics for People in a Hurry", Description = "An introduction to astrophysics for laypeople", PublishYear = "2017", Price = 140000, Quantity = 6, Language = "English", PageCount = 224, Edition = "1st edition" },
-                new Book { Id = 7, AuthorId = 7, CategoryId = 2, PublisherId = 2, ISBN = RandomIsbn(), Title = "The Annotated Gulliver's Travels", Description = "An annotated edition of the classic satire by Jonathan Swift", PublishYear = "1960", Price = 105000, Quantity = 1, Language = "English", PageCount = 522, Edition = "3rd edition" },
-                new Book { Id = 8, AuthorId = 8, CategoryId = 1, PublisherId = 4, ISBN = RandomIsbn(), Title = "The Da Vinci Code", Description = "A thriller novel by American author Dan Brown", PublishYear = "2003", Price = 150000, Quantity = 10, Language = "English", PageCount = 481, Edition = "First edition" },
-                new Book { Id = 9, AuthorId = 9, CategoryId = 5, PublisherId = 3, ISBN = RandomIsbn(), Title = "Becoming", Description = "An autobiography by Michelle Obama", PublishYear = "2018", Price = 250000, Quantity = 8, Language = "English", PageCount = 426, Edition = "First edition" },
-                new Book { Id = 10, AuthorId = 9, CategoryId = 4, PublisherId = 1, ISBN = RandomIsbn(), Title = "The Hobbit", Description = "A children's fantasy novel by J.R.R. Tolkien", PublishYear = "1937", Price = 120000, Quantity = 12, Language = "English", PageCount = 310, Edition = "Revised edition" },
-                new Book { Id = 11, AuthorId = 3, CategoryId = 3, PublisherId = 2, ISBN = RandomIsbn(), Title = "A Brief History of Time", Description = "A popular science book by British physicist Stephen Hawking", PublishYear = "1988", Price = 180000, Quantity = 5, Language = "English", PageCount = 212, Edition = "First edition" },
-                new Book { Id = 12, AuthorId = 2, CategoryId = 4, PublisherId = 5, ISBN = RandomIsbn(), Title = "Pride and Prejudice", Description = "A romantic novel by English author Jane Austen", PublishYear = "1813", Price = 90000, Quantity = 15, Language = "English", PageCount = 279, Edition = "First edition" },
-                new Book { Id = 13, AuthorId = 3, CategoryId = 3, PublisherId = 4, ISBN = RandomIsbn(), Title = "The Grand Design", Description = "A popular-science book by British physicists Stephen Hawking and Leonard Mlodinow", PublishYear = "2010", Price = 200000, Quantity = 3, Language = "English", PageCount = 198, Edition = "First edition" },
-                new Book { Id = 14, AuthorId = 5, CategoryId = 1, PublisherId = 1, ISBN = RandomIsbn(), Title = "The Murder of Roger Ackroyd", Description = "A detective novel by Agatha Christie", PublishYear = "1926", Price = 85000, Quantity = 6, Language = "English", PageCount = 288, Edition = "First edition" },
-                new Book { Id = 15, AuthorId = 8, CategoryId = 4, PublisherId = 2, ISBN = RandomIsbn(), Title = "The Fault in Our Stars", Description = "A novel by John Green", PublishYear = "2012", Price = 170000, Quantity = 9, Language = "English", PageCount = 313, Edition = "First edition" }
+                new Publisher { Id = 9, Name = "Hachette Livre", Description = "The world's third-largest trade book publisher, headquartered in France." }
                 );
 
-            //Add Instances
-            int id = 1;
-            for (int i = 1; i <= 15; i++)
+            //Add Book and Instance Data
             {
-                for (int j = 1; j <= 10; j++)
+                Random random = new Random();
+                const int length = 12;
+                const string chars = "0123456789";
+                const int minValue = 50000;
+                const int maxValue = 200000;
+                const int step = 50000;
+                const int maxCharacterCount = 200;
+
+                List<string> titleWords = new List<string>
                 {
-                    modelBuilder.Entity<Instance>().HasData(
-                        new Instance { Id = id, BookId = i, StatusId = 1 }
-                        );
-                    id++;
+                    "The", "Art", "Science", "Adventures", "Secrets", "Mysteries", "Journey", "In", "Into", "Out", "Beyond",
+                    "From", "With", "Without", "Life", "World", "Universe", "Quest", "Power", "Legend", "Dreams", "Hope",
+                    "Kingdom", "Magic", "Truth", "Wisdom", "Heart", "Soul", "Mind", "Essence", "Eternal", "Lost", "Found",
+                    "Heroes", "Dark", "Light", "Chaos", "Order", "Rise", "Fall", "Song", "Echoes", "Whispers", "Silence"
+                };
+                List<string> descriptionWords = new List<string>
+                {
+                    "A", "theoretical", "physicist's", "introduction", "to", "the", "theory", "of", "relativity",
+                    "exploring", "its", "fundamental", "concepts", "and", "principles", "in", "an", "accessible", "way",
+                    "covering", "both", "special", "and", "general", "relativity",
+                    "with", "real-world", "examples", "and", "applications",
+                    "comprehensive", "and", "insightful", "reading", "for", "anyone", "interested", "in", "the", "subject",
+                    "delves", "deep", "into", "the", "mathematical", "framework", "and", "physical", "implications",
+                    "provides", "a", "fresh", "perspective", "on", "our", "understanding", "of", "space", "and", "time",
+                    "and", "its", "relation", "to", "gravity", "and", "the", "structure", "of", "the", "universe"
+                };
+                List<string> languages = new List<string>
+                {
+                    "English", "Spanish", "French", "German", "Italian", "Japanese", "Chinese", "Russian", "Arabic", "Portuguese"
+                };
+                List<string> editions = new List<string>
+                {
+                    "1st edition", "2nd edition", "3rd edition", "4th edition", "5th edition", "Special edition", "Collector's edition"
+                };
+
+                string RandomIsbn()
+                {
+                    return new string(Enumerable.Repeat(chars, length)
+                        .Select(s => s[random.Next(s.Length)]).ToArray());
+                }
+                int RandomNext(int num)
+                {
+                    return random.Next(1, num + 1);
+                }
+                int RandomPrice()
+                {
+                    int randomValue = random.Next((maxValue - minValue) / step + 1) * step;
+                    return randomValue;
+                }
+                string RandomDescription()
+                {
+                    StringBuilder descriptionBuilder = new StringBuilder();
+                    int currentCharacterCount = 0;
+
+                    while (currentCharacterCount < maxCharacterCount)
+                    {
+                        string randomWord = descriptionWords[random.Next(descriptionWords.Count)];
+
+                        if (currentCharacterCount + randomWord.Length + 1 <= maxCharacterCount)
+                        {
+                            descriptionBuilder.Append(randomWord).Append(" ");
+                            currentCharacterCount += randomWord.Length + 1;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    string randomDescription = descriptionBuilder.ToString().TrimEnd();
+                    return randomDescription;
+                }
+                string RandomPublishYear()
+                {
+                    int randomYear = random.Next(1900, 2001);
+                    return randomYear.ToString();
+                }
+                string RandomTitle()
+                {
+                    StringBuilder titleBuilder = new StringBuilder();
+                    int currentLength = 0;
+
+                    while (currentLength < 20)
+                    {
+                        string randomWord = titleWords[random.Next(titleWords.Count)];
+
+                        if (currentLength + randomWord.Length + 1 <= 20)
+                        {
+                            if (currentLength > 0)
+                            {
+                                titleBuilder.Append(" ");
+                                currentLength++;
+                            }
+                            titleBuilder.Append(randomWord);
+                            currentLength += randomWord.Length;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    string bookTitle = titleBuilder.ToString();
+                    return bookTitle;
+                }
+                string RandomLanguage()
+                {
+                    int randomIndex = random.Next(languages.Count);
+                    string randomLanguage = languages[randomIndex];
+                    return randomLanguage;
+                }
+                string RandomEdition()
+                {
+                    int randomIndex = random.Next(editions.Count);
+                    string randomEdition = editions[randomIndex];
+                    return randomEdition;
+                }
+                int[] RandomNumImg(int count)
+                {
+                    int[] arr = new int[count];
+                    int[] group6 = new int[6];
+                    for (int i = 0; i < count; i++)
+                    {
+                        int num = RandomNext(25);
+                        while (group6.Contains(num))
+                        {
+                            num = RandomNext(25);
+                        }
+                        group6[i % 6] = num;
+                        arr[i] = num;
+                    }
+                    return arr;
+                }
+
+
+                int instanceId = 1;
+                int[] imagePathNum = RandomNumImg(300);
+                for (int i = 0; i < imagePathNum.Length; i++)
+                {
+                    modelBuilder.Entity<Book>().HasData(new Book
+                    {
+                        Id = i + 1,
+                        AuthorId = RandomNext(9),
+                        CategoryId = RandomNext(9),
+                        PublisherId = RandomNext(9),
+                        ISBN = RandomIsbn(),
+                        Title = RandomTitle(),
+                        Description = RandomDescription(),
+                        PublishYear = RandomPublishYear(),
+                        Price = RandomPrice(),
+                        Quantity = 10,
+                        Language = RandomLanguage(),
+                        PageCount = RandomNext(999),
+                        Edition = RandomEdition(),
+                        CoverImagePath = $"~/{imagePathNum[i]}.jpg"
+                    });
+
+                    int instanceQuantity = RandomNext(9);
+                    for (int j = 1; j <= instanceQuantity; j++)
+                    {
+                        modelBuilder.Entity<Instance>().HasData(
+                            new Instance { Id = instanceId, BookId = i + 1, StatusId = 1 }
+                            );
+                        instanceId++;
+                    }
                 }
             }
             #endregion

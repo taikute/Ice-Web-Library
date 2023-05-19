@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using RestSharp;
+﻿using RestSharp;
 
 namespace WEB.Helpers
 {

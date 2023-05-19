@@ -23,7 +23,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { bugCode = (int?)null })"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+                <a class="navbar-brand" href="@Url.Action("Index", "Home", new { status = (int?)null })"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -33,7 +33,7 @@
                         <a class="nav-link text-light" asp-controller="Authors" asp-action="Index">Authors</a>
                         <a class="nav-link text-light" asp-controller="Categorys" asp-action="Index">Categories</a>
                         <a class="nav-link text-light" asp-controller="Publishers" asp-action="Index">Publishers</a>
-                        <a class="nav-link text-light" asp-controller="Books" asp-action="Manager">Manager</a>
+                        <a class="nav-link text-light" asp-controller="Books" asp-action="Manager">Book Manager</a>
                     </ul>
 
                     @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
@@ -134,24 +134,7 @@
         color: #0C5460;
     }
 </style>
-<!--Alert script-->
-<script>
-    function createAlert(message, type) {
-        var alertElement = document.createElement('div');
-        alertElement.classList.add('alert', 'alert-' + type);
-        alertElement.innerText = message;
 
-        var container = document.getElementById('alert-container');
-        container.appendChild(alertElement);
-
-        setTimeout(function () {
-            alertElement.classList.add('hide');
-            setTimeout(function () {
-                container.removeChild(alertElement);
-            }, 10);
-        }, 5000);
-    }
-</script>
 
 
 @*

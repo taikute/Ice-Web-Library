@@ -2,70 +2,113 @@
 
 @{
     ViewData["Title"] = "Index";
-    int pageCount = ViewBag.PageCount ?? 1;
+    int pageCount = ViewBag.PageCount ?? 0;
     var authors = ViewBag.Authors as IEnumerable<Author>;
     var categories = ViewBag.Categories as IEnumerable<Category>;
     var publishers = ViewBag.Publishers as IEnumerable<Publisher>;
+    int? authorId = ViewBag.AuthorId;
+    int? categoryId = ViewBag.CategoryId;
+    int? publisherId = ViewBag.PublisherId;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    var maxVisibleButtons = 5;
+    var halfVisibleButtons = (maxVisibleButtons - 1) / 2;
+    var startPage = currentPage - halfVisibleButtons;
+    var endPage = currentPage + halfVisibleButtons;
+
+    if (startPage < 1)
+    {
+        endPage += 1 - startPage;
+        startPage = 1;
+    }
+    if (endPage > pageCount)
+    {
+        startPage -= endPage - pageCount;
+        endPage = pageCount;
+    }
+    if (startPage < 1) startPage = 1;
 }
 
 <div class="text-center"><h1 class="display-4">Books</h1></div>
 
-<form action="/Books/Index" method="get">
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <select id="authorId" name="authorId" class="form-control" asp-items="@(new SelectList(authors, "Id", "Name"))">
-                    <option value="">Select author</option>
-                </select>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <select id="categoryId" name="categoryId" class="form-control" asp-items="@(new SelectList(categories, "Id", "Name"))">
-                    <option value="">Select category</option>
-                </select>
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <select id="publisherId" name="publisherId" class="form-control" asp-items="@(new SelectList(publishers, "Id", "Name"))">
-                    <option value="">Select publisher</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-1">
-            <div class="form-group text-center">
-                <button type="submit" class="btn btn-primary">Filter</button>
-            </div>
+<div class="row">
+    <div class="col">
+        <div class="form-group">
+            <select id="authorId" name="authorId" class="form-control" asp-items="@(new SelectList(authors, "Id", "Name"))">
+                <option value="">Select author</option>
+            </select>
         </div>
     </div>
-</form>
-
-
-<div class="container">
-    <div class="row">
-        @foreach (var book in Model)
-        {
-            <div class="col-6 col-md-2">
-                <div class="card mb-4">
-                    <img class="card-img-top" src=@Url.Content(book.CoverImagePath) alt="@book.Title">
-                    <div class="card-body text-center">
-                        <h6 class="card-title">@book.Title</h6>
-                        <a asp-action="Detail" asp-route-id="@book.Id" class="btn btn-primary">Detail</a>
-                        <a asp-controller="Loans" asp-action="Create" asp-route-id="@book.Id" class="btn btn-primary">Loan</a>
-                    </div>
-                </div>
-            </div>
-        }
+    <div class="col">
+        <div class="form-group">
+            <select id="categoryId" name="categoryId" class="form-control" asp-items="@(new SelectList(categories, "Id", "Name"))">
+                <option value="">Select category</option>
+            </select>
+        </div>
     </div>
-
-    <div style="display: flex;">
-        @for (var i = 1; i <= pageCount; i++)
-        {
-            <a asp-controller="Books" asp-action="Index" asp-route-page="@i" class="btn btn-primary" style="margin-right: 5px;">@i</a>
-        }
+    <div class="col">
+        <div class="form-group">
+            <select id="publisherId" name="publisherId" class="form-control" asp-items="@(new SelectList(publishers, "Id", "Name"))">
+                <option value="">Select publisher</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-1">
+        <div class="form-group text-center text-light">
+            <a id="filterButton" class="btn btn-primary">Filter</a>
+        </div>
     </div>
 </div>
+
+@if (Model.Count() == 0)
+{
+    <h3>Books not found!</h3>
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            @foreach (var book in Model)
+            {
+                <div class="col-6 col-md-2">
+                    <div class="card mb-4" style="width: 100%; height: 350px;">
+                        <img class="card-img-top" style="object-fit: cover; width: 100%; height: 250px;" src="/book-cover-img/@Url.Content(book.CoverImagePath)" alt="@book.Title">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">@book.Title</h6>
+                            <a asp-action="Detail" asp-route-id="@book.Id" class="btn btn-primary">Detail</a>
+                            <a asp-controller="Loans" asp-action="Create" asp-route-id="@book.Id" class="btn btn-primary">Loan</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div style="display: flex;justify-content: center; margin-top:10px;">
+            @if (currentPage > 1)
+            {
+                <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = 1 })">&lt;&lt;</a>
+                <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage - 1 })">&lt;</a>
+            }
+            <div style="width: 10px"></div>
+            @for (var i = startPage; i <= endPage; i++)
+            {
+                if (i == currentPage)
+                {
+                    <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = i })"><strong><u>@i</u></strong></a>
+                }
+                else
+                {
+                    <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = i })">@i</a>
+                }
+            }
+            <div style="width: 10px"></div>
+            @if (currentPage < endPage)
+            {
+                <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage + 1 })">&gt;</a>
+                <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = pageCount })">&gt;&gt;</a>
+            }
+        </div>
+    </div>
+}
 
 <style>
     .card-title {
@@ -74,3 +117,22 @@
         text-overflow: ellipsis;
     }
 </style>
+
+<script>
+    document.getElementById("filterButton").addEventListener("click", function () {
+        var authorId = document.getElementById("authorId").value;
+        var categoryId = document.getElementById("categoryId").value;
+        var publisherId = document.getElementById("publisherId").value;
+        var url = "@Url.Action("Index", "Books")?";
+        if (authorId) {
+            url += "authorId=" + authorId;
+        }
+        if (categoryId) {
+            url += "&categoryId=" + categoryId;
+        }
+        if (publisherId) {
+            url += "&publisherId=" + publisherId;
+        }
+        window.location.href = url;
+    });
+</script>

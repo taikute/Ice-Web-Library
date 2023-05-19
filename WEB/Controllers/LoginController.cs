@@ -14,7 +14,7 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
-        [HttpGet, Route("Index/{bugCode?}")]
+        [HttpGet, Route("Index/{bugCode?}"), MyAuthorization(0)]
         public IActionResult Index(int? bugCode)
         {
             //1: Login Require
@@ -30,7 +30,7 @@ namespace WEB.Controllers
             }
             return View();
         }
-        [HttpPost, Route("Login")]
+        [HttpPost, Route("Login"), MyAuthorization(0)]
         public async Task<IActionResult> Login(User user)
         {
             var username = user.Username;

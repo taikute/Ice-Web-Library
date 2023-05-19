@@ -12,12 +12,12 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
-        [Route("Index")]
+        [Route("Index"), MyAuthorization(0)]
         public IActionResult Index()
         {
             return View();
         }
-        [HttpPost, Route("Index")]
+        [HttpPost, Route("Index"), MyAuthorization(0)]
         public async Task<IActionResult> Register(User user)
         {
             user.IsActived = true;

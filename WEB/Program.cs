@@ -1,5 +1,4 @@
 using WEB.Helpers;
-using WEB.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,15 +27,15 @@ app.UseAuthorization();
 //Use TempData
 app.UseSession();
 
-//Update Quantity
-var apiHelper = new ApiHelper();
-var books = await apiHelper.GetAll<Book>("Books");
-var instances = await apiHelper.GetAll<Instance>("Instances");
-foreach (var book in books!)
-{
-    book.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
-    await apiHelper.Put(book, "Books");
-}
+////Update Quantity
+//var apiHelper = new ApiHelper();
+//var books = await apiHelper.GetAll<Book>("Books");
+//var instances = await apiHelper.GetAll<Instance>("Instances");
+//foreach (var book in books!)
+//{
+//    book.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
+//    await apiHelper.Put(book, "Books");
+//}
 
 app.MapControllerRoute(
     name: "default",

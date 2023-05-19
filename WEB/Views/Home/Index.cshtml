@@ -21,6 +21,12 @@
         $(document).ready(function () { createAlert("Loan Successful", "success"); });
     </script>
 }
+@if (ViewBag.AlreadyLogin)
+{
+    <script>
+        $(document).ready(function () { createAlert("Already Login!", "danger"); });
+    </script>
+}
 
 <div class="text-center"><h1 class="display-4">Welcome to Ice Library</h1></div>
 
