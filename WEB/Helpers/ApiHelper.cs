@@ -55,5 +55,18 @@ namespace WEB.Helpers
                 throw new Exception(ex.Message, ex);
             }
         }
+        public async Task<bool> IsResponse()
+        {
+            try
+            {
+                var response = await client.ExecuteAsync(new RestRequest("Books"));
+                return response.IsSuccessful;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 }

@@ -1,4 +1,6 @@
-﻿function createAlert(message, type) {
+﻿
+
+function createAlert(message, type) {
     var alertElement = document.createElement('div');
     alertElement.classList.add('alert', 'alert-' + type);
     alertElement.innerText = message;
@@ -13,3 +15,18 @@
         }, 10);
     }, 5000);
 }
+
+
+function handleSearchFormSubmit() {
+    var form = document.getElementById("search-form");
+    var input = document.getElementById("search-input");
+
+    input.addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            form.submit();
+        }
+    });
+}
+
+

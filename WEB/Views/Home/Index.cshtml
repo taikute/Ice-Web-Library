@@ -2,35 +2,13 @@
     ViewData["Title"] = "Home";
 }
 
-<!--Alert-->
-@if (ViewBag.RoleInvalid)
-{
-    <script>
-        $(document).ready(function () { createAlert("Role Invalid", "warning"); });
-    </script>
-}
-@if (ViewBag.LogoutSuccess)
-{
-    <script>
-        $(document).ready(function () { createAlert("Logout Successful", "success"); });
-    </script>
-}
-@if (ViewBag.LoanSuccess)
-{
-    <script>
-        $(document).ready(function () { createAlert("Loan Successful", "success"); });
-    </script>
-}
-@if (ViewBag.AlreadyLogin)
-{
-    <script>
-        $(document).ready(function () { createAlert("Already Login!", "danger"); });
-    </script>
-}
-
 <div class="text-center"><h1 class="display-4">Welcome to Ice Library</h1></div>
 
 <form asp-action="Search" class="d-flex">
     <input class="form-control me-2 rounded-pill" type="text" name="searchTerm" placeholder="Search by Author, Title, ..." required>
     <button class="btn btn-primary" type="submit">Search</button>
 </form>
+
+<script>
+    handleSearchFormSubmit();
+</script>

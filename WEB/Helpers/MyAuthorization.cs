@@ -1,61 +1,52 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Newtonsoft.Json.Linq;
 using WEB.Models;
 
 namespace WEB.Helpers
 {
     public class MyAuthorization : ActionFilterAttribute
     {
-        //Role 0: if IsLogin, cant go to this page
-        readonly int[] _roleId;
-        public MyAuthorization(params int[] roleId)
+        readonly int _roleId;
+        readonly bool _noAccessWhileLogin;
+        readonly bool _guestAccept;
+        readonly ApiHelper _apiHelper;
+        public MyAuthorization(int roleId, bool noAccessWhileLogin = false, bool guestAccept = false)
         {
             _roleId = roleId;
+            _noAccessWhileLogin = noAccessWhileLogin;
+            _guestAccept = guestAccept;
+            _apiHelper = new ApiHelper();
         }
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        public override async void OnActionExecuting(ActionExecutingContext context)
         {
-            HttpContext context = filterContext.HttpContext;
-            bool isLogin = bool.Parse(context.Session.GetString("IsLogin") ?? "false");
-            if (_roleId.Contains(0))
+            HttpContext HttpContext = context.HttpContext;
+            bool IsLogin = bool.Parse(HttpContext.Session.GetString("IsLogin") ?? "false");
+            int userId = HttpContext.Session.GetInt32("UserId") ?? 3;
+            User? user = await _apiHelper.GetByID<User>(userId, "Users");
+
+            if (!IsLogin)
             {
-                if (isLogin)
+                if (!_guestAccept)
                 {
-                    filterContext.Result = new RedirectResult("/4");
-                    return;
+                    MyMessage.Add("Danger", "Login require!");
+                    context.Result = new RedirectResult("/Login/Index");
                 }
-                else
-                {
-                    return;
-                }
+            }
+            else if (_noAccessWhileLogin)
+            {
+                MyMessage.Add("Danger", "Already login!");
+                context.Result = new RedirectToActionResult("MyAccessDenied", "Errors", null);
+            }
+            else if (_roleId != user!.RoleId)
+            {
+                MyMessage.Add("Danger", "Role invalid!");
+                context.Result = new RedirectToActionResult("MyNotFound", "Errors", null);
             }
 
-            if (!isLogin)
-            {
-                filterContext.Result = new RedirectResult("/Login/Index/1");
-                return;
-            }
-            int? roleId = context.Session.GetInt32("RoleId");
-            if (roleId == null)
-            {
-                filterContext.Result = new RedirectResult("/1");
-                return;
-            }
-            bool isRoleExists = false;
-            for (int i = 0; i < _roleId.Length; i++)
-            {
-                if (roleId == _roleId[i])
-                {
-                    isRoleExists = true;
-                    break;
-                }
-            }
-            if (!isRoleExists)
-            {
-                filterContext.Result = new RedirectResult("/1");
-                return;
-            }
-
-            base.OnActionExecuting(filterContext);
+            base.OnActionExecuting(context);
         }
     }
 }

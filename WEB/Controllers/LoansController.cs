@@ -13,7 +13,7 @@ namespace WEB.Controllers
             _apiHelper = apiHelper;
         }
 
-        [HttpGet, Route("Index")]
+        [HttpGet, Route("Index"), MyAuthorization(2)]
         public async Task<IActionResult> Index(int? userId)
         {
             ViewBag.LoanIsNull = false;
@@ -61,7 +61,8 @@ namespace WEB.Controllers
             book!.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
             await _apiHelper.Put(book, "Books");
 
-            return RedirectToAction("Index", "Home", new { status = 3 });
+            MyMessage.Add("Success", "Loan Success!");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

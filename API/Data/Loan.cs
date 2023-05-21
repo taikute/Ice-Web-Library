@@ -10,11 +10,11 @@ namespace API.Data
         [Required] public DateTime BorrowedDate { get; set; } = DateTime.Now;
         public DateTime? ReturnedDate { get; set; } = null;
         public int StatusId { get; set; } = 1;
-        //1: Waiting for the book to be picked up
-        //2: Book on loan
-        //3: Book has been returned
-        //-1: Past due book pickup
-        //-2: Past due book return
+        //1: Waiting For Pickup
+        //2: On Loan
+        //3: Returned
+        //-1: Past Due Pickup
+        //-2: Past Due Return
 
         #region ForeignKey
         public virtual Instance? Instance { get; set; }

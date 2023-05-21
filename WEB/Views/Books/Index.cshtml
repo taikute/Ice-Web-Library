@@ -31,30 +31,37 @@
 <div class="text-center"><h1 class="display-4">Books</h1></div>
 
 <div class="row">
-    <div class="col">
+    <div class="col-2">
         <div class="form-group">
             <select id="authorId" name="authorId" class="form-control" asp-items="@(new SelectList(authors, "Id", "Name"))">
-                <option value="">Select author</option>
+                <option value="">Author</option>
             </select>
         </div>
     </div>
-    <div class="col">
+    <div class="col-2">
         <div class="form-group">
             <select id="categoryId" name="categoryId" class="form-control" asp-items="@(new SelectList(categories, "Id", "Name"))">
-                <option value="">Select category</option>
+                <option value="">Category</option>
             </select>
         </div>
     </div>
-    <div class="col">
+    <div class="col-2">
         <div class="form-group">
             <select id="publisherId" name="publisherId" class="form-control" asp-items="@(new SelectList(publishers, "Id", "Name"))">
-                <option value="">Select publisher</option>
+                <option value="">Publisher</option>
             </select>
         </div>
     </div>
-    <div class="col-1">
-        <div class="form-group text-center text-light">
-            <a id="filterButton" class="btn btn-primary">Filter</a>
+    <div class="col-1 d-flex align-items-center">
+        <div class="form-group">
+            <a id="filterButton" class="btn btn-primary text-light">Filter</a>
+        </div>
+    </div>
+    <div class="col-5 d-flex justify-content-end">
+        <div class="form-group">
+            <a class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage, asc = true })">Asc</a>
+            <a class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage, asc = false })">Desc</a>
+            <a class="btn btn-primary" href="@Url.Action("Index", "Books")">Clear</a>
         </div>
     </div>
 </div>

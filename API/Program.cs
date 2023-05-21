@@ -45,19 +45,19 @@ app.UseAuthorization();
 app.MapControllers();
 
 //Update Quantity
-//using (var scope = app.Services.CreateScope())
-//{
-//    var bookRepos = scope.ServiceProvider.GetRequiredService<IGenericRepos<Book>>();
-//    var instanceRepos = scope.ServiceProvider.GetRequiredService<IGenericRepos<Instance>>();
+using (var scope = app.Services.CreateScope())
+{
+    var bookRepos = scope.ServiceProvider.GetRequiredService<IGenericRepos<Book>>();
+    var instanceRepos = scope.ServiceProvider.GetRequiredService<IGenericRepos<Instance>>();
 
-//    var books = await bookRepos.GetAll();
-//    var instances = await instanceRepos.GetAll();
-//    foreach (var book in books!)
-//    {
-//        book.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
-//        await bookRepos.Update(book);
-//    }
-//}
+    var books = await bookRepos.GetAll();
+    var instances = await instanceRepos.GetAll();
+    foreach (var book in books!)
+    {
+        book.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
+        await bookRepos.Update(book);
+    }
+}
 
 app.Logger.LogInformation("Starting Application");
 

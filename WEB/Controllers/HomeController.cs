@@ -14,28 +14,26 @@ namespace WEB.Controllers
             _logger = logger;
             _apiHelper = apiHelper;
         }
-        [HttpGet("{status?}")]
-        public IActionResult Index(int? status)
-        {
-            ViewBag.RoleInvalid = false;
-            ViewBag.LogoutSuccess = false;
-            ViewBag.LoanSuccess = false;
-            ViewBag.AlreadyLogin = false;
-            if (status != null)
-            {
-                if (status == 1) ViewBag.RoleInvalid = true;
-                if (status == 2) ViewBag.LogoutSuccess = true;
-                if (status == 3) ViewBag.LoanSuccess = true;
-                if (status == 4) ViewBag.AlreadyLogin = true;
-            }
-            return View();
-        }
         [Route("Privacy")]
         public IActionResult Privacy()
         {
             return View();
         }
-        [HttpPost]
+
+        [HttpGet, MyAuthorization(1, false, true)]
+        public async Task<IActionResult> Index()
+        {
+            HttpContext.Session.SetString("IsApiResponse", "true");
+            if (!await _apiHelper.IsResponse())
+            {
+                HttpContext.Session.SetString("IsApiResponse", "false");
+                return RedirectToAction("MyNotFound", "Errors");
+            }
+
+            ViewData["MsgDict"] = MyMessage.Get();
+            return View();
+        }
+        [HttpPost, Route("Search"), MyAuthorization(1, false, true)]
         public async Task<IActionResult> Search(string searchTerm)
         {
             ViewBag.SearchTerm = searchTerm;

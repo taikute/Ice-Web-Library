@@ -93,9 +93,6 @@ namespace API.Data
                 Random random = new Random();
                 const int length = 12;
                 const string chars = "0123456789";
-                const int minValue = 50000;
-                const int maxValue = 200000;
-                const int step = 50000;
                 const int maxCharacterCount = 200;
 
                 List<string> titleWords = new List<string>
@@ -136,8 +133,7 @@ namespace API.Data
                 }
                 int RandomPrice()
                 {
-                    int randomValue = random.Next((maxValue - minValue) / step + 1) * step;
-                    return randomValue;
+                    return RandomNext(4) * 50000;
                 }
                 string RandomDescription()
                 {
@@ -180,7 +176,7 @@ namespace API.Data
                         {
                             if (currentLength > 0)
                             {
-                                titleBuilder.Append(" ");
+                                titleBuilder.Append(' ');
                                 currentLength++;
                             }
                             titleBuilder.Append(randomWord);

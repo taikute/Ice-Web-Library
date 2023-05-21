@@ -1,28 +1,21 @@
-﻿@if (ViewBag.LoginRequire)
-{
-    <script>
-        $(document).ready(function () { createAlert("Please login to continue.", "warning"); });
-    </script>
-}
-
-@model WEB.Models.User
+﻿@model WEB.Models.User
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <div class="login-container">
-    <form class="login-form" asp-action="Login">
+    <form class="login-form" asp-action="Index" method="post">
         <div class="text-center"><h1 class="display-4">Login</h1></div>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="Username" class="control-label"></label>
-            <input value="user1" asp-for="Username" class="form-control" required />
+            <input value="@Model?.Username" asp-for="Username" class="form-control" required />
             <span asp-validation-for="Username" class="text-danger"></span>
         </div>
         <div class="form-group">
             <label asp-for="Password" class="control-label"></label>
-            <input value="user1" asp-for="Password" type="password" class="form-control" id="password-input" required />
+            <input asp-for="Password" type="password" class="form-control" id="password-input" required />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
         <button class="btn btn-primary" type="submit">Login</button>

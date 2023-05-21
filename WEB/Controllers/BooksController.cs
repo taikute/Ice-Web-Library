@@ -17,7 +17,7 @@ namespace WEB.Controllers
         }
 
         #region Index
-        [HttpGet, Route("Index")]
+        [HttpGet, Route("Index"), MyAuthorization(1, false, true)]
         public async Task<IActionResult> Index(int? authorId, int? categoryId, int? publisherId,
             bool? asc, int limit = 18, int page = 1)
         {
@@ -83,19 +83,28 @@ namespace WEB.Controllers
             ViewBag.Authors = await _apiHelper.GetAll<Author>("Authors")!;
             ViewBag.Categories = await _apiHelper.GetAll<Category>("Categories")!;
             ViewBag.Publishers = await _apiHelper.GetAll<Publisher>("Publishers")!;
-            return View();
+
+            if (TempData["ValidationErrors"] != null)
+            {
+                ViewBag.ValidationErrors = TempData["ValidationErrors"];
+            }
+
+            return View(new Book());
         }
+
         [HttpPost, Route("Create"), MyAuthorization(2)]
         public async Task<IActionResult> Create(Book book)
         {
             book.Id = 0;
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _apiHelper.Post(book, "Books");
-                return RedirectToAction("Manager");
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
+                TempData["ValidationErrors"] = errors;
+                return RedirectToAction("Create");
             }
-            ViewBag.ErrorMessenger = "Thông tin nhập không hợp lệ!";
-            return View(book);
+
+            await _apiHelper.Post(book, "Books");
+            return RedirectToAction("Manager");
         }
         #endregion
         #region Detail
