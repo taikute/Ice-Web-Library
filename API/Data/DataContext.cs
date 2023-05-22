@@ -45,11 +45,11 @@ namespace API.Data
                 );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "Admin Name", Email = "admin@gmail.com", Username = "admin", Password = "admin", RoleId = 3 },
-                new User { Id = 2, Name = "Librarian Name", Email = "librarian@gmail.com", Username = "librarian", Password = "librarian", RoleId = 2 },
-                new User { Id = 3, Name = "User1 Name", Email = "user1@gmail.com", Username = "user1", Password = "user1", RoleId = 1 },
-                new User { Id = 4, Name = "User2 Name", Email = "user2@gmail.com", Username = "user2", Password = "user2", RoleId = 1 },
-                new User { Id = 5, Name = "User3 Name", Email = "user3@gmail.com", Username = "user3", Password = "user3", RoleId = 1 }
+                new User { Id = 1, Name = "Admin Name", Email = "admin@gmail.com", Username = "admin", Password = "Admin123", RoleId = 3 },
+                new User { Id = 2, Name = "Librarian Name", Email = "librarian@gmail.com", Username = "librarian", Password = "Lib123", RoleId = 2 },
+                new User { Id = 3, Name = "User1 Name", Email = "user1@gmail.com", Username = "user1", Password = "User1", RoleId = 1 },
+                new User { Id = 4, Name = "User2 Name", Email = "user2@gmail.com", Username = "user2", Password = "User2", RoleId = 1 },
+                new User { Id = 5, Name = "User3 Name", Email = "user3@gmail.com", Username = "user3", Password = "User3", RoleId = 1 }
                 );
 
             modelBuilder.Entity<Category>().HasData(

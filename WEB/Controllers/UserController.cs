@@ -13,7 +13,7 @@ namespace WEB.Controllers
             _apiHelper = apiHelper;
         }
 
-        [Route("Index"), MyAuthorization(1)]
+        [Route("Index"), MyAuthorizationFilter(1)]
         public async Task<IActionResult> Index()
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;

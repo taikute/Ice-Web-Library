@@ -17,7 +17,8 @@ namespace WEB.Controllers
         }
 
         #region Index
-        [HttpGet, Route("Index"), MyAuthorization(1, false, true)]
+        [MyAuthorizationFilter(1, false, true)]
+        [HttpGet("Index")] 
         public async Task<IActionResult> Index(int? authorId, int? categoryId, int? publisherId,
             bool? asc, int limit = 18, int page = 1)
         {
@@ -62,7 +63,8 @@ namespace WEB.Controllers
         }
         #endregion
         #region Manager
-        [HttpGet, Route("Manager"), MyAuthorization(2)]
+        [MyAuthorizationFilter(2)]
+        [HttpGet("Manager")]
         public async Task<IActionResult> Manager()
         {
             var books = await _apiHelper.GetAll<Book>("Books")!;
@@ -77,7 +79,7 @@ namespace WEB.Controllers
         }
         #endregion
         #region Create
-        [HttpGet, Route("Create"), MyAuthorization(2)]
+        [HttpGet, Route("Create"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> Create()
         {
             ViewBag.Authors = await _apiHelper.GetAll<Author>("Authors")!;
@@ -92,7 +94,7 @@ namespace WEB.Controllers
             return View(new Book());
         }
 
-        [HttpPost, Route("Create"), MyAuthorization(2)]
+        [HttpPost, Route("Create"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> Create(Book book)
         {
             book.Id = 0;
@@ -119,7 +121,7 @@ namespace WEB.Controllers
         }
         #endregion
         #region Edit
-        [HttpGet, Route("Edit"), MyAuthorization(2)]
+        [HttpGet, Route("Edit"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> Edit(int id)
         {
             var book = await _apiHelper.GetByID<Book>(id, "Books");
@@ -128,7 +130,7 @@ namespace WEB.Controllers
             ViewBag.Publishers = await _apiHelper.GetAll<Publisher>("Publishers");
             return View(book);
         }
-        [HttpPost, Route("Edit"), MyAuthorization(2)]
+        [HttpPost, Route("Edit"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> Edit(Book book)
         {
             if (ModelState.IsValid)
@@ -140,13 +142,13 @@ namespace WEB.Controllers
         }
         #endregion
         #region Delete
-        [HttpGet, Route("Delete"), MyAuthorization(2)]
+        [HttpGet, Route("Delete"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> Delete(int id)
         {
             var book = await _apiHelper.GetByID<Book>(id, "Books")!;
             return View(book);
         }
-        [HttpPost, Route("DeleteConfirmed"), MyAuthorization(2)]
+        [HttpPost, Route("DeleteConfirmed"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _apiHelper.Delete<Book>(id, "Books");

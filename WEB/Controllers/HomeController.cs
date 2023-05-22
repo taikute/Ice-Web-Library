@@ -20,20 +20,13 @@ namespace WEB.Controllers
             return View();
         }
 
-        [HttpGet, MyAuthorization(1, false, true)]
-        public async Task<IActionResult> Index()
+        [HttpGet, MyAuthorizationFilter(1, false, true)]
+        public ActionResult Index()
         {
-            HttpContext.Session.SetString("IsApiResponse", "true");
-            if (!await _apiHelper.IsResponse())
-            {
-                HttpContext.Session.SetString("IsApiResponse", "false");
-                return RedirectToAction("MyNotFound", "Errors");
-            }
-
             ViewData["MsgDict"] = MyMessage.Get();
             return View();
         }
-        [HttpPost, Route("Search"), MyAuthorization(1, false, true)]
+        [HttpPost, Route("Search"), MyAuthorizationFilter(1, false, true)]
         public async Task<IActionResult> Search(string searchTerm)
         {
             ViewBag.SearchTerm = searchTerm;

@@ -13,29 +13,31 @@ namespace WEB.Controllers
             _apiHelper = apiHelper;
         }
 
-        [HttpGet, Route("Index"), MyAuthorization(2)]
+        [HttpGet, Route("Index/{userId?}"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> Index(int? userId)
         {
-            ViewBag.LoanIsNull = false;
+            ViewData["MsgDict"] = MyMessage.Get();
             var loans = await _apiHelper.GetAll<Loan>("Loans");
-            if (loans == null) ViewBag.LoanIsNull = true;
-            if (userId != null) loans = loans!.Where(l => l.UserId == userId);
+            if (userId != null)
+            {
+                loans = loans!.Where(l => l.UserId == userId);
+            }
             return View(loans);
         }
 
-        [HttpGet("{id}"), Route("Get"), MyAuthorization(1)]
+        [HttpGet("{id}"), Route("Get"), MyAuthorizationFilter(1, false, false)]
         public async Task<IActionResult> GetLoan(int id)
         {
             return View(await _apiHelper.GetByID<Loan>(id, "Loans"));
         }
 
-        [HttpGet("{id}"), Route("Create"), MyAuthorization(1)]
+        [HttpGet("{id}"), Route("Create"), MyAuthorizationFilter(1, false, false)]
         public async Task<IActionResult> Create(int id)
         {
             var book = await _apiHelper.GetByID<Book>(id, "Books");
             return View(book);
         }
-        [HttpPost("{id}"), Route("CreateConfirmed"), MyAuthorization(1)]
+        [HttpPost("{id}"), Route("CreateConfirmed"), MyAuthorizationFilter(1, false, false)]
         public async Task<IActionResult> CreateConfirmed(int id)
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;

@@ -1,4 +1,4 @@
-using WEB.Helpers;
+﻿using WEB.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 builder.Services.AddScoped<ApiHelper>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddSingleton(new MyAuthorization(1));
+builder.Services.AddSingleton(new MyAuthorizationFilter(1));
 
 var app = builder.Build();
 

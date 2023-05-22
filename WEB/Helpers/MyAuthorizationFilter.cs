@@ -7,32 +7,35 @@ using WEB.Models;
 
 namespace WEB.Helpers
 {
-    public class MyAuthorization : ActionFilterAttribute
+    public class MyAuthorizationFilter : ActionFilterAttribute
     {
         readonly int _roleId;
         readonly bool _noAccessWhileLogin;
         readonly bool _guestAccept;
         readonly ApiHelper _apiHelper;
-        public MyAuthorization(int roleId, bool noAccessWhileLogin = false, bool guestAccept = false)
+        public MyAuthorizationFilter(int roleId, bool noAccessWhileLogin = false, bool guestAccept = false)
         {
             _roleId = roleId;
             _noAccessWhileLogin = noAccessWhileLogin;
             _guestAccept = guestAccept;
             _apiHelper = new ApiHelper();
         }
-        public override async void OnActionExecuting(ActionExecutingContext context)
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             HttpContext HttpContext = context.HttpContext;
-            bool IsLogin = bool.Parse(HttpContext.Session.GetString("IsLogin") ?? "false");
-            int userId = HttpContext.Session.GetInt32("UserId") ?? 3;
-            User? user = await _apiHelper.GetByID<User>(userId, "Users");
+            HttpContext.Session.SetString("IsApiResponse", _apiHelper.IsResponse().Result.ToString());
 
-            if (!IsLogin)
+            if (!bool.Parse(HttpContext.Session.GetString("IsApiResponse") ?? "false"))
+            {
+                MyMessage.Add("Danger", "Cant connect to database!");
+                context.Result = new RedirectToActionResult("MyNotFound", "Errors", null);
+            }
+            else if (!bool.Parse(HttpContext.Session.GetString("IsLogin") ?? "false"))
             {
                 if (!_guestAccept)
                 {
                     MyMessage.Add("Danger", "Login require!");
-                    context.Result = new RedirectResult("/Login/Index");
+                    context.Result = new RedirectToActionResult("Index", "Login", null);
                 }
             }
             else if (_noAccessWhileLogin)
@@ -40,13 +43,13 @@ namespace WEB.Helpers
                 MyMessage.Add("Danger", "Already login!");
                 context.Result = new RedirectToActionResult("MyAccessDenied", "Errors", null);
             }
-            else if (_roleId != user!.RoleId)
+            else if (_roleId != _apiHelper.GetByID<User>(HttpContext.Session.GetInt32("UserId") ?? 3, "Users").Result!.RoleId)
             {
                 MyMessage.Add("Danger", "Role invalid!");
                 context.Result = new RedirectToActionResult("MyNotFound", "Errors", null);
             }
 
-            base.OnActionExecuting(context);
+            await base.OnActionExecutionAsync(context, next);
         }
     }
 }

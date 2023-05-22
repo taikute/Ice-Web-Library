@@ -31,12 +31,12 @@
     @{
         var HttpContext = HttpContextAccessor.HttpContext!;
         bool isLogin = bool.Parse(HttpContext.Session.GetString("IsLogin") ?? "false");
-        bool isApiResponse = bool.Parse(HttpContext.Session.GetString("IsApiResponse") ?? "true");
+        bool isApiResponse = bool.Parse(HttpContext.Session.GetString("IsApiResponse") ?? "false");
     }
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+
                 @if (isApiResponse)
                 {
                     @if (isLogin)
@@ -46,6 +46,8 @@
                         int roleId = user!.RoleId;
                         if (roleId == 1)
                         {
+                            <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+
                             <ul class="navbar-nav me-auto">
                                 <li>
                                     <a class="nav-link text-light" asp-controller="Books" asp-action="Index">Books</a>
@@ -63,6 +65,8 @@
                         }
                         else if (roleId == 2)
                         {
+                            <a class="navbar-brand" href="@Url.Action("Index", "Loans")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+
                             <ul class="navbar-nav me-auto">
                                 <li><a class="nav-link text-light" asp-controller="Books" asp-action="Manager">Book Manager</a></li>
                                 <li><a class="nav-link text-light" asp-controller="Loans" asp-action="Index">Loan Manager</a></li>
@@ -70,18 +74,22 @@
                         }
                         else if (roleId == 3)
                         {
+                            <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+
                             <ul class="navbar-nav me-auto">
                                 <li><a class="nav-link text-light" asp-controller="" asp-action="">Librarian Manager</a></li>
                             </ul>
                         }
 
                         <ul class="navbar-nav ms-auto">
-                            <li><a class="nav-link text-light" asp-controller="User" asp-action="Index">Hello @user.Name</a></li>
+                            <li><a class="nav-link text-light" asp-controller="User" asp-action="Index">Hello @user.Name!</a></li>
                             <li><a class="nav-link text-light" asp-controller="Login" asp-action="Logout">Logout</a></li>
                         </ul>
                     }
                     else
                     {
+                        <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+
                         <ul class="navbar-nav me-auto">
                             <li><a class="nav-link text-light" asp-controller="Books" asp-action="Index">Books</a></li>
                             <li><a class="nav-link text-light" asp-controller="Authors" asp-action="Index">Authors</a></li>
@@ -90,14 +98,17 @@
                         </ul>
 
                         <ul class="navbar-nav ms-auto">
-                            <li><a class="nav-link text-light" href="@Url.Action("","Login")">Login</a></li>
-                            <li><a class="nav-link text-light" asp-controller="Register">Register</a></li>
+                            <li><a class="nav-link text-light" asp-controller="Login" asp-action="Index">Login</a></li>
+                            <li><a class="nav-link text-light" asp-controller="Register" asp-action="Index">Register</a></li>
                         </ul>
                     }
                 }
                 else
                 {
-                    <h1 style="color: red;"><strong>Can't Connect to Database!</strong></h1>
+                    <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+                    <ul class="navbar-nav me-auto">
+                        <li><h1 style="color: red;"><strong>Can't Connect to Database!</strong></h1></li>
+                    </ul>
                 }
             </div>
         </nav>
@@ -109,13 +120,13 @@
     </div>
     @if (ViewData["HideFooter"] == null)
     {
-        <div style="height: 200px;"></div>
+        <div style="height: 300px;"></div>
         <footer class="footer" style="background-color: #D7E7A9;">
             <div style="height: 5px;"></div>
             <div class="row" style="margin: 10px 20px; text-align:center;">
                 <div class="col-3" style="border: solid 1px;">
                     <h4>Address</h4>
-                    <h6>828 Sư Vạn Hạnh</h6>
+                    <h6>828 Sư Vạn Hạnh Street,<br />Ward 13, District 10, HCMC</h6>
                 </div>
                 <div class="col-3" style="border: solid 1px;">
                     <h4>Phone</h4>
@@ -150,7 +161,7 @@
 <style>
     #alert-container {
         position: fixed;
-        top: 60px;
+        top: 70px;
         right: 20px;
         z-index: 9999;
     }
@@ -183,7 +194,10 @@
         color: #0C5460;
     }
 </style>
+
+
 @{
+    //ShowMsg
     var msgDict = ViewData["MsgDict"] as Dictionary<string, List<string>>;
     if (msgDict != null)
     {

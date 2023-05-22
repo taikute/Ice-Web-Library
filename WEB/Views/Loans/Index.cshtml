@@ -14,46 +14,41 @@
 
 <div class="text-center"><h1 class="display-4">Loan Manager</h1></div>
 
-@if (Model.Count() == 0)
-{
-    <h3>Empty!</h3>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>@Html.DisplayName("Instance Id")</th>
-                <th>@Html.DisplayName("User Id")</th>
-                <th>@Html.DisplayName("Borrowed Date")</th>
-                <th>@Html.DisplayName("Returned Date")</th>
-                <th>@Html.DisplayName("Due Date")</th>
-                <th>@Html.DisplayName("Status")</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                DateTime dueDate = ((DateTime)item.BorrowedDate).AddDays(31).Date;
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayName("Instance Id")</th>
+            <th>@Html.DisplayName("User Id")</th>
+            <th>@Html.DisplayName("Borrowed Date")</th>
+            <th>@Html.DisplayName("Returned Date")</th>
+            <th>@Html.DisplayName("Due Date")</th>
+            <th>@Html.DisplayName("Status")</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model.Any())
+        @foreach (var item in Model)
+        {
+            DateTime dueDate = ((DateTime)item.BorrowedDate).AddDays(31).Date;
 
-                <tr>
-                    <td>@Html.DisplayFor(modelItem => item.InstanceId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.UserId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.BorrowedDate)</td>
-                    <td>
-                        @if (item.ReturnedDate == null)
-                        {
-                            <span class="display-value">Not return yet</span>
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(modelItem => item.ReturnedDate)
-                        }
-                    </td>
-                    <td><span class="display-value">@dueDate.ToString("dd/MM/yyyy")</span></td>
-                    <td><span class="display-value">@loanStatusDictionary[item.StatusId]</span></td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.InstanceId)</td>
+                <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                <td>@Html.DisplayFor(modelItem => item.BorrowedDate)</td>
+                <td>
+                    @if (item.ReturnedDate == null)
+                    {
+                        <span class="display-value">Not return yet</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.ReturnedDate)
+                    }
+                </td>
+                <td><span class="display-value">@dueDate.ToString("dd/MM/yyyy")</span></td>
+                <td><span class="display-value">@loanStatusDictionary[item.StatusId]</span></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

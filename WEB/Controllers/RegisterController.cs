@@ -12,27 +12,30 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
-        [ActionName("Index"), MyAuthorization(0, true, true)]
+        [HttpGet("Index"), MyAuthorizationFilter(0, true, true)]
         public IActionResult Index()
         {
             ViewData["HideFooter"] = true;
             return View();
         }
-        [HttpPost("Index"), MyAuthorization(0, true, true)]
+        [HttpPost("Index"), MyAuthorizationFilter(0, true, true)]
         public async Task<IActionResult> Index(User user)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(user);
+            }
+
+            //Check
+
+
+
+            //Register success!
             user.IsActived = true;
             user.IsOnline = false;
-            if (ModelState.IsValid)
-            {
-                await _apiHelper.Post(user, "Users");
-                MyMessage.Add("Success", "Register success!");
-                return RedirectToAction("Index", "Login");
-            }
-            else
-            {
-                return View();
-            }
+            await _apiHelper.Post(user, "Users");
+            MyMessage.Add("Success", "Register success!");
+            return RedirectToAction("Index", "Login");
         }
     }
 }

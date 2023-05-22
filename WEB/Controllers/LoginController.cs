@@ -6,7 +6,7 @@ using WEB.Models;
 
 namespace WEB.Controllers
 {
-    [Route("Login")]
+    [Route("[controller]")]
     public class LoginController : Controller
     {
         readonly RestClient client = new RestClient("https://localhost:7042/api/");
@@ -15,50 +15,55 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
-        [ActionName("Index"), MyAuthorization(0, true, true)]
-        public IActionResult Index()
+
+        [MyAuthorizationFilter(0, true, true)]
+        [HttpGet("Index")]
+        public ActionResult Index()
         {
             ViewData["MsgDict"] = MyMessage.Get();
             ViewData["HideFooter"] = true;
+
             return View();
         }
-        [HttpPost("Index"), MyAuthorization(0, true, true)]
+
+        [MyAuthorizationFilter(0, true, true)]
+        [HttpPost("Index")]
         public async Task<ActionResult> Index(User user)
         {
+            ModelState.Remove("Name");
+            ModelState.Remove("Email");
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(user);
             }
+
             var username = user.Username;
             var password = user.Password;
             var users = await _apiHelper.GetAll<User>("Users")!;
             var userExists = users!.FirstOrDefault(u => u.Username == username);
+
             if (userExists == null)
             {
-                ModelState.AddModelError("Username", "Username does not exists!");
+                ModelState.AddModelError("Username", "Username does not exist.");
                 return View(user);
             }
 
             int id = userExists.Id;
             int roleId = userExists.RoleId;
-            var checkPassword = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
-            if (!checkPassword.IsSuccessful) return BadRequest("Fail!");
-            bool isPassWordCorrect = bool.Parse(checkPassword.Content!);
-            if (!isPassWordCorrect)
+            bool isPasswordCorrect = bool.Parse(client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}")).Content ?? "false");
+
+            if (!isPasswordCorrect)
             {
-                ModelState.AddModelError("Password", "Password does not correct!");
+                ModelState.AddModelError("Password", "Password is incorrect.");
                 return View(user);
             }
 
-            var changeOnline = client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
+            //Login Accept
+            //var changeOnline = localClient.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
             HttpContext.Session.SetString("IsLogin", "true");
             HttpContext.Session.SetInt32("UserId", id);
 
-            //HttpContext.Session.SetString("Username", username!);
-            //HttpContext.Session.SetString("Name", userExists.Name!);
-            //HttpContext.Session.SetInt32("RoleId", roleId);
-
-            MyMessage.Add("Success", "Login success!");
+            MyMessage.Add("Success", "Login success");
             switch (roleId)
             {
                 case 1:
@@ -67,7 +72,7 @@ namespace WEB.Controllers
                     }
                 case 2:
                     {
-                        return RedirectToAction("Manager", "Books");
+                        return RedirectToAction("Index", "Loans");
                     }
                 case 3:
                     {
@@ -80,10 +85,10 @@ namespace WEB.Controllers
             }
         }
 
-        [HttpGet, Route("Logout")]
-        public IActionResult Logout()
+        [Route("Logout")]
+        public ActionResult Logout()
         {
-            MyMessage.Add("Success", "Logout successful!");
+            MyMessage.Add("Success", "Logout success");
             HttpContext.Session.SetString("IsLogin", "false");
             return RedirectToAction("Index", "Home");
         }

@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using WEB.Helpers;
 
 namespace WEB.Controllers
 {
     public class ErrorsController : Controller
     {
-        public IActionResult MyNotFound()
+        public ActionResult MyNotFound()
         {
             ViewData["MsgDict"] = MyMessage.Get();
             ViewData["HideFooter"] = true;
