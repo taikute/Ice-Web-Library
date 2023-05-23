@@ -8,9 +8,6 @@ using System.Text.Json.Serialization;
 using static System.Reflection.Metadata.BlobBuilder;
 
 var builder = WebApplication.CreateBuilder(args);
-var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
-    .SetMinimumLevel(LogLevel.Trace)
-    .AddConsole());
 
 // Add services to the container.
 
@@ -24,7 +21,11 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("IceLibraryConnectionString")));
 
 //Logger
-builder.Services.AddLogging();
+builder.Services.AddLogging(options =>
+{
+    options.ClearProviders();
+    options.AddConsole();
+});
 
 //Repositories
 builder.Services.AddScoped(typeof(IGenericRepos<>), typeof(GenericRepos<>));
@@ -59,6 +60,5 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.Logger.LogInformation("Starting Application");
-
 app.Run();
+

@@ -23,6 +23,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation/1.19.3/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+    <!-- Đường dẫn đến thư viện Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 </head>
 <body>
 
@@ -31,7 +33,7 @@
     @{
         var HttpContext = HttpContextAccessor.HttpContext!;
         bool isLogin = bool.Parse(HttpContext.Session.GetString("IsLogin") ?? "false");
-        bool isApiResponse = bool.Parse(HttpContext.Session.GetString("IsApiResponse") ?? "false");
+        bool isApiResponse = bool.Parse(HttpContext.Session.GetString("IsApiResponse") ?? "true");
     }
     <header>
         <nav class="navbar navbar-expand-sm navbar-dark">
@@ -49,18 +51,10 @@
                             <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
 
                             <ul class="navbar-nav me-auto">
-                                <li>
-                                    <a class="nav-link text-light" asp-controller="Books" asp-action="Index">Books</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link text-light" asp-controller="Authors" asp-action="Index">Authors</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link text-light" asp-controller="Categorys" asp-action="Index">Categories</a>
-                                </li>
-                                <li>
-                                    <a class="nav-link text-light" asp-controller="Publishers" asp-action="Index">Publishers</a>
-                                </li>
+                                <li><a class="nav-link text-light" asp-controller="Books" asp-action="Index">Books</a></li>
+                                <li><a class="nav-link text-light" asp-controller="Authors" asp-action="Index">Authors</a></li>
+                                <li><a class="nav-link text-light" asp-controller="Categories" asp-action="Index">Categories</a></li>
+                                <li><a class="nav-link text-light" asp-controller="Publishers" asp-action="Index">Publishers</a></li>
                             </ul>
                         }
                         else if (roleId == 2)
@@ -93,7 +87,7 @@
                         <ul class="navbar-nav me-auto">
                             <li><a class="nav-link text-light" asp-controller="Books" asp-action="Index">Books</a></li>
                             <li><a class="nav-link text-light" asp-controller="Authors" asp-action="Index">Authors</a></li>
-                            <li><a class="nav-link text-light" asp-controller="Categorys" asp-action="Index">Categories</a></li>
+                            <li><a class="nav-link text-light" asp-controller="Categories" asp-action="Index">Categories</a></li>
                             <li><a class="nav-link text-light" asp-controller="Publishers" asp-action="Index">Publishers</a></li>
                         </ul>
 
@@ -118,30 +112,31 @@
             @RenderBody()
         </main>
     </div>
+
     @if (ViewData["HideFooter"] == null)
     {
         <div style="height: 300px;"></div>
         <footer class="footer" style="background-color: #D7E7A9;">
             <div style="height: 5px;"></div>
             <div class="row" style="margin: 10px 20px; text-align:center;">
-                <div class="col-3" style="border: solid 1px;">
+                <div class="col-md-3 col-sm-6" style="border: solid 1px;">
                     <h4>Address</h4>
                     <h6>828 Sư Vạn Hạnh Street,<br />Ward 13, District 10, HCMC</h6>
                 </div>
-                <div class="col-3" style="border: solid 1px;">
+                <div class="col-md-3 col-sm-6" style="border: solid 1px;">
                     <h4>Phone</h4>
                     <h6>0389653102</h6>
                 </div>
-                <div class="col-3" style="border: solid 1px;">
+                <div class="col-md-3 col-sm-6" style="border: solid 1px;">
                     <h4>Email</h4>
                     <h6>anhtai05102002@gmail.com</h6>
                 </div>
-                <div class="col-3" style="border: solid 1px;">
+                <div class="col-md-3 col-sm-6" style="border: solid 1px;">
                     <h4>Opening Hours</h4>
                     <h6>Mon - Sat: 7:00am - 9:30pm<br />Sunday: 7:00am - 10:00pm</h6>
                 </div>
             </div>
-            <div style="text-align: center; line-height:50px; height:60px;">
+            <div style="text-align: center; line-height: 50px; height: 60px;">
                 ©2023 by Nguyễn Anh Tài - Ice Library - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
         </footer>

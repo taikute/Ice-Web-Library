@@ -2,6 +2,7 @@
 using API.Repos.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol;
 
 namespace API.Controllers
@@ -18,17 +19,18 @@ namespace API.Controllers
             _instanceRepos = instanceRepos;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Loan>>> GetLoans()
+        [HttpGet("{userId?}")]
+        public async Task<ActionResult<IEnumerable<Loan>>> GetLoans(int? userId)
         {
-            return Ok(await _loanRepos.GetAll());
+            var loans = await _loanRepos.GetAll();
+            loans = loans.Where(l => l.UserId == userId);
+            return Ok(loans);
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Loan>> GetLoan(int id)
         {
-            if (id == 0) return BadRequest("Id must be different from 0!");
             var loan = await _loanRepos.GetById(id);
-            if (loan == null) return NotFound(id);
             return Ok(loan);
         }
         [HttpPost]

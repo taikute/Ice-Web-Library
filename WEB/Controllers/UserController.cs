@@ -13,8 +13,8 @@ namespace WEB.Controllers
             _apiHelper = apiHelper;
         }
 
-        [Route("Index"), MyAuthorizationFilter(1)]
-        public async Task<IActionResult> Index()
+        [Route("Index/{id}"), MyAuthorizationFilter(1)]
+        public async Task<IActionResult> Index(int id)
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
             ViewBag.Username = HttpContext.Session.GetString("Username");

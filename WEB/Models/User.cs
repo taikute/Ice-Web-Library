@@ -7,9 +7,8 @@ namespace WEB.Models
     public class User
     {
         public int Id { get; set; }
-        [Required] public int RoleId { get; set; } = 1;
-        [Required] public bool IsActived { get; set; } = true;
-        [Required] public bool IsOnline { get; set; } = false;
+        public int RoleId { get; set; } = 1;
+        public bool IsLocked { get; set; } = false;
 
         [Required]
         [StringLength(30, ErrorMessage = "30 characters limited.")]
@@ -17,13 +16,13 @@ namespace WEB.Models
 
         [Required]
         [EmailAddress]
-        [RegularExpression(@"^[\w-\.]+@gmail\.com$", ErrorMessage = "Invalid email.")]
+        [RegularExpression(@"^[\w-\.]+@gmail\.com$", ErrorMessage = "Email must contain @gmail.com.")]
         [StringLength(100, ErrorMessage = "100 character limited.")]
         public string? Email { get; set; }
 
         [Required]
         [RegularExpression("^[a-z0-9]+$", ErrorMessage = "Only lowercase letters and numbers are allowed.")]
-        [StringLength(10, MinimumLength = 5, ErrorMessage = "Length must between 5 - 10.")]
+        [StringLength(15, MinimumLength = 5, ErrorMessage = "At least 5 characters.")]
         public string Username { get; set; } = "";
 
         [Required]

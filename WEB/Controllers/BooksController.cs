@@ -9,16 +9,16 @@ namespace WEB.Controllers
     public class BooksController : Controller
     {
         readonly ApiHelper _apiHelper;
-        readonly IUrlHelperFactory _urlHelperFactory;
-        public BooksController(ApiHelper apiHelper, IUrlHelperFactory urlHelperFactory)
+        readonly IWebHostEnvironment _webHostEnvironment;
+        public BooksController(ApiHelper apiHelper, IWebHostEnvironment webHostEnvironment)
         {
             _apiHelper = apiHelper;
-            _urlHelperFactory = urlHelperFactory;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         #region Index
         [MyAuthorizationFilter(1, false, true)]
-        [HttpGet("Index")] 
+        [HttpGet("Index")]
         public async Task<IActionResult> Index(int? authorId, int? categoryId, int? publisherId,
             bool? asc, int limit = 18, int page = 1)
         {
@@ -64,46 +64,74 @@ namespace WEB.Controllers
         #endregion
         #region Manager
         [MyAuthorizationFilter(2)]
-        [HttpGet("Manager")]
-        public async Task<IActionResult> Manager()
+        [HttpGet("Manager/{page?}")]
+        public async Task<IActionResult> Manager(int page = 1)
         {
-            var books = await _apiHelper.GetAll<Book>("Books")!;
+            int limit = 50;
+            int skip = (page - 1) * limit;
+            var books = await _apiHelper.GetAll<Book>("Books");
+            if (books == null)
+            {
+                //Thông báo
+                return View();
+            }
+            books = books.Skip(skip).Take(limit);
+
 
             foreach (var book in books!)
             {
-                book.Author = await _apiHelper.GetByID<Author>(book.AuthorId, "Authors")!;
-                book.Category = await _apiHelper.GetByID<Category>(book.CategoryId, "Categories")!;
-                book.Publisher = await _apiHelper.GetByID<Publisher>(book.PublisherId, "Publishers")!;
+                book.Author = await _apiHelper.GetByID<Author>(book.AuthorId, "Authors");
+                book.Category = await _apiHelper.GetByID<Category>(book.CategoryId, "Categories");
+                book.Publisher = await _apiHelper.GetByID<Publisher>(book.PublisherId, "Publishers");
             }
             return View(books);
         }
         #endregion
         #region Create
-        [HttpGet, Route("Create"), MyAuthorizationFilter(2)]
+        [HttpGet("Create"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> Create()
         {
-            ViewBag.Authors = await _apiHelper.GetAll<Author>("Authors")!;
-            ViewBag.Categories = await _apiHelper.GetAll<Category>("Categories")!;
-            ViewBag.Publishers = await _apiHelper.GetAll<Publisher>("Publishers")!;
+            ViewBag.Authors = await _apiHelper.GetAll<Author>("Authors");
+            ViewBag.Categories = await _apiHelper.GetAll<Category>("Categories");
+            ViewBag.Publishers = await _apiHelper.GetAll<Publisher>("Publishers");
 
-            if (TempData["ValidationErrors"] != null)
-            {
-                ViewBag.ValidationErrors = TempData["ValidationErrors"];
-            }
-
-            return View(new Book());
+            return View();
         }
 
-        [HttpPost, Route("Create"), MyAuthorizationFilter(2)]
-        public async Task<IActionResult> Create(Book book)
+        [HttpPost("Create"), MyAuthorizationFilter(2)]
+        public async Task<IActionResult> Create(Book book, IFormFile? coverImage)
         {
+            ViewData["coverImage"] = coverImage;
+            ViewBag.Authors = await _apiHelper.GetAll<Author>("Authors");
+            ViewBag.Categories = await _apiHelper.GetAll<Category>("Categories");
+            ViewBag.Publishers = await _apiHelper.GetAll<Publisher>("Publishers");
+
             book.Id = 0;
             if (!ModelState.IsValid)
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage));
-                TempData["ValidationErrors"] = errors;
-                return RedirectToAction("Create");
+                return View(book);
             }
+            if (book.Price % 50000 != 0)
+            {
+                ModelState.AddModelError("Price", "Price must be divisible by 5.");
+            }
+            if (coverImage != null)
+            {
+                if (coverImage.Length > 512 * 1024)
+                {
+                    ModelState.AddModelError("CoverImagePath", "Cover image size must be less than 512 KB.");
+                    return View(book);
+                }
+                string extension = Path.GetExtension(coverImage.FileName);
+                string fileName = book.ISBN.ToString() + extension;
+                string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "book-cover-img", fileName);
+
+                using var stream = new FileStream(imagePath, FileMode.Create);
+                await coverImage.CopyToAsync(stream);
+
+                book.CoverImagePath = "~/" + fileName;
+            }
+
 
             await _apiHelper.Post(book, "Books");
             return RedirectToAction("Manager");

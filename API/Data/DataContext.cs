@@ -49,7 +49,8 @@ namespace API.Data
                 new User { Id = 2, Name = "Librarian Name", Email = "librarian@gmail.com", Username = "librarian", Password = "Lib123", RoleId = 2 },
                 new User { Id = 3, Name = "User1 Name", Email = "user1@gmail.com", Username = "user1", Password = "User1", RoleId = 1 },
                 new User { Id = 4, Name = "User2 Name", Email = "user2@gmail.com", Username = "user2", Password = "User2", RoleId = 1 },
-                new User { Id = 5, Name = "User3 Name", Email = "user3@gmail.com", Username = "user3", Password = "User3", RoleId = 1 }
+                new User { Id = 5, Name = "User3 Name", Email = "user3@gmail.com", Username = "user3", Password = "User3", RoleId = 1 },
+                new User { Id = 6, Name = "UserNotActive Name", Email = "notactiveuser@gmail.com", Username = "usernotactive", Password = "User123", RoleId = 1 , IsLocked = true}
                 );
 
             modelBuilder.Entity<Category>().HasData(
@@ -90,6 +91,7 @@ namespace API.Data
 
             //Add Book and Instance Data
             {
+                const int bookCount = 1000;
                 Random random = new Random();
                 const int length = 12;
                 const string chars = "0123456789";
@@ -156,7 +158,7 @@ namespace API.Data
                     }
 
                     string randomDescription = descriptionBuilder.ToString().TrimEnd();
-                    return randomDescription;
+                    return char.ToUpper(randomDescription[0]) + randomDescription.Substring(1); ;
                 }
                 string RandomPublishYear()
                 {
@@ -222,7 +224,7 @@ namespace API.Data
 
 
                 int instanceId = 1;
-                int[] imagePathNum = RandomNumImg(300);
+                int[] imagePathNum = RandomNumImg(bookCount);
                 for (int i = 0; i < imagePathNum.Length; i++)
                 {
                     modelBuilder.Entity<Book>().HasData(new Book

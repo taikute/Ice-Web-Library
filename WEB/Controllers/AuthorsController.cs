@@ -12,7 +12,9 @@ namespace WEB.Controllers
         {
             _apiHelper = apiHelper;
         }
-        [HttpGet, Route("Index")]
+
+        [MyAuthorizationFilter(1, false, true)]
+        [HttpGet("Index")]
         public async Task<IActionResult> Index()
         {
             var authors = await _apiHelper.GetAll<Author>("Authors")!;

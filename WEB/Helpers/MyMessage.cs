@@ -22,7 +22,6 @@
                     MessageDict[key].Clear();
                 }
             }
-
             return dict;
         }
 

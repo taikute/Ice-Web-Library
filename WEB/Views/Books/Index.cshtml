@@ -31,37 +31,32 @@
 <div class="text-center"><h1 class="display-4">Books</h1></div>
 
 <div class="row">
-    <div class="col-2">
+    <div style="width: 20%;">
         <div class="form-group">
-            <select id="authorId" name="authorId" class="form-control" asp-items="@(new SelectList(authors, "Id", "Name"))">
-                <option value="">Author</option>
+            <select onchange="handleChange(this.value)" class="form-control" id="authorId" name="authorId" asp-items="@(new SelectList(authors, "Id", "Name", authorId))">
+                <option value="">All Author</option>
             </select>
         </div>
     </div>
-    <div class="col-2">
+    <div style="width: 20%;">
         <div class="form-group">
-            <select id="categoryId" name="categoryId" class="form-control" asp-items="@(new SelectList(categories, "Id", "Name"))">
-                <option value="">Category</option>
+            <select onchange="handleChange(this.value)" class="form-control" id="categoryId" name="categoryId" asp-items="@(new SelectList(categories, "Id", "Name", categoryId))">
+                <option value="">All Category</option>
             </select>
         </div>
     </div>
-    <div class="col-2">
+    <div style="width: 20%;">
         <div class="form-group">
-            <select id="publisherId" name="publisherId" class="form-control" asp-items="@(new SelectList(publishers, "Id", "Name"))">
-                <option value="">Publisher</option>
+            <select onchange="handleChange(this.value)" class="form-control" id="publisherId" name="publisherId" asp-items="@(new SelectList(publishers, "Id", "Name", publisherId))">
+                <option value="">All Publisher</option>
             </select>
         </div>
     </div>
-    <div class="col-1 d-flex align-items-center">
+    <div style="width: 40%;" class="">
         <div class="form-group">
-            <a id="filterButton" class="btn btn-primary text-light">Filter</a>
-        </div>
-    </div>
-    <div class="col-5 d-flex justify-content-end">
-        <div class="form-group">
-            <a class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage, asc = true })">Asc</a>
-            <a class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage, asc = false })">Desc</a>
             <a class="btn btn-primary" href="@Url.Action("Index", "Books")">Clear</a>
+            <a class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage, asc = true })">A-Z</a>
+            <a class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage, asc = false })">Z-A</a>
         </div>
     </div>
 </div>
@@ -89,31 +84,53 @@ else
             }
         </div>
 
-        <div style="display: flex;justify-content: center; margin-top:10px;">
-            @if (currentPage > 1)
-            {
-                <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = 1 })">&lt;&lt;</a>
-                <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage - 1 })">&lt;</a>
+        <div class="row">
+            @{
+                const int edgeWidth = 5;
+                const int ltgtWidth = 25;
+                const int pagesWidth = 100 - edgeWidth * 2 - ltgtWidth * 2;
+
             }
-            <div style="width: 10px"></div>
-            @for (var i = startPage; i <= endPage; i++)
-            {
-                if (i == currentPage)
+            <div style="width: @edgeWidth%"></div>
+
+            <div style="text-align: right; width: @ltgtWidth%;">
+                @if (currentPage > 1)
                 {
-                    <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = i })"><strong><u>@i</u></strong></a>
+                    <a style="" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = authorId, categoryId = categoryId, publisherId = publisherId, page = 1 })">&lt;&lt;</a>
+                    <a style="" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage - 1 })">&lt;</a>
                 }
-                else
+            </div>
+
+            <div style="width: @pagesWidth%; text-align: center;">
+                @for (var i = startPage; i <= endPage; i++)
                 {
-                    <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = i })">@i</a>
+                    if (i == currentPage)
+                    {
+                        <a style="" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = authorId, categoryId = categoryId, publisherId = publisherId, page = i })"><strong><u>@i</u></strong></a>
+                    }
+                    else
+                    {
+                        <a style="" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = authorId, categoryId = categoryId, publisherId = publisherId, page = i })">@i</a>
+                    }
                 }
-            }
-            <div style="width: 10px"></div>
-            @if (currentPage < endPage)
-            {
-                <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage + 1 })">&gt;</a>
-                <a style="margin-right:5px" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = (int?)authorId, categoryId = categoryId, publisherId = publisherId, page = pageCount })">&gt;&gt;</a>
-            }
+            </div>
+
+            <div style="text-align: left;width: @ltgtWidth%;">
+                @if (currentPage < endPage)
+                {
+                    <a style="" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = authorId, categoryId = categoryId, publisherId = publisherId, page = currentPage + 1 })">&gt;</a>
+                    <a style="" class="btn btn-primary" href="@Url.Action("Index", "Books", new { authorId = authorId, categoryId = categoryId, publisherId = publisherId, page = pageCount })">&gt;&gt;</a>
+                }
+            </div>
+
+
+            <div style="width:@edgeWidth%;text-align:right;font-size:20px;">
+                <span>@currentPage/@pageCount</span>
+            </div>
         </div>
+
+
+
     </div>
 }
 
@@ -126,7 +143,7 @@ else
 </style>
 
 <script>
-    document.getElementById("filterButton").addEventListener("click", function () {
+    function handleChange(value) {
         var authorId = document.getElementById("authorId").value;
         var categoryId = document.getElementById("categoryId").value;
         var publisherId = document.getElementById("publisherId").value;
@@ -141,5 +158,5 @@ else
             url += "&publisherId=" + publisherId;
         }
         window.location.href = url;
-    });
+    }
 </script>

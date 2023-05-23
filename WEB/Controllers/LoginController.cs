@@ -48,9 +48,15 @@ namespace WEB.Controllers
                 return View(user);
             }
 
+            if (userExists.IsLocked)
+            {
+                ModelState.AddModelError("Username", "Account has been locked.");
+                return View(user);
+            }
+
             int id = userExists.Id;
             int roleId = userExists.RoleId;
-            bool isPasswordCorrect = bool.Parse(client.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}")).Content ?? "false");
+            bool isPasswordCorrect = bool.Parse(client.Execute(new RestRequest($"Users/CheckPassword/{id}/{password}")).Content ?? "false");
 
             if (!isPasswordCorrect)
             {
@@ -59,7 +65,6 @@ namespace WEB.Controllers
             }
 
             //Login Accept
-            //var changeOnline = localClient.Execute(new RestRequest($"Users/CheckPassword?id={id}&password={password}"));
             HttpContext.Session.SetString("IsLogin", "true");
             HttpContext.Session.SetInt32("UserId", id);
 
@@ -88,7 +93,8 @@ namespace WEB.Controllers
         [Route("Logout")]
         public ActionResult Logout()
         {
-            MyMessage.Add("Success", "Logout success");
+            MyMessage.Add("Success", "Logout success!");
+            HttpContext.Session.Remove("UserId");
             HttpContext.Session.SetString("IsLogin", "false");
             return RedirectToAction("Index", "Home");
         }

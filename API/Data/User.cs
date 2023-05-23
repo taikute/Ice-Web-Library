@@ -9,8 +9,7 @@ namespace API.Data
     {
         public int Id { get; set; }
         public int RoleId { get; set; } = 1;
-        public bool IsActived { get; set; } = true;
-        public bool IsOnline { get; set; } = false;
+        public bool IsLocked { get; set; } = false;
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Username { get; set; }

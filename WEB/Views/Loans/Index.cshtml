@@ -12,7 +12,9 @@
     };
 }
 
-<div class="text-center"><h1 class="display-4">Loan Manager</h1></div>
+<div class="text-center">
+    <h1 class="display-4">Loan Manager</h1>
+</div>
 
 <table class="table">
     <thead>
@@ -26,29 +28,65 @@
         </tr>
     </thead>
     <tbody>
-        @if(Model.Any())
-        @foreach (var item in Model)
+        @if (Model.Any())
         {
-            DateTime dueDate = ((DateTime)item.BorrowedDate).AddDays(31).Date;
+            foreach (var item in Model)
+            {
+                DateTime dueDate = ((DateTime)item.BorrowedDate).AddDays(31).Date;
 
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.InstanceId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                    <td>@Html.DisplayFor(modelItem => item.BorrowedDate)</td>
+                    <td>
+                        @if (item.ReturnedDate == null)
+                        {
+                            <span class="display-value">Not returned yet</span>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.ReturnedDate)
+                        }
+                    </td>
+                    <td><span class="display-value">@dueDate.ToString("dd/MM/yyyy")</span></td>
+                    <td class="status-cell" data-status-id="@item.StatusId">
+                        @loanStatusDictionary[item.StatusId]
+                        <span class="bi bi-pencil-fill float-end"></span>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.InstanceId)</td>
-                <td>@Html.DisplayFor(modelItem => item.UserId)</td>
-                <td>@Html.DisplayFor(modelItem => item.BorrowedDate)</td>
-                <td>
-                    @if (item.ReturnedDate == null)
-                    {
-                        <span class="display-value">Not return yet</span>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.ReturnedDate)
-                    }
-                </td>
-                <td><span class="display-value">@dueDate.ToString("dd/MM/yyyy")</span></td>
-                <td><span class="display-value">@loanStatusDictionary[item.StatusId]</span></td>
+                <td colspan="6">No loans found.</td>
             </tr>
         }
     </tbody>
 </table>
 
+<style>
+    .status-cell {
+        cursor: pointer;
+        font-weight: bold;
+        color: #41644A;
+    }
+
+        .status-cell:hover {
+            text-decoration: underline;
+        }
+</style>
+
+@*<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var statusCells = document.querySelectorAll(".status-cell");
+
+        statusCells.forEach(function (cell) {
+            cell.addEventListener("click", function () {
+                var statusId = this.dataset.statusId;
+                // Do something with the statusId, such as redirecting to a new page or performing an action
+                console.log("Clicked statusId: " + statusId);
+            });
+        });
+    });
+</script>*@

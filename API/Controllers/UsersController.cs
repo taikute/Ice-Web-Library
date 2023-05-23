@@ -36,8 +36,7 @@ namespace API.Controllers
             if (users.Any(u => u.Username == user.Username))
                 return BadRequest("Username is exists in database!");
             user.Id = 0;
-            user.IsActived = true;
-            user.IsOnline = false;
+            user.IsLocked = false;
             if (user.RoleId != 1)
             {
                 user.Loans = null;
@@ -45,14 +44,14 @@ namespace API.Controllers
             await _userRepos.Create(user);
             return NoContent();
         }
-        [HttpPut("ChangeStatus/{id}/{isOnline}")]
-        public async Task<IActionResult> ChangeStatus(int id, bool isOnline)
-        {
-            var user = await _userRepos.GetById(id);
-            user!.IsOnline = isOnline;
-            return NoContent();
-        }
-        [HttpGet("CheckPassword")]
+        //[HttpPut("ChangeActive/{id}/{isOnline}")]
+        //public async Task<IActionResult> ChangeActive(int id, bool isOnline)
+        //{
+        //    var user = await _userRepos.GetById(id);
+        //    user!.IsOnline = isOnline;
+        //    return NoContent();
+        //}
+        [HttpGet("CheckPassword/{id}/{password}")]
         public async Task<bool> CheckPassWord(int id, string password)
         {
             var user = await _userRepos.GetById(id);

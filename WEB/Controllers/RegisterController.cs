@@ -31,8 +31,7 @@ namespace WEB.Controllers
 
 
             //Register success!
-            user.IsActived = true;
-            user.IsOnline = false;
+            user.IsLocked = false;
             await _apiHelper.Post(user, "Users");
             MyMessage.Add("Success", "Register success!");
             return RedirectToAction("Index", "Login");
