@@ -15,7 +15,7 @@ namespace WEB.Controllers
             _apiHelper = apiHelper;
         }
         [Route("Privacy")]
-        public IActionResult Privacy()
+        public ActionResult Privacy()
         {
             return View();
         }
@@ -27,24 +27,40 @@ namespace WEB.Controllers
             return View();
         }
         [HttpPost, Route("Search"), MyAuthorizationFilter(1, false, true)]
-        public async Task<IActionResult> Search(string searchTerm)
+        public async Task<ActionResult> Search(string searchTerm)
         {
             ViewBag.SearchTerm = searchTerm;
-            var books = await _apiHelper.GetAll<Book>("Books")!;
-            foreach (var book in books!)
+            var books = await _apiHelper.GetAll<Book>("Books");
+
+            if (books == null)
+            {
+                return View();
+            }
+
+            searchTerm = searchTerm.ToLower();
+
+            var titles = books.Where(b => b.Title.ToLower().Contains(searchTerm));
+
+            foreach (var book in books)
             {
                 book.Author = await _apiHelper.GetByID<Author>(book.AuthorId, "Authors")!;
                 book.Category = await _apiHelper.GetByID<Category>(book.CategoryId, "Categories")!;
                 book.Publisher = await _apiHelper.GetByID<Publisher>(book.PublisherId, "Publishers")!;
             }
-            var lowerSearchTerm = searchTerm.ToLower();
-            var result = books.Where(b =>
-                b.Title!.ToLower().Contains(lowerSearchTerm)
-                || b.Author!.Name!.ToLower().Contains(lowerSearchTerm)
-                || b.Publisher!.Name!.ToLower().Contains(lowerSearchTerm)
-                || b.Category!.Name!.ToLower().Contains(lowerSearchTerm))
-                .ToList();
-            return View(result);
+
+            var authors = books.Where(b => b.Author?.Name?.ToLower().Contains(searchTerm) == true);
+            var categories = books.Where(b => b.Category?.Name?.ToLower().Contains(searchTerm) == true);
+            var publisher = books.Where(b => b.Publisher?.Name?.ToLower().Contains(searchTerm) == true);
+
+            Dictionary<string, IEnumerable<Book>?>? bookResult = new()
+            {
+                { "Title", titles.Take(50) },
+                { "Author", authors.Take(50) },
+                { "Category", categories.Take(50) },
+                { "Publisher", publisher.Take(50) }
+            };
+
+            return View(bookResult);
         }
     }
 }

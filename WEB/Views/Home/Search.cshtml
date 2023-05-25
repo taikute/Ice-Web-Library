@@ -1,5 +1,5 @@
 ﻿@using WEB.Models
-@model List<Book>
+@model Dictionary<string, IEnumerable<Book>>
 
 @{
     ViewData["Title"] = "Search";
@@ -9,7 +9,7 @@
     handleSearchFormSubmit();
 </script>
 
-<div class="text-center"><h1 class="display-4">Search Result</h1></div>
+<div class="text-center"><h1 class="display-4">@ViewData["Title"]</h1></div>
 
 <form asp-action="Search" class="d-flex">
     <input class="form-control me-2 rounded-pill" type="text" name="searchTerm" value="@ViewBag.SearchTerm" placeholder="Search by Author, Title, ..." required>
@@ -19,34 +19,35 @@
 <div class="container">
     <div class="row mt-4">
         <div class="col-md-12">
-            <h4>Search results:</h4>
-            @if (Model.Count == 0)
+            <h2>Search results:</h2>
+
+            @foreach (var pair in Model)
             {
-                <p>No results found</p>
-            }
-            else
-            {
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>Publisher</th>
-                            <th>Category</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var book in Model)
-                        {
-                            <tr id="tr-search" onclick="window.location.href='@Url.Action("Detail", "Books", new { id = book.Id })'">
-                                <td>@book.Title</td>
-                                <td>@(book.Author!.Name)</td>
-                                <td>@(book.Publisher!.Name)</td>
-                                <td>@(book.Category!.Name)</td>
+                if (pair.Value.Any())
+                {
+                    <h4 style="color: #566E2D;margin-top: 30px; text-align: center;"><b>Search By: @pair.Key</b></h4>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Publisher</th>
+                                <th>Category</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var book in pair.Value)
+                            {
+                                <tr id="tr-search" onclick="window.location.href='@Url.Action("Detail", "Books", new { id = book.Id })'">
+                                    <td>@book.Title</td>
+                                    <td>@(book.Author!.Name)</td>
+                                    <td>@(book.Publisher!.Name)</td>
+                                    <td>@(book.Category!.Name)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
             }
         </div>
     </div>

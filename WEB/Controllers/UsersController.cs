@@ -4,11 +4,11 @@ using WEB.Models;
 
 namespace WEB.Controllers
 {
-    [Route("User")]
-    public class UserController : Controller
+    [Route("Users")]
+    public class UsersController : Controller
     {
         readonly ApiHelper _apiHelper;
-        public UserController(ApiHelper apiHelper)
+        public UsersController(ApiHelper apiHelper)
         {
             _apiHelper = apiHelper;
         }
@@ -21,6 +21,11 @@ namespace WEB.Controllers
             var loans = await _apiHelper.GetAll<Loan>("Loans");
             loans = loans!.Where(l => l.UserId == userId);
             return View(loans);
+        }
+
+        public async Task<ActionResult> Manager(int? id)
+        {
+            return View();
         }
     }
 }

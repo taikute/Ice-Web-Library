@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
 
@@ -7,6 +8,7 @@ namespace WEB.Models
     [Index(nameof(ISBN), IsUnique = true)]
     public class Book
     {
+        [DisplayName("Book Id")]
         public int Id { get; set; }
         [Required] public int AuthorId { get; set; }
         [Required] public int CategoryId { get; set; }
@@ -14,7 +16,7 @@ namespace WEB.Models
 
         [Required]
         [StringLength(12, MinimumLength = 12, ErrorMessage = "ISBN must be exactly 12 characters long!")]
-        public string ISBN { get; set; } = "ISBN";
+        public string ISBN { get; set; } = "123456789012";
 
         [Required]
         [Range(1, int.MaxValue)]
@@ -29,25 +31,27 @@ namespace WEB.Models
         public int Quantity { get; set; } = 0;
 
         [Required]
+        [DisplayName("Book Title")]
         [StringLength(50)]
-        public string? Title { get; set; }
+        public string Title { get; set; } = "NewTitle";
 
         [StringLength(200)]
-        public string? Description { get; set; }
+        public string Description { get; set; } = "NewDescription";
 
         [Required]
         [StringLength(4)]
-        public string? PublishYear { get; set; }
+        public string PublishYear { get; set; } = "2023";
 
-        public string? CoverImagePath { get; set; } = "~/1.jpg";
-
-        [Required]
-        [StringLength(30)]
-        public string? Language { get; set; }
+        [DisplayName("Book Cover")]
+        public string CoverImagePath { get; set; } = "~/1.jpg";
 
         [Required]
         [StringLength(30)]
-        public string? Edition { get; set; }
+        public string Language { get; set; } = "English";
+
+        [Required]
+        [StringLength(30)]
+        public string Edition { get; set; } = "Edition 1";
 
         #region ForeignKey
         public virtual Author? Author { get; set; }

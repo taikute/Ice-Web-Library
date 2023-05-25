@@ -20,7 +20,7 @@ namespace WEB.Controllers
         [MyAuthorizationFilter(1, false, true)]
         [HttpGet("Index")]
         public async Task<IActionResult> Index(int? authorId, int? categoryId, int? publisherId,
-            bool? asc, int limit = 18, int page = 1)
+            bool asc = true, int limit = 18, int page = 1)
         {
             var books = await _apiHelper.GetAll<Book>("Books");
             if (books == null) return BadRequest();
@@ -31,17 +31,14 @@ namespace WEB.Controllers
             if (publisherId != null) books = books.Where(b => b.PublisherId == publisherId);
 
             //Sort
-            if (asc != null)
+            switch (asc)
             {
-                switch (asc)
-                {
-                    case true:
-                        books = books.OrderBy(b => b.Title);
-                        break;
-                    case false:
-                        books = books.OrderByDescending(b => b.Title);
-                        break;
-                }
+                case true:
+                    books = books.OrderBy(b => b.Title);
+                    break;
+                case false:
+                    books = books.OrderByDescending(b => b.Title);
+                    break;
             }
 
             //PageCount
@@ -64,19 +61,22 @@ namespace WEB.Controllers
         #endregion
         #region Manager
         [MyAuthorizationFilter(2)]
-        [HttpGet("Manager/{page?}")]
-        public async Task<IActionResult> Manager(int page = 1)
+        [HttpGet("Manager")]
+        public async Task<ActionResult> Manager(string? authorName, string? categoryName, string publisherName,
+            string? searchTerm, string searchField = "ISBN", int page = 1)
         {
-            int limit = 50;
-            int skip = (page - 1) * limit;
-            var books = await _apiHelper.GetAll<Book>("Books");
-            if (books == null)
-            {
-                //Thông báo
-                return View();
-            }
-            books = books.Skip(skip).Take(limit);
+            const int pageSize = 50;
 
+            var books = await _apiHelper.GetAll<Book>("Books");
+            if (books == null) return View();
+
+            if (true)
+            {
+
+            }
+
+
+            books = books.Skip((page - 1) * pageSize).Take(pageSize);
 
             foreach (var book in books!)
             {
@@ -84,6 +84,14 @@ namespace WEB.Controllers
                 book.Category = await _apiHelper.GetByID<Category>(book.CategoryId, "Categories");
                 book.Publisher = await _apiHelper.GetByID<Publisher>(book.PublisherId, "Publishers");
             }
+
+            //ViewData
+            ViewData["Authors"] = await _apiHelper.GetAll<Author>("Authors");
+            ViewData["Categories"] = await _apiHelper.GetAll<Category>("Categories");
+            ViewData["Publishers"] = await _apiHelper.GetAll<Publisher>("Publishers");
+            ViewData["Page"] = page;
+            ViewData["SearchTerm"] = searchTerm;
+            ViewData["SearchField"] = searchField;
             return View(books);
         }
         #endregion
@@ -138,7 +146,8 @@ namespace WEB.Controllers
         }
         #endregion
         #region Detail
-        [HttpGet, Route("Detail")]
+        [MyAuthorizationFilter(1, false, true)]
+        [HttpGet("Detail")]
         public async Task<IActionResult> Detail(int id)
         {
             var book = await _apiHelper.GetByID<Book>(id, "Books")!;
