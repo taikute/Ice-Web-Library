@@ -9,7 +9,7 @@
 <div class="info-box">
     <div class="book-info">
         <div class="book-image">
-            <img src="/book-cover-img/@Url.Content(Model.CoverImagePath)" alt="Book Image">
+            <img src="/book-cover-img/@Url.Content(Model.CoverImagePath)" alt="@Model.Title">
         </div>
         <div class="book-details">
             <h2>@Model.Title</h2>
@@ -49,7 +49,7 @@
     }
 
     .book-image img {
-        max-width: 200px;
+        width: 200px;
         height: auto;
         margin-right: 20px;
     }

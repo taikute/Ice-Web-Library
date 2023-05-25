@@ -19,10 +19,12 @@ namespace WEB.Models
         public string ISBN { get; set; } = "123456789012";
 
         [Required]
+        [DisplayName("Page Count")]
         [Range(1, int.MaxValue)]
         public int PageCount { get; set; } = 99;
 
         [Required]
+        [DisplayName("Price (VND)")]
         [Range(50000, 200000)]
         public int Price { get; set; } = 100000;
 
@@ -39,6 +41,7 @@ namespace WEB.Models
         public string Description { get; set; } = "NewDescription";
 
         [Required]
+        [DisplayName("Publish Year")]
         [StringLength(4)]
         public string PublishYear { get; set; } = "2023";
 

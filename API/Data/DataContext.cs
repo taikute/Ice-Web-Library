@@ -50,7 +50,7 @@ namespace API.Data
                 new User { Id = 3, Name = "User1 Name", Email = "user1@gmail.com", Username = "user1", Password = "User1", RoleId = 1 },
                 new User { Id = 4, Name = "User2 Name", Email = "user2@gmail.com", Username = "user2", Password = "User2", RoleId = 1 },
                 new User { Id = 5, Name = "User3 Name", Email = "user3@gmail.com", Username = "user3", Password = "User3", RoleId = 1 },
-                new User { Id = 6, Name = "UserNotActive Name", Email = "notactiveuser@gmail.com", Username = "usernotactive", Password = "User123", RoleId = 1 , IsLocked = true}
+                new User { Id = 6, Name = "UserNotActive Name", Email = "notactiveuser@gmail.com", Username = "usernotactive", Password = "User123", RoleId = 1, IsLocked = true }
                 );
 
             modelBuilder.Entity<Category>().HasData(
@@ -92,34 +92,15 @@ namespace API.Data
             //Add Book and Instance Data
             {
                 const int bookCount = 1000;
-                Random random = new Random();
+                Random random = new();
                 const int length = 12;
                 const string chars = "0123456789";
-                const int maxCharacterCount = 200;
 
-                List<string> titleWords = new List<string>
-                {
-                    "The", "Art", "Science", "Adventures", "Secrets", "Mysteries", "Journey", "In", "Into", "Out", "Beyond",
-                    "From", "With", "Without", "Life", "World", "Universe", "Quest", "Power", "Legend", "Dreams", "Hope",
-                    "Kingdom", "Magic", "Truth", "Wisdom", "Heart", "Soul", "Mind", "Essence", "Eternal", "Lost", "Found",
-                    "Heroes", "Dark", "Light", "Chaos", "Order", "Rise", "Fall", "Song", "Echoes", "Whispers", "Silence"
-                };
-                List<string> descriptionWords = new List<string>
-                {
-                    "A", "theoretical", "physicist's", "introduction", "to", "the", "theory", "of", "relativity",
-                    "exploring", "its", "fundamental", "concepts", "and", "principles", "in", "an", "accessible", "way",
-                    "covering", "both", "special", "and", "general", "relativity",
-                    "with", "real-world", "examples", "and", "applications",
-                    "comprehensive", "and", "insightful", "reading", "for", "anyone", "interested", "in", "the", "subject",
-                    "delves", "deep", "into", "the", "mathematical", "framework", "and", "physical", "implications",
-                    "provides", "a", "fresh", "perspective", "on", "our", "understanding", "of", "space", "and", "time",
-                    "and", "its", "relation", "to", "gravity", "and", "the", "structure", "of", "the", "universe"
-                };
-                List<string> languages = new List<string>
+                List<string> languages = new()
                 {
                     "English", "Spanish", "French", "German", "Italian", "Japanese", "Chinese", "Russian", "Arabic", "Portuguese"
                 };
-                List<string> editions = new List<string>
+                List<string> editions = new()
                 {
                     "1st edition", "2nd edition", "3rd edition", "4th edition", "5th edition", "Special edition", "Collector's edition"
                 };
@@ -139,26 +120,48 @@ namespace API.Data
                 }
                 string RandomDescription()
                 {
-                    StringBuilder descriptionBuilder = new StringBuilder();
-                    int currentCharacterCount = 0;
+                    string[] descriptionPhrases = {
+                        "A gripping tale of", "An enchanting exploration into", "A thrilling journey through",
+                        "A captivating story about", "An intriguing look at", "A mesmerizing adventure in",
+                        "A thought-provoking examination of", "An exhilarating quest to uncover",
+                        "A hauntingly beautiful portrayal of", "A fascinating account of",
+                        "A compelling narrative that delves into", "A vivid depiction of",
+                        "A heartwarming story that celebrates", "An epic saga of",
+                        "A poignant reflection on", "A mesmerizing blend of",
+                        "A riveting exploration of", "An extraordinary tale of",
+                        "A spellbinding odyssey through", "A breathtaking escapade into",
+                        "A stunning portrayal of", "An introspective journey through",
+                        "A thrilling saga of", "A dazzling tapestry of",
+                        "A profound exploration of", "A gripping account of",
+                        "A haunting tale of", "A captivating journey into",
+                        "A remarkable story that unravels", "An evocative examination of"
+                    };
 
-                    while (currentCharacterCount < maxCharacterCount)
+                    string[] themes = {
+                        "love and loss", "courage and resilience", "mystery and intrigue",
+                        "history and heritage", "friendship and betrayal", "identity and self-discovery",
+                        "adventure and discovery", "hope and redemption", "power and corruption",
+                        "family and secrets", "nature and the environment", "war and conflict",
+                        "art and creativity", "science and innovation", "faith and spirituality",
+                        "dreams and aspirations", "justice and injustice", "fate and destiny",
+                        "triumph over adversity", "the human condition", "the pursuit of knowledge",
+                        "the struggle for freedom", "the meaning of life", "the depths of the human soul",
+                        "the clash of civilizations", "the complexity of relationships",
+                        "the enigma of existence", "the price of ambition", "the search for truth"
+                    };
+
+                    string descriptionPhrase = descriptionPhrases[random.Next(descriptionPhrases.Length)];
+                    string theme = themes[random.Next(themes.Length)];
+
+                    string description = $"{descriptionPhrase} {theme}.";
+
+                    // Truncate description to a maximum of 200 characters
+                    if (description.Length > 200)
                     {
-                        string randomWord = descriptionWords[random.Next(descriptionWords.Count)];
-
-                        if (currentCharacterCount + randomWord.Length + 1 <= maxCharacterCount)
-                        {
-                            descriptionBuilder.Append(randomWord).Append(" ");
-                            currentCharacterCount += randomWord.Length + 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        description = description.Substring(0, 200);
                     }
 
-                    string randomDescription = descriptionBuilder.ToString().TrimEnd();
-                    return char.ToUpper(randomDescription[0]) + randomDescription.Substring(1); ;
+                    return description;
                 }
                 string RandomPublishYear()
                 {
@@ -167,31 +170,37 @@ namespace API.Data
                 }
                 string RandomTitle()
                 {
-                    StringBuilder titleBuilder = new StringBuilder();
-                    int currentLength = 0;
+                    string[] words = { "The", "Adventures", "Journey", "Mystery", "Secrets", "Lost", "Discovery",
+                           "Forgotten", "Chaos", "Whisper", "Silent", "Echoes", "Shadow", "Eternal",
+                           "Fire", "Ice", "Storm", "Twilight", "Moonlight", "Starlight", "Dreams",
+                           "Reflections", "Enigma", "Serenity", "Endless", "Infinite", "Captive",
+                           "Beyond", "Crimson", "Golden", "Silver", "Scarlet", "Amber", "Emerald",
+                           "Obsidian", "Opal", "Sapphire", "Ruby", "Diamond", "Amethyst", "Topaz",
+                           "Midnight", "Sunrise", "Sunset", "Dusk", "Dawn", "Legacy", "Destiny",
+                           "Quest", "Fate", "Legend", "Tales", "Whispers", "Chronicles", "Visions",
+                           "Essence", "Labyrinth", "Myth", "Realm", "Wanderer", "Luminary", "Oracle",
+                           "Puzzle", "Conundrum", "Paradox", "Inception", "Reflection", "Illusion",
+                           "Imagination", "Muse", "Voyage", "Odyssey", "Prophecy", "Enchantment",
+                           "Suspicion", "Betrayal", "Revelation", "Obsession", "Desire", "Passion",
+                           "Yearning", "Temptation", "Sacrifice", "Perception", "Deception",
+                           "Whirlwind", "Phoenix", "Mirage", "Escape", "Forgiveness", "Retribution",
+                           "Resurrection", "Purgatory", "Salvation", "Sanctuary", "Genesis",
+                           "Apocalypse", "Eclipse" };
 
-                    while (currentLength < 20)
+                    // Generate a random title by selecting random words
+                    string title = "";
+
+                    for (int i = 0; i < 3; i++)
                     {
-                        string randomWord = titleWords[random.Next(titleWords.Count)];
+                        int index = random.Next(words.Length);
+                        string word = words[index];
 
-                        if (currentLength + randomWord.Length + 1 <= 20)
-                        {
-                            if (currentLength > 0)
-                            {
-                                titleBuilder.Append(' ');
-                                currentLength++;
-                            }
-                            titleBuilder.Append(randomWord);
-                            currentLength += randomWord.Length;
-                        }
-                        else
-                        {
-                            break;
-                        }
+                        title += word + " ";
                     }
 
-                    string bookTitle = titleBuilder.ToString();
-                    return bookTitle;
+                    title = title.Trim(); // Remove trailing whitespace
+
+                    return title;
                 }
                 string RandomLanguage()
                 {

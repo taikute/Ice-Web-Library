@@ -17,16 +17,3 @@ function createAlert(message, type) {
 }
 
 
-function handleSearchFormSubmit() {
-    var form = document.getElementById("search-form");
-    var input = document.getElementById("search-input");
-
-    input.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            form.submit();
-        }
-    });
-}
-
-

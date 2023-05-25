@@ -23,7 +23,7 @@ namespace WEB.Controllers
             return View(loans);
         }
 
-        public async Task<ActionResult> Manager(int? id)
+        public ActionResult Manager(int? id)
         {
             return View();
         }

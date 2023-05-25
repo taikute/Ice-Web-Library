@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
 using WEB.Helpers;
 using WEB.Models;
 
@@ -19,11 +18,11 @@ namespace WEB.Controllers
         #region Index
         [MyAuthorizationFilter(1, false, true)]
         [HttpGet("Index")]
-        public async Task<IActionResult> Index(int? authorId, int? categoryId, int? publisherId,
+        public async Task<ActionResult> Index(int? authorId, int? categoryId, int? publisherId,
             bool asc = true, int limit = 18, int page = 1)
         {
             var books = await _apiHelper.GetAll<Book>("Books");
-            if (books == null) return BadRequest();
+            if (books == null) return View();
 
             //Filter
             if (authorId != null) books = books.Where(b => b.AuthorId == authorId);
@@ -62,21 +61,43 @@ namespace WEB.Controllers
         #region Manager
         [MyAuthorizationFilter(2)]
         [HttpGet("Manager")]
-        public async Task<ActionResult> Manager(string? authorName, string? categoryName, string publisherName,
-            string? searchTerm, string searchField = "ISBN", int page = 1)
+        public async Task<ActionResult> Manager(int? authorId, int? categoryId, int? publisherId,
+            string? searchTerm, int searchType = 1, int page = 1)
         {
-            const int pageSize = 50;
-
+            string filteredInfo = "";
+            int pageLimit = 20;
             var books = await _apiHelper.GetAll<Book>("Books");
             if (books == null) return View();
 
-            if (true)
+            if (authorId != null)
             {
-
+                filteredInfo += $"AuthorId:{authorId},";
+                books = books.Where(b => b.AuthorId == authorId);
+            }
+            if (categoryId != null)
+            {
+                filteredInfo += $"CategoryId:{categoryId},";
+                books = books.Where(b => b.CategoryId == categoryId);
+            }
+            if (publisherId != null)
+            {
+                filteredInfo += $"PublisherId:{publisherId},";
+                books = books.Where(b => b.PublisherId == publisherId);
             }
 
+            if (searchTerm != null)
+            {
+                switch (searchType)
+                {
+                    case 1:
+                        {
+                            books = books.Where(b => b.ISBN == searchTerm);
+                            break;
+                        }
+                }
+            }
 
-            books = books.Skip((page - 1) * pageSize).Take(pageSize);
+            books = books.Skip((page - 1) * pageLimit).Take(pageLimit);
 
             foreach (var book in books!)
             {
@@ -86,12 +107,18 @@ namespace WEB.Controllers
             }
 
             //ViewData
+            ViewData["AuthorId"] = authorId;
+            ViewData["CategoryId"] = categoryId;
+            ViewData["PublisherId"] = publisherId;
             ViewData["Authors"] = await _apiHelper.GetAll<Author>("Authors");
             ViewData["Categories"] = await _apiHelper.GetAll<Category>("Categories");
             ViewData["Publishers"] = await _apiHelper.GetAll<Publisher>("Publishers");
             ViewData["Page"] = page;
             ViewData["SearchTerm"] = searchTerm;
-            ViewData["SearchField"] = searchField;
+            ViewData["SearchType"] = searchType;
+
+            filteredInfo += "Page:" + page;
+            ViewData["FilteredInfo"] = filteredInfo;
             return View(books);
         }
         #endregion
