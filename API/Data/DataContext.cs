@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using API.MyRandom;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text;
 
@@ -118,89 +119,10 @@ namespace API.Data
                 {
                     return RandomNext(4) * 50000;
                 }
-                string RandomDescription()
-                {
-                    string[] descriptionPhrases = {
-                        "A gripping tale of", "An enchanting exploration into", "A thrilling journey through",
-                        "A captivating story about", "An intriguing look at", "A mesmerizing adventure in",
-                        "A thought-provoking examination of", "An exhilarating quest to uncover",
-                        "A hauntingly beautiful portrayal of", "A fascinating account of",
-                        "A compelling narrative that delves into", "A vivid depiction of",
-                        "A heartwarming story that celebrates", "An epic saga of",
-                        "A poignant reflection on", "A mesmerizing blend of",
-                        "A riveting exploration of", "An extraordinary tale of",
-                        "A spellbinding odyssey through", "A breathtaking escapade into",
-                        "A stunning portrayal of", "An introspective journey through",
-                        "A thrilling saga of", "A dazzling tapestry of",
-                        "A profound exploration of", "A gripping account of",
-                        "A haunting tale of", "A captivating journey into",
-                        "A remarkable story that unravels", "An evocative examination of"
-                    };
-
-                    string[] themes = {
-                        "love and loss", "courage and resilience", "mystery and intrigue",
-                        "history and heritage", "friendship and betrayal", "identity and self-discovery",
-                        "adventure and discovery", "hope and redemption", "power and corruption",
-                        "family and secrets", "nature and the environment", "war and conflict",
-                        "art and creativity", "science and innovation", "faith and spirituality",
-                        "dreams and aspirations", "justice and injustice", "fate and destiny",
-                        "triumph over adversity", "the human condition", "the pursuit of knowledge",
-                        "the struggle for freedom", "the meaning of life", "the depths of the human soul",
-                        "the clash of civilizations", "the complexity of relationships",
-                        "the enigma of existence", "the price of ambition", "the search for truth"
-                    };
-
-                    string descriptionPhrase = descriptionPhrases[random.Next(descriptionPhrases.Length)];
-                    string theme = themes[random.Next(themes.Length)];
-
-                    string description = $"{descriptionPhrase} {theme}.";
-
-                    // Truncate description to a maximum of 200 characters
-                    if (description.Length > 200)
-                    {
-                        description = description.Substring(0, 200);
-                    }
-
-                    return description;
-                }
                 string RandomPublishYear()
                 {
                     int randomYear = random.Next(1900, 2001);
                     return randomYear.ToString();
-                }
-                string RandomTitle()
-                {
-                    string[] words = { "The", "Adventures", "Journey", "Mystery", "Secrets", "Lost", "Discovery",
-                           "Forgotten", "Chaos", "Whisper", "Silent", "Echoes", "Shadow", "Eternal",
-                           "Fire", "Ice", "Storm", "Twilight", "Moonlight", "Starlight", "Dreams",
-                           "Reflections", "Enigma", "Serenity", "Endless", "Infinite", "Captive",
-                           "Beyond", "Crimson", "Golden", "Silver", "Scarlet", "Amber", "Emerald",
-                           "Obsidian", "Opal", "Sapphire", "Ruby", "Diamond", "Amethyst", "Topaz",
-                           "Midnight", "Sunrise", "Sunset", "Dusk", "Dawn", "Legacy", "Destiny",
-                           "Quest", "Fate", "Legend", "Tales", "Whispers", "Chronicles", "Visions",
-                           "Essence", "Labyrinth", "Myth", "Realm", "Wanderer", "Luminary", "Oracle",
-                           "Puzzle", "Conundrum", "Paradox", "Inception", "Reflection", "Illusion",
-                           "Imagination", "Muse", "Voyage", "Odyssey", "Prophecy", "Enchantment",
-                           "Suspicion", "Betrayal", "Revelation", "Obsession", "Desire", "Passion",
-                           "Yearning", "Temptation", "Sacrifice", "Perception", "Deception",
-                           "Whirlwind", "Phoenix", "Mirage", "Escape", "Forgiveness", "Retribution",
-                           "Resurrection", "Purgatory", "Salvation", "Sanctuary", "Genesis",
-                           "Apocalypse", "Eclipse" };
-
-                    // Generate a random title by selecting random words
-                    string title = "";
-
-                    for (int i = 0; i < 3; i++)
-                    {
-                        int index = random.Next(words.Length);
-                        string word = words[index];
-
-                        title += word + " ";
-                    }
-
-                    title = title.Trim(); // Remove trailing whitespace
-
-                    return title;
                 }
                 string RandomLanguage()
                 {
@@ -243,8 +165,8 @@ namespace API.Data
                         CategoryId = RandomNext(9),
                         PublisherId = RandomNext(9),
                         ISBN = RandomIsbn(),
-                        Title = RandomTitle(),
-                        Description = RandomDescription(),
+                        Title = Title.RandomTitle(),
+                        Description = Description.RandomDescription(),
                         PublishYear = RandomPublishYear(),
                         Price = RandomPrice(),
                         Quantity = 10,

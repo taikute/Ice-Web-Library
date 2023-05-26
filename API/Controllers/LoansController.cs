@@ -19,11 +19,10 @@ namespace API.Controllers
             _instanceRepos = instanceRepos;
         }
 
-        [HttpGet("{userId?}")]
-        public async Task<ActionResult<IEnumerable<Loan>>> GetLoans(int? userId)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Loan>>> GetLoans()
         {
             var loans = await _loanRepos.GetAll();
-            loans = loans.Where(l => l.UserId == userId);
             return Ok(loans);
         }
 
@@ -37,6 +36,12 @@ namespace API.Controllers
         public async Task<IActionResult> PostLoan(Loan loan)
         {
             await _loanRepos.Create(loan);
+            return NoContent();
+        }
+        [HttpPut]
+        public async Task<IActionResult> PutLoan(Loan loan)
+        {
+            await _loanRepos.Update(loan);
             return NoContent();
         }
     }

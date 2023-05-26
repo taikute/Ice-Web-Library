@@ -1,19 +1,20 @@
 ﻿@model IEnumerable<WEB.Models.Loan>
 
 @{
-    ViewData["Title"] = "Index";
-    Dictionary<int, string> loanStatusDictionary = new Dictionary<int, string>()
+    ViewData["Title"] = "Loan Manager";
+    Dictionary<long, string> loanStatusDictionary = new()
     {
         { 1, "Waiting For Pickup" },
         { 2, "On Loan" },
         { 3, "Returned" },
         { -1, "Past Due Pickup" },
-        { -2, "Past Due Return" }
+        { -2, "Past Due Return" },
+        { -3, "Cancel"}
     };
 }
 
 <div class="text-center">
-    <h1 class="display-4">Loan Manager</h1>
+    <h1 class="display-4">@ViewData["Title"]</h1>
 </div>
 
 <table class="table">
@@ -24,7 +25,30 @@
             <th>@Html.DisplayName("Borrowed Date")</th>
             <th>@Html.DisplayName("Returned Date")</th>
             <th>@Html.DisplayName("Due Date")</th>
-            <th>@Html.DisplayName("Status")</th>
+            <th>
+                <select id="statusSelect" class="form-control">
+                    <option value="0">All status</option>
+                    @foreach (var key in loanStatusDictionary.Keys)
+                    {
+                        if (key == ((int?)ViewData["StatusId"] ?? 0))
+                        {
+                            <option selected value="@key">@loanStatusDictionary[key]</option>
+                        }
+                        else
+                        {
+                            <option value="@key">@loanStatusDictionary[key]</option>
+                        }
+                    }
+
+                </select>
+                <script>
+                    document.getElementById('statusSelect').addEventListener('change', function () {
+                        var statusId = this.value;
+                        window.location.href = '/Loans/Index?statusId=' + statusId;
+                    });
+                </script>
+            </th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -49,9 +73,24 @@
                         }
                     </td>
                     <td><span class="display-value">@dueDate.ToString("dd/MM/yyyy")</span></td>
-                    <td class="status-cell" data-status-id="@item.StatusId">
-                        @loanStatusDictionary[item.StatusId]
-                        <span class="bi bi-pencil-fill float-end"></span>
+                    <td>
+                        <span>@loanStatusDictionary[item.StatusId]</span>
+                    </td>
+                    <td>
+                        @if (item.StatusId > 0)
+                        {
+                            string? action = null;
+                            if (item.StatusId == 1) action = "Pickup?";
+                            else if (item.StatusId == 2) action = "Returned?";
+                            if (action != null)
+                            {
+                                <a class="btn btn-primary" asp-action="PlusStatus" asp-route-loanId="@item.Id">@action</a>
+                            }
+                            if (item.StatusId != 3)
+                            {
+                                <a class="btn btn-primary" style="background-color: darkred !important;" asp-action="UpdateStatus" asp-route-loanId="@item.Id" asp-route-isCancel="true">Cancel</a>
+                            }
+                        }
                     </td>
                 </tr>
             }
@@ -59,34 +98,57 @@
         else
         {
             <tr>
-                <td colspan="6">No loans found.</td>
+                <td colspan="7" style="font-size: 20px;"><b>No loans found!</b></td>
             </tr>
         }
     </tbody>
 </table>
 
 <style>
-    .status-cell {
+    #status-detail {
         cursor: pointer;
         font-weight: bold;
         color: #41644A;
     }
 
-        .status-cell:hover {
+        #status-detail:hover {
             text-decoration: underline;
+        }
+
+    .table {
+        display: table;
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .table tbody {
+            display: table-row-group;
+        }
+
+        .table tr {
+            display: table-row;
+        }
+
+        .table td, .table th {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid black;
+            padding: 8px;
         }
 </style>
 
-@*<script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         var statusCells = document.querySelectorAll(".status-cell");
 
         statusCells.forEach(function (cell) {
             cell.addEventListener("click", function () {
                 var statusId = this.dataset.statusId;
-                // Do something with the statusId, such as redirecting to a new page or performing an action
-                console.log("Clicked statusId: " + statusId);
+                alert(statusId);
             });
         });
     });
-</script>*@
+</script>

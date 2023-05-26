@@ -13,6 +13,7 @@ namespace API.Data
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Username { get; set; }
+        public string? CitizenIdentificationNumber { get; set; }
         public string? Password { get => _password; set => _password = HashPassword(value ?? "Password123"); }
 
         public virtual Role? Role { get; set; }

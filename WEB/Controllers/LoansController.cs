@@ -13,8 +13,8 @@ namespace WEB.Controllers
             _apiHelper = apiHelper;
         }
 
-        [HttpGet, Route("Index/{userId?}"), MyAuthorizationFilter(2)]
-        public async Task<IActionResult> Index(int? userId)
+        [HttpGet, Route("Index"), MyAuthorizationFilter(2)]
+        public async Task<ActionResult> Index(int? userId, int statusId = 0)
         {
             ViewData["MsgDict"] = MyMessage.Get();
             var loans = await _apiHelper.GetAll<Loan>("Loans");
@@ -22,6 +22,12 @@ namespace WEB.Controllers
             {
                 loans = loans!.Where(l => l.UserId == userId);
             }
+            if (statusId != 0)
+            {
+                loans = loans!.Where(l => l.StatusId == statusId);
+            }
+
+            ViewData["StatusId"] = statusId;
             return View(loans);
         }
 
@@ -65,6 +71,31 @@ namespace WEB.Controllers
 
             MyMessage.Add("Success", "Loan Success!");
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet("UpdateStatus")]
+        public async Task<ActionResult> UpdateStatus(int loanId, bool isCancel = false)
+        {
+            var loan = await _apiHelper.GetByID<Loan>(loanId, "Loans");
+            if (loan!.StatusId == 3)
+            {
+                MyMessage.Add("Danger", "Cant update status!");
+                return RedirectToAction("Index", "Loans");
+            }
+
+            if (isCancel)
+            {
+                loan!.StatusId = -3;
+                MyMessage.Add("Success", "Cancel loan success!");
+            }
+            else
+            {
+                loan!.StatusId++;
+                MyMessage.Add("Success", "Update status success!");
+            }
+
+            await _apiHelper.Put(loan, "Loans");
+            return RedirectToAction("Index", "Loans");
         }
     }
 }

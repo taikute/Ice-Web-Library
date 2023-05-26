@@ -31,6 +31,9 @@ namespace WEB.Models
         [StringLength(30, MinimumLength = 5, ErrorMessage = "Length must between 5 - 10.")]
         public string? Password { get; set; }
 
+        [StringLength(12, MinimumLength = 12, ErrorMessage = "Id must be exactly 12 characters long!")]
+        public string? CitizenIdentificationNumber { get; set; }
+
         public virtual Role? Role { get; set; }
         public virtual ICollection<Loan>? Loans { get; set; }
     }

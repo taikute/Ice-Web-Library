@@ -62,7 +62,7 @@ namespace WEB.Controllers
         [MyAuthorizationFilter(2)]
         [HttpGet("Manager")]
         public async Task<ActionResult> Manager(int? authorId, int? categoryId, int? publisherId,
-            string? searchTerm, int searchType = 1, int page = 1)
+            string? searchTerm, int searchType = 1, int sortType = 0, int page = 1)
         {
             string filteredInfo = "";
             int pageLimit = 25;
@@ -71,17 +71,20 @@ namespace WEB.Controllers
 
             if (authorId != null)
             {
-                filteredInfo += $"AuthorId:{authorId},";
+                var author = await _apiHelper.GetByID<Author>(authorId.Value, "Authors");
+                filteredInfo += $"Author:{author?.Name}, ";
                 books = books.Where(b => b.AuthorId == authorId);
             }
             if (categoryId != null)
             {
-                filteredInfo += $"CategoryId:{categoryId},";
+                var category = await _apiHelper.GetByID<Category>(categoryId.Value, "Categories");
+                filteredInfo += $"Category:{category?.Name}, ";
                 books = books.Where(b => b.CategoryId == categoryId);
             }
             if (publisherId != null)
             {
-                filteredInfo += $"PublisherId:{publisherId},";
+                var publisher = await _apiHelper.GetByID<Publisher>(publisherId.Value, "Publishers");
+                filteredInfo += $"Publisher:{publisher?.Name}, ";
                 books = books.Where(b => b.PublisherId == publisherId);
             }
 
@@ -94,9 +97,41 @@ namespace WEB.Controllers
                             books = books.Where(b => b.ISBN == searchTerm);
                             break;
                         }
+                    case 2:
+                        {
+                            //books = books.Where(b => b.ISBN == searchTerm);
+                            break;
+                        }
+                    case 3:
+                        {
+                            //books = books.Where(b => b.ISBN == searchTerm);
+                            break;
+                        }
+                }
+            }
+            if (sortType != 0)
+            {
+                if (sortType == 1 || sortType == -1)
+                {
+                    if (sortType == 1)
+                    {
+                        filteredInfo += $"SortBy:Title(A-Z), ";
+                        books = books.OrderBy(b => b.Title);
+                    }
+                    else
+                    {
+                        filteredInfo += $"SortBy:Title(Z-A), ";
+                        books = books.OrderByDescending(b => b.Title);
+                    }
+                }
+                else if (sortType == 2 || sortType == -2)
+                {
+                    //if (sortType == 1) books = books.OrderBy(b => b.Title);
+                    //else books = books.OrderByDescending(b => b.Title);
                 }
             }
 
+            ViewData["PageCount"] = (books.Count() % pageLimit == 0) ? (books.Count() / pageLimit) : (books.Count() / pageLimit + 1);
             books = books.Skip((page - 1) * pageLimit).Take(pageLimit);
 
             foreach (var book in books!)
@@ -114,6 +149,7 @@ namespace WEB.Controllers
             ViewData["Categories"] = await _apiHelper.GetAll<Category>("Categories");
             ViewData["Publishers"] = await _apiHelper.GetAll<Publisher>("Publishers");
             ViewData["Page"] = page;
+            ViewData["SortType"] = sortType;
             ViewData["SearchTerm"] = searchTerm;
             ViewData["SearchType"] = searchType;
 
