@@ -65,7 +65,7 @@ namespace WEB.Controllers
             string? searchTerm, int searchType = 1, int page = 1)
         {
             string filteredInfo = "";
-            int pageLimit = 20;
+            int pageLimit = 25;
             var books = await _apiHelper.GetAll<Book>("Books");
             if (books == null) return View();
 

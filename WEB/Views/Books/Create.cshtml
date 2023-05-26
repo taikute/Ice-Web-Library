@@ -87,13 +87,13 @@
         <span asp-validation-for="Edition" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-top: 10px;">
         <label asp-for="CoverImagePath" class="control-label">Cover Image:</label>
         <input asp-for="Edition" type="file" name="CoverImage" accept="image/*" />
         <span asp-validation-for="CoverImagePath" class="text-danger"></span>
     </div>
 
-    <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-primary" />
+    <div class="align-items-center" style="margin-top: 10px;">
+        <input style="width: 20%;" type="submit" value="Save" class="btn btn-primary" />
     </div>
 </form>
