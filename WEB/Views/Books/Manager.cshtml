@@ -106,7 +106,6 @@
         });
     });
 </script>
-
 <!--Scroll table-->
 <style>
     .scrollable-table-wrapper {
@@ -126,8 +125,6 @@
             text-align: left;
         }
 </style>
-
-
 
 @model IEnumerable<WEB.Models.Book>
 
@@ -172,7 +169,7 @@
     <table class="scrollable-table">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.Id)</th>
+                <th>@Html.DisplayNameFor(model => model.ISBN)</th>
                 <th>
                     <select style="width: auto;" id="author-filter" class="form-control">
                         <option value="">All Authors</option>
@@ -231,7 +228,6 @@
                     <button id="titleSort">Sort</button>
                 </th>
                 <th>@Html.DisplayNameFor(model => model.Description)</th>
-                <th>@Html.DisplayNameFor(model => model.ISBN)</th>
                 <th>@Html.DisplayNameFor(model => model.PublishYear)</th>
                 <th>@Html.DisplayNameFor(model => model.Price)</th>
                 <th>@Html.DisplayNameFor(model => model.Quantity)</th>
@@ -246,7 +242,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Id)</td>
+                    <td>@Html.DisplayFor(modelItem => item.ISBN)</td>
                     <td>@Html.DisplayFor(modelItem => item.Author!.Name)</td>
                     <td>@Html.DisplayFor(modelItem => item.Category!.Name)</td>
                     <td>@Html.DisplayFor(modelItem => item.Publisher!.Name)</td>
@@ -272,7 +268,6 @@
                             </div>
                         </div>
                     </td>
-                    <td>@Html.DisplayFor(modelItem => item.ISBN)</td>
                     <td>@Html.DisplayFor(modelItem => item.PublishYear)</td>
                     <td>@Html.DisplayFor(modelItem => item.Price)</td>
                     <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
@@ -303,6 +298,7 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary">Delete</a>
+                        <a asp-action="Index" asp-controller="Instances" asp-route-bookId="@item.Id" class="btn btn-primary">Show Instances</a>
                     </td>
                 </tr>
             }

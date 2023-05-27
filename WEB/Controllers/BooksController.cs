@@ -217,6 +217,7 @@ namespace WEB.Controllers
             book!.Author = await _apiHelper.GetByID<Author>(book.AuthorId, "Authors")!;
             book!.Category = await _apiHelper.GetByID<Category>(book.CategoryId, "Categories")!;
             book!.Publisher = await _apiHelper.GetByID<Publisher>(book.PublisherId, "Publishers")!;
+            ViewData["MsgDict"] = MyMessage.Get();
             return View(book);
         }
         #endregion

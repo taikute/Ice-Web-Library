@@ -13,7 +13,7 @@ namespace WEB.Controllers
             _apiHelper = apiHelper;
         }
 
-        [Route("Index/{id}"), MyAuthorizationFilter(1)]
+        [Route("Index/{userId}"), MyAuthorizationFilter(1)]
         public async Task<IActionResult> Index(int id)
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
@@ -23,9 +23,28 @@ namespace WEB.Controllers
             return View(loans);
         }
 
-        public ActionResult Manager(int? id)
+        [MyAuthorizationFilter(2)]
+        [HttpGet("ReaderManager")]
+        public async Task<ActionResult> ReaderManager(int? userId)
         {
-            return View();
+            var users = await _apiHelper.GetAll<User>("Users");
+
+            if (userId.HasValue)
+            {
+                users = users?.Where(u => u.Id == userId);
+            }
+
+            users = users?.Where(u => u.RoleId == 1);
+
+            if (users != null)
+            {
+                var loans = await _apiHelper.GetAll<Loan>("Loans");
+                foreach (var user in users)
+                {
+                    user.Loans = loans?.Where(l => l.UserId == user.Id).ToList();
+                }
+            }
+            return View(users);
         }
     }
 }

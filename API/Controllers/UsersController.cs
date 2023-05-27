@@ -44,6 +44,13 @@ namespace API.Controllers
             await _userRepos.Create(user);
             return NoContent();
         }
+
+        [HttpPut]
+        public async Task<IActionResult> PutUser(User user)
+        {
+            await _userRepos.Update(user);
+            return NoContent();
+        }
         //[HttpPut("ChangeActive/{id}/{isOnline}")]
         //public async Task<IActionResult> ChangeActive(int id, bool isOnline)
         //{

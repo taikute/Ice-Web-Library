@@ -15,6 +15,7 @@ namespace WEB.Models
         //3: Returned
         //-1: Past Due Pickup
         //-2: Past Due Return
+        //-3: Cancel
 
         #region ForeignKey
         public virtual Instance? Instance { get; set; }

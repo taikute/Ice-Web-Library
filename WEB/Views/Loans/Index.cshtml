@@ -17,16 +17,24 @@
     <h1 class="display-4">@ViewData["Title"]</h1>
 </div>
 
+<form asp-action="Index" method="get">
+    <input style="width: 200px; padding: 5px 10px;" class="rounded-pill" type="text" name="instanceId" value="@ViewData["SearchTerm"]" required>
+    <button style="width:auto;" class="btn btn-primary" type="submit">Search by instance</button>
+    <a class="btn btn-primary" asp-action="Index">Clear</a>
+</form>
+<br />
+
 <table class="table">
     <thead>
         <tr>
+            <th>@Html.DisplayName("ISBN")</th>
             <th>@Html.DisplayName("Instance Id")</th>
             <th>@Html.DisplayName("User Id")</th>
             <th>@Html.DisplayName("Borrowed Date")</th>
             <th>@Html.DisplayName("Returned Date")</th>
             <th>@Html.DisplayName("Due Date")</th>
             <th>
-                <select id="statusSelect" class="form-control">
+                <select id="statusSelect" class="form-control" style="text-align: center;">
                     <option value="0">All status</option>
                     @foreach (var key in loanStatusDictionary.Keys)
                     {
@@ -59,12 +67,28 @@
                 DateTime dueDate = ((DateTime)item.BorrowedDate).AddDays(31).Date;
 
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.InstanceId)</td>
+                    <td>
+                        @{
+                            string ISBN = item.Instance?.Book?.ISBN ?? "null";
+                        }
+                        <a class="clickAble" asp-action="Manager" asp-controller="Books" asp-route-searchTerm="@ISBN">
+                            @ISBN
+                        </a>
+                    </td>
+                    <td>
+                        <a class="clickAble" asp-action="Index" asp-controller="Instances" asp-route-id="@item.InstanceId">
+                            @Html.DisplayFor(modelItem => item.InstanceId)
+                        </a>
+                    </td>
                     <td>@Html.DisplayFor(modelItem => item.UserId)</td>
                     <td>@Html.DisplayFor(modelItem => item.BorrowedDate)</td>
                     <td>
                         @if (item.ReturnedDate == null)
                         {
+                            if (item.StatusId == 1)
+                            {
+
+                            }
                             <span class="display-value">Not returned yet</span>
                         }
                         else
@@ -79,12 +103,42 @@
                     <td>
                         @if (item.StatusId > 0)
                         {
-                            string? action = null;
-                            if (item.StatusId == 1) action = "Pickup?";
-                            else if (item.StatusId == 2) action = "Returned?";
-                            if (action != null)
+                            if (item.StatusId == 1)
                             {
-                                <a class="btn btn-primary" asp-action="PlusStatus" asp-route-loanId="@item.Id">@action</a>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#loanModal-@item.Id">Pickup?</button>
+                                <div class="modal fade" id="loanModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myModalLabel">Add required information</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" style="white-space: normal;">
+                                                <form method="get" asp-action="UpdateStatus" enctype="multipart/form-data">
+                                                    <input type="hidden" value="@item.Id" name="loanId"/>
+                                                    <div class="form-group">
+                                                        <lable>Citizen ID</lable>
+                                                        <input name="citizenId" type="text" class="form-control mx-auto" style="width: 300px;" required/>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <lable>Phone Number</lable>
+                                                        <input name="phoneNumber" type="text" class="form-control mx-auto" style="width: 300px;" required/>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </form>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (item.StatusId == 2)
+                            {
+                                <a class="btn btn-primary" asp-action="UpdateStatus" asp-route-loanId="@item.Id">Returned?</a>
                             }
                             if (item.StatusId != 3)
                             {
@@ -98,20 +152,22 @@
         else
         {
             <tr>
-                <td colspan="7" style="font-size: 20px;"><b>No loans found!</b></td>
+                <td colspan="8" style="font-size: 20px;"><b>No loans found!</b></td>
             </tr>
         }
     </tbody>
 </table>
 
 <style>
-    #status-detail {
+    .clickAble {
         cursor: pointer;
         font-weight: bold;
         color: #41644A;
+        text-decoration: none;
     }
 
-        #status-detail:hover {
+        .clickAble:hover {
+            color: #41644A;
             text-decoration: underline;
         }
 

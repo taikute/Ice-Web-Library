@@ -1,0 +1,50 @@
+﻿@model IEnumerable<WEB.Models.Instance>
+
+@{
+    ViewData["Title"] = "Instances";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status!.Name)
+                    </td>
+                    <td>
+                        @if (item.StatusId == 1)
+                        {
+                            <a asp-action="BrokenConfirm" asp-route-id="@item.Id" class="btn btn-primary">Broken?</a>
+                        }
+                        else if(item.StatusId == 2)
+                        {
+                            <a asp-action="Index" asp-controller="Loans" asp-route-instanceId="@item.Id" class="btn btn-primary">Show Loan</a>
+                        }
+                    </td>
+                </tr>
+            }
+    </tbody>
+</table>

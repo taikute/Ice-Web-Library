@@ -14,6 +14,8 @@ namespace API.Data
         public string? Email { get; set; }
         public string? Username { get; set; }
         public string? CitizenIdentificationNumber { get; set; }
+        public string? PhoneNumber { get; set; }
+        public int LoanLeft { get; set; } = 1;
         public string? Password { get => _password; set => _password = HashPassword(value ?? "Password123"); }
 
         public virtual Role? Role { get; set; }

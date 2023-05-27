@@ -1,0 +1,43 @@
+﻿@model IEnumerable<WEB.Models.User>
+
+@{
+    ViewData["Title"] = "Reader Manager";
+}
+
+<div class="text-center">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@user.Username</td>
+                <td>
+                    @if (!user.IsLocked)
+                    {
+                        <a asp-action="Lock" class="btn btn-primary">Lock</a>
+                        <a asp-action="ResetPassword" class="btn btn-primary">Reset Password</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Unlock" class="btn btn-primary">Unlock</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
