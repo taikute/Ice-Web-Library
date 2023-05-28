@@ -24,139 +24,211 @@
 </form>
 <br />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayName("ISBN")</th>
-            <th>@Html.DisplayName("Instance Id")</th>
-            <th>@Html.DisplayName("User Id")</th>
-            <th>@Html.DisplayName("Borrowed Date")</th>
-            <th>@Html.DisplayName("Returned Date")</th>
-            <th>@Html.DisplayName("Due Date")</th>
-            <th>
-                <select id="statusSelect" class="form-control" style="text-align: center;">
-                    <option value="0">All status</option>
-                    @foreach (var key in loanStatusDictionary.Keys)
-                    {
-                        if (key == ((int?)ViewData["StatusId"] ?? 0))
-                        {
-                            <option selected value="@key">@loanStatusDictionary[key]</option>
-                        }
-                        else
-                        {
-                            <option value="@key">@loanStatusDictionary[key]</option>
-                        }
-                    }
+<style>
+    .scrollable-table-wrapper {
+        overflow-x: auto;
+        white-space: nowrap;
+    }
 
-                </select>
-                <script>
-                    document.getElementById('statusSelect').addEventListener('change', function () {
-                        var statusId = this.value;
-                        window.location.href = '/Loans/Index?statusId=' + statusId;
-                    });
-                </script>
-            </th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Any())
-        {
-            foreach (var item in Model)
-            {
-                DateTime dueDate = ((DateTime)item.BorrowedDate).AddDays(31).Date;
+    .scrollable-table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-                <tr>
-                    <td>
-                        @{
-                            string ISBN = item.Instance?.Book?.ISBN ?? "null";
-                        }
-                        <a class="clickAble" asp-action="Manager" asp-controller="Books" asp-route-searchTerm="@ISBN">
-                            @ISBN
-                        </a>
-                    </td>
-                    <td>
-                        <a class="clickAble" asp-action="Index" asp-controller="Instances" asp-route-id="@item.InstanceId">
-                            @Html.DisplayFor(modelItem => item.InstanceId)
-                        </a>
-                    </td>
-                    <td>@Html.DisplayFor(modelItem => item.UserId)</td>
-                    <td>@Html.DisplayFor(modelItem => item.BorrowedDate)</td>
-                    <td>
-                        @if (item.ReturnedDate == null)
+        .scrollable-table th,
+        .scrollable-table td {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid black;
+            padding: 8px;
+        }
+</style>
+<div class="scrollable-table-wrapper">
+    <table class="scrollable-table">
+        <thead>
+            <tr>
+                <th>@Html.DisplayName("ISBN")</th>
+                <th>@Html.DisplayName("Instance Id")</th>
+                <th>@Html.DisplayName("User Id")</th>
+                <th>@Html.DisplayName("Borrowed Date")</th>
+                <th>@Html.DisplayName("Returned Date")</th>
+                <th>@Html.DisplayName("Due Date")</th>
+                <th>
+                    <select id="statusSelect" class="form-control" style="text-align: center;">
+                        <option value="0">All status</option>
+                        @foreach (var key in loanStatusDictionary.Keys)
                         {
-                            if (item.StatusId == 1)
+                            if (key == ((int?)ViewData["StatusId"] ?? 0))
                             {
-
+                                <option selected value="@key">@loanStatusDictionary[key]</option>
                             }
-                            <span class="display-value">Not returned yet</span>
-                        }
-                        else
-                        {
-                            @Html.DisplayFor(modelItem => item.ReturnedDate)
-                        }
-                    </td>
-                    <td><span class="display-value">@dueDate.ToString("dd/MM/yyyy")</span></td>
-                    <td>
-                        <span>@loanStatusDictionary[item.StatusId]</span>
-                    </td>
-                    <td>
-                        @if (item.StatusId > 0)
-                        {
-                            if (item.StatusId == 1)
+                            else
                             {
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#loanModal-@item.Id">Pickup?</button>
-                                <div class="modal fade" id="loanModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="myModalLabel">Add required information</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body" style="white-space: normal;">
-                                                <form method="get" asp-action="UpdateStatus" enctype="multipart/form-data">
-                                                    <input type="hidden" value="@item.Id" name="loanId"/>
-                                                    <div class="form-group">
-                                                        <lable>Citizen ID</lable>
-                                                        <input name="citizenId" type="text" class="form-control mx-auto" style="width: 300px;" required/>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <lable>Phone Number</lable>
-                                                        <input name="phoneNumber" type="text" class="form-control mx-auto" style="width: 300px;" required/>
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                                </form>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <option value="@key">@loanStatusDictionary[key]</option>
+                            }
+                        }
+
+                    </select>
+                    <script>
+                        document.getElementById('statusSelect').addEventListener('change', function () {
+                            var statusId = this.value;
+                            window.location.href = '/Loans/Index?statusId=' + statusId;
+                        });
+                    </script>
+                </th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var item in Model)
+                {
+                    DateTime dueDate = ((DateTime)item.BorrowedDate).AddDays(31).Date;
+
+                    <tr>
+                        <td>
+                            @{
+                                string ISBN = item.Instance?.Book?.ISBN ?? "null";
+                            }
+                            <a class="clickAble" asp-action="Manager" asp-controller="Books" asp-route-searchTerm="@ISBN">
+                                @ISBN
+                            </a>
+                        </td>
+                        <td>
+                            <a class="clickAble" asp-action="Index" asp-controller="Instances" asp-route-id="@item.InstanceId">
+                                @Html.DisplayFor(modelItem => item.InstanceId)
+                            </a>
+                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.UserId)</td>
+                        <td>@Html.DisplayFor(modelItem => item.BorrowedDate)</td>
+                        <td>
+                            @if (item.ReturnedDate == null)
+                            {
+                                if (item.StatusId == 1 || item.StatusId == 2)
+                                {
+                                    <span class="display-value">Not returned yet</span>
+                                }
+                                else if(item.StatusId == -3 || item.StatusId == -1)
+                                {
+                                    <span class="display-value">Canceled</span>
+                                }
+                                else if (item.StatusId == -2)
+                                {
+                                    <span class="display-value">Never return</span>
+                                }
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(modelItem => item.ReturnedDate)
+                            }
+                        </td>
+                        <td><span class="display-value">@dueDate.ToString("dd/MM/yyyy")</span></td>
+                        <td>
+                            <span>@loanStatusDictionary[item.StatusId]</span>
+                        </td>
+                        <td>
+                            @if (item.StatusId > 0)
+                            {
+                                if (item.StatusId == 1)
+                                {
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#pickupModal-@item.Id">Pickup</button>
+                                    <button class="btn btn-primary" style="background-color: darkred !important;" data-toggle="modal" data-target="#cancelModal-@item.Id">Cancel</button>
+
+                                    <div class="modal fade" id="pickupModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel">Add required information</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" style="white-space: normal;">
+                                                    <form method="get" asp-action="UpdateStatus" enctype="multipart/form-data">
+                                                        <input type="hidden" value="@item.Id" name="loanId" />
+                                                        <div class="form-group">
+                                                            <lable>Citizen ID</lable>
+                                                            <input name="citizenId" value="@item.User?.CitizenIdentificationNumber" type="text" class="form-control mx-auto" style="width: 300px;" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <lable>Phone Number</lable>
+                                                            <input name="phoneNumber" value="@item.User?.PhoneNumber" type="text" class="form-control mx-auto" style="width: 300px;" required />
+                                                        </div>
+                                                        <span class="text-danger">*Note: enter all the information provided by the reader, after clicking submit, it cannot be undone.</span>
+                                                        <button style="width: 50%;" type="submit" class="btn btn-primary">Submit</button>
+                                                    </form>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+
+                                    <div class="modal fade" id="cancelModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel">Add required information</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" style="white-space: normal;">
+                                                    <span class="text-danger">*Note: Book loan cancellation confirmation, after clicking "Confirm", it cannot be undone.</span>
+                                                    <br>
+                                                    <a class="btn btn-primary" style="width: 200px;" asp-action="UpdateStatus" asp-route-loanId="@item.Id" asp-route-isCancel="true">Confirm</a>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else if (item.StatusId == 2)
+                                {
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#returnedModal-@item.Id">Returned?</button>
+                                    <div class="modal fade" id="returnedModal-@item.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myModalLabel">Book return confirmation</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body" style="white-space: normal;">
+                                                    <span class="text-danger">*Note: Please make sure that you have received the book in its original condition, after clicking submit, it cannot be undone.</span>
+                                                    <a class="btn btn-primary" style="width: 200px;" asp-action="UpdateStatus" asp-route-loanId="@item.Id">Submit</a>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
                             }
-                            else if (item.StatusId == 2)
-                            {
-                                <a class="btn btn-primary" asp-action="UpdateStatus" asp-route-loanId="@item.Id">Returned?</a>
-                            }
-                            if (item.StatusId != 3)
-                            {
-                                <a class="btn btn-primary" style="background-color: darkred !important;" asp-action="UpdateStatus" asp-route-loanId="@item.Id" asp-route-isCancel="true">Cancel</a>
-                            }
-                        }
-                    </td>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8" style="font-size: 20px;"><b>No loans found!</b></td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="8" style="font-size: 20px;"><b>No loans found!</b></td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <style>
     .clickAble {

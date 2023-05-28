@@ -16,18 +16,32 @@ namespace API.Data
         public string? CitizenIdentificationNumber { get; set; }
         public string? PhoneNumber { get; set; }
         public int LoanLeft { get; set; } = 1;
-        public string? Password { get => _password; set => _password = HashPassword(value ?? "Password123"); }
+
+        //PasswordHash
+        private string _password = "";
+        public string Password
+        {
+            get => _password;
+            set
+            {
+                if (!string.IsNullOrEmpty(value) && value != _password)
+                {
+                    _password = HashPassword(value);
+                }
+            }
+        }
 
         public virtual Role? Role { get; set; }
         public virtual ICollection<Loan>? Loans { get; set; }
 
-        //PasswordHash
-        string? _password;
-        static string HashPassword(string password)
+        // Hash mật khẩu
+        private static string HashPassword(string password)
         {
             var hashedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
             return Convert.ToBase64String(hashedBytes);
         }
+
+        // Xác thực mật khẩu
         public bool VerifyPassword(string password)
         {
             var hashedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));

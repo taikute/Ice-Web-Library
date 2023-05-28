@@ -17,6 +17,7 @@ namespace WEB.Controllers
         public async Task<ActionResult> Index(int? userId, int? instanceId, int statusId = 0)
         {
             ViewData["MsgDict"] = MyMessage.Get();
+
             var loans = await _apiHelper.GetAll<Loan>("Loans");
             if (instanceId != null)
             {
@@ -38,9 +39,12 @@ namespace WEB.Controllers
                     loan.Instance = instance;
                     var book = await _apiHelper.GetByID<Book>(instance!.BookId, "Books");
                     loan.Instance!.Book = book;
+                    var user = await _apiHelper.GetByID<User>(loan.UserId, "Users");
+                    loan.User = user;
                 }
                 loans = loans.OrderByDescending(l => l.BorrowedDate);
             }
+
             ViewData["SearchTerm"] = instanceId;
             ViewData["StatusId"] = statusId;
             return View(loans);
@@ -121,6 +125,9 @@ namespace WEB.Controllers
                 var book = await _apiHelper.GetByID<Book>(instance.BookId, "Books");
                 book!.Quantity++;
                 await _apiHelper.Put(book, "Books");
+                var user = await _apiHelper.GetByID<User>(loan.UserId, "Users");
+                user!.LoanLeft++;
+                await _apiHelper.Put(user, "Users");
 
                 MyMessage.Add("Success", "Cancel loan success!");
             }
@@ -165,8 +172,10 @@ namespace WEB.Controllers
                     var user = await _apiHelper.GetByID<User>(loan.UserId, "Users");
                     user!.CitizenIdentificationNumber = citizenId;
                     user.PhoneNumber = phoneNumber;
+                    user.LoanLeft++;
                     await _apiHelper.Put(user, "Users");
                 }
+
                 if (loan.StatusId == 3)
                 {
                     //Update instance status and quantity

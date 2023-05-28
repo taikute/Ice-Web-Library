@@ -48,9 +48,27 @@ namespace API.Controllers
         [HttpPut]
         public async Task<IActionResult> PutUser(User user)
         {
-            await _userRepos.Update(user);
+            // Lấy thông tin người dùng hiện tại từ cơ sở dữ liệu
+            var existingUser = await _userRepos.GetById(user.Id);
+            if (existingUser == null)
+            {
+                return NotFound();
+            }
+
+            // Cập nhật các trường khác của người dùng từ đối tượng user
+            existingUser.Name = user.Name;
+            existingUser.Email = user.Email;
+            existingUser.Username = user.Username;
+            existingUser.CitizenIdentificationNumber = user.CitizenIdentificationNumber;
+            existingUser.PhoneNumber = user.PhoneNumber;
+            existingUser.LoanLeft = user.LoanLeft;
+
+            // Lưu các thay đổi vào cơ sở dữ liệu
+            await _userRepos.Update(existingUser);
+
             return NoContent();
         }
+
         //[HttpPut("ChangeActive/{id}/{isOnline}")]
         //public async Task<IActionResult> ChangeActive(int id, bool isOnline)
         //{
@@ -58,6 +76,7 @@ namespace API.Controllers
         //    user!.IsOnline = isOnline;
         //    return NoContent();
         //}
+
         [HttpGet("CheckPassword/{id}/{password}")]
         public async Task<bool> CheckPassWord(int id, string password)
         {
