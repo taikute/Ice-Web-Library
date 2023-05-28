@@ -13,13 +13,13 @@ namespace WEB.Controllers
             _apiHelper = apiHelper;
         }
         [HttpGet("Index"), MyAuthorizationFilter(0, true, true)]
-        public IActionResult Index()
+        public ActionResult Index()
         {
             ViewData["HideFooter"] = true;
             return View();
         }
         [HttpPost("Index"), MyAuthorizationFilter(0, true, true)]
-        public async Task<IActionResult> Index(User user)
+        public async Task<ActionResult> Index(User user)
         {
             if (!ModelState.IsValid)
             {

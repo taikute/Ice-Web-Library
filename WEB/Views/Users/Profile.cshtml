@@ -49,13 +49,25 @@
     }
 </style>
 
+@if (((int?)ViewData["Fine"] ?? 0) != 0)
+{
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <div style="text-align: center; height: auto; padding: 5px; width: 800px; background-color: lightcoral; border-radius: 20px; margin-top: 20px;"><h3>You must to pay @ViewData["Fine"] VND</h3></div>
+    </div>
+}
+
 <div class="profile-container">
     <h1 class="text-center display-4">User Profile</h1>
 
     <div class="profile-info">
-        <p><strong>Name:</strong> @Model.Name</p>
-        <p><strong>Email:</strong> @Model.Email</p>
-        <p><strong>Username:</strong> @Model.Username</p>
+        <span><strong>Name:</strong> @Model.Name</span>
+        <br />
+        <span style="width: auto;"><strong>Email:</strong> @Model.Email</span>
+        <a style="width: auto;" class="btn btn-primary" asp-action="EmailVerification" asp-route-id="@Model.Id">Verification</a>
+        <br />
+        <span><strong>Username:</strong> @Model.Username</span>
+        <br />
+        <span><strong>Loan Left:</strong> @Model.LoanLeft</span>
     </div>
 
     <h2>Loan history</h2>
@@ -74,8 +86,16 @@
                 @foreach (var loan in Model.Loans)
                 {
                     <tr>
-                        <td>@loan.Instance?.Book?.ISBN</td>
-                        <td>@loan.BorrowedDate</td>
+                        @if (loan.StatusId < 0)
+                        {
+                            <td class="text-danger">@loan.Instance?.Book?.ISBN</td>
+                            <td class="text-danger">@loan.BorrowedDate</td>
+                        }
+                        else
+                        {
+                            <td>@loan.Instance?.Book?.ISBN</td>
+                            <td>@loan.BorrowedDate</td>
+                        }
                         <td>
                             <a asp-action="Detail" asp-controller="Books" asp-route-id="@loan.Instance!.BookId" class="btn btn-primary">Book Detail</a>
                             <button class="btn btn-primary" data-toggle="modal" data-target="#userloanModal-@loan.Id">Loan Detail</button>
@@ -90,10 +110,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <style>
-                                        .loan-modal p {
-                                        }
-                                    </style>
+
                                     <div class="modal-body loan-modal" style="white-space: normal;">
                                         <p><b>Instance ID:</b> @loan.InstanceId</p>
                                         <p><b>Borrowed Date:</b> @loan.BorrowedDate</p>
@@ -102,7 +119,7 @@
                                         @if (loan.StatusId == 1)
                                         {
                                             <span class="text-danger">
-                                                *Note: Come pick it up within 24 hours after placing an order to loan a book on the web.
+                                                *Note: Bring ID card and come pick it up within 24 hours after placing an order to loan a book on the web.
                                             </span>
                                         }
                                         else if (loan.StatusId == 2)

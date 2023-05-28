@@ -35,7 +35,15 @@ namespace WEB.Controllers
                     var book = await _apiHelper.GetByID<Book>(instance.BookId, "Books");
                     if (book != null)
                     {
-                        if (!books.Contains(book))
+                        bool isExists = false;
+                        foreach (var item in books)
+                        {
+                            if (item.Id == book.Id)
+                            {
+                                isExists = true;
+                            }
+                        }
+                        if (!isExists)
                         {
                             books.Add(book);
                         }

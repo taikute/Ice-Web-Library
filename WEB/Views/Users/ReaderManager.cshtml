@@ -21,6 +21,11 @@
     <tbody>
         @foreach (var user in Model)
         {
+            int fine = 0;
+            foreach (var loan in user.Loans!)
+            {
+                fine += loan.Instance!.Book!.Price;
+            }
             <tr>
                 <td>@user.Id</td>
                 <td>@user.Name</td>
@@ -29,12 +34,12 @@
                 <td>
                     @if (!user.IsLocked)
                     {
-                        <a asp-action="Lock" class="btn btn-primary">Lock</a>
-                        <a asp-action="ResetPassword" class="btn btn-primary">Reset Password</a>
+                        <a asp-action="ReaderManager" asp-route-userId="@user.Id" asp-route-isLock="true" class="btn btn-primary">Lock</a>
                     }
                     else
                     {
-                        <a asp-action="Unlock" class="btn btn-primary">Unlock</a>
+                        <a asp-action="ReaderManager" asp-route-userId="@user.Id" asp-route-isLock="false" class="btn btn-primary">Unlock</a>
+                        <span>debt: @fine</span>
                     }
                 </td>
             </tr>

@@ -67,18 +67,25 @@ namespace WEB.Controllers
         public async Task<ActionResult> CreateConfirmed(int id)
         {
             int userId = HttpContext.Session.GetInt32("UserId") ?? 0;
+
+            var user = await _apiHelper.GetByID<User>(userId, "Users");
+            if (user!.IsLocked)
+            {
+                MyMessage.Add("Danger", "ACCOUNT IS LOCKED!");
+                return RedirectToAction("Profile", "Users");
+            }
+
+            if (user.LoanLeft == 0)
+            {
+                MyMessage.Add("Warning", "Out of loans!");
+                return RedirectToAction("Detail", "Books", new { id });
+            }
+
             var instances = await _apiHelper.GetAll<Instance>("Instances");
             var instance = instances!.Where(i => i.BookId == id && i.StatusId == 1).FirstOrDefault();
             if (instance == null)
             {
                 MyMessage.Add("Warning", "Out of book!");
-                return RedirectToAction("Detail", "Books", new { id });
-            }
-
-            var user = await _apiHelper.GetByID<User>(userId, "Users");
-            if (user!.LoanLeft == 0)
-            {
-                MyMessage.Add("Warning", "Out of loans!");
                 return RedirectToAction("Detail", "Books", new { id });
             }
 
@@ -105,21 +112,31 @@ namespace WEB.Controllers
             await _apiHelper.Put(book, "Books");
 
             //Set Due Pickup Date
-            DateTime duePickupDate = loan.BorrowedDate.AddSeconds(20);
+            DateTime duePickupDate = loan.BorrowedDate.AddSeconds(15);
             System.Timers.Timer timer = new();
             timer.Elapsed += async (sender, e) =>
             {
-                //không biết id
                 var loans = await _apiHelper.GetAll<Loan>("Loans");
-                var newLoan = loans!.First(l=>l.InstanceId == instance.Id);
-                if (newLoan?.StatusId == 1)
+                var loan = loans!.FirstOrDefault(l => l.InstanceId == instance.Id && l.StatusId == 1);
+                if (loan != null)
                 {
-                    MyMessage.Add("Danger", "Due pickup date!");
+                    loan.StatusId = -1;
+                    await _apiHelper.Put(loan, "Loans");
+
+                    var user = await _apiHelper.GetByID<User>(loan.UserId, "Users");
+                    user!.LoanLeft++;
+                    await _apiHelper.Put(user, "Users");
+
+                    var book = await _apiHelper.GetByID<Book>(instance.BookId, "Books");
+                    book!.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
+                    await _apiHelper.Put(book, "Books");
+
+                    MyMessage.Add("Danger", "Past Due Pickup!");
                 }
             };
+
             timer.Interval = (duePickupDate - DateTime.Now).TotalMilliseconds;
             timer.AutoReset = false;
-
             timer.Start();
 
             MyMessage.Add("Success", "Loan Success!");
@@ -197,6 +214,38 @@ namespace WEB.Controllers
                     user.PhoneNumber = phoneNumber;
                     user.LoanLeft++;
                     await _apiHelper.Put(user, "Users");
+
+                    //Set Due Return Date
+                    DateTime dueReturnDate = loan.BorrowedDate.AddSeconds(30);
+                    System.Timers.Timer timer = new();
+                    timer.Elapsed += async (sender, e) =>
+                    {
+                        if (loan.StatusId == 2)
+                        {
+                            loan.StatusId = -2;
+                            await _apiHelper.Put(loan, "Loans");
+
+                            var user = await _apiHelper.GetByID<User>(loan.UserId, "Users");
+                            user!.LoanLeft++;
+                            user.IsLocked = true;
+                            await _apiHelper.Put(user, "Users");
+
+                            var instances = await _apiHelper.GetAll<Instance>("Instances");
+                            var instance = instances!.First(i => i.Id == loan.Id);
+                            instance.StatusId = 3;
+                            await _apiHelper.Put(instance, "Instances");
+
+                            var book = await _apiHelper.GetByID<Book>(instance.BookId, "Books");
+                            book!.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
+                            await _apiHelper.Put(book, "Books");
+
+                            MyMessage.Add("Danger", "Past Due Pickup!");
+                        }
+                    };
+
+                    timer.Interval = (dueReturnDate - DateTime.Now).TotalMilliseconds;
+                    timer.AutoReset = false;
+                    timer.Start();
                 }
 
                 if (loan.StatusId == 3)

@@ -56,6 +56,7 @@ namespace API.Controllers
             }
 
             // Cập nhật các trường khác của người dùng từ đối tượng user
+            existingUser.IsLocked = user.IsLocked;
             existingUser.Name = user.Name;
             existingUser.Email = user.Email;
             existingUser.Username = user.Username;

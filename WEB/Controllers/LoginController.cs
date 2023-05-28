@@ -48,11 +48,11 @@ namespace WEB.Controllers
                 return View(user);
             }
 
-            if (userExists.IsLocked)
-            {
-                ModelState.AddModelError("Username", "Account has been locked.");
-                return View(user);
-            }
+            //if (userExists.IsLocked)
+            //{
+            //    ModelState.AddModelError("Username", "Account has been locked.");
+            //    return View(user);
+            //}
 
             int id = userExists.Id;
             int roleId = userExists.RoleId;
@@ -81,7 +81,7 @@ namespace WEB.Controllers
                     }
                 case 3:
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("LibrarianManager", "Users");
                     }
                 default:
                     {

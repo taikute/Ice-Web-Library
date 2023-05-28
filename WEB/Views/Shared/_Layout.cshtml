@@ -69,10 +69,10 @@
                         }
                         else if (roleId == 3)
                         {
-                            <a class="navbar-brand" href="@Url.Action("Index", "Home")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
+                            <a class="navbar-brand" href="@Url.Action("LibrarianManager", "Users")"><img src="~/web-logo.png" alt="Library Logo" style="width:40px;" class="rounded-pill"></a>
 
                             <ul class="navbar-nav me-auto">
-                                <li><a class="nav-link text-light" asp-controller="" asp-action="">Librarian Manager</a></li>
+                                <li><a class="nav-link text-light" asp-controller="Users" asp-action="LibrarianManager">Librarian Manager</a></li>
                             </ul>
                         }
 
