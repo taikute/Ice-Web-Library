@@ -1,0 +1,130 @@
+﻿@model WEB.Models.User
+
+@{
+    ViewData["Title"] = "User: " + ViewBag.Username;
+    Dictionary<int, string> loanStatusDictionary = new()
+    {
+        { 1, "Waiting For Pickup" },
+        { 2, "On Loan" },
+        { 3, "Returned" },
+        { -1, "Past Due Pickup" },
+        { -2, "Past Due Return" },
+        { -3, "Cancel"}
+    };
+}
+
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .profile-info {
+        margin-bottom: 20px;
+    }
+
+    .loans-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .loans-table th,
+        .loans-table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .loans-table th {
+            background-color: #f2f2f2;
+        }
+
+    .no-loans {
+        font-style: italic;
+        color: #888;
+    }
+</style>
+
+<div class="profile-container">
+    <h1 class="text-center display-4">User Profile</h1>
+
+    <div class="profile-info">
+        <p><strong>Name:</strong> @Model.Name</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Username:</strong> @Model.Username</p>
+    </div>
+
+    <h2>Loan history</h2>
+
+    @if (Model.Loans != null && Model.Loans.Count > 0)
+    {
+        <table class="loans-table">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Borrowed Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var loan in Model.Loans)
+                {
+                    <tr>
+                        <td>@loan.Instance?.Book?.ISBN</td>
+                        <td>@loan.BorrowedDate</td>
+                        <td>
+                            <a asp-action="Detail" asp-controller="Books" asp-route-id="@loan.Instance!.BookId" class="btn btn-primary">Book Detail</a>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#userloanModal-@loan.Id">Loan Detail</button>
+                        </td>
+
+                        <td class="modal fade" id="userloanModal-@loan.Id" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Loan Detail</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <style>
+                                        .loan-modal p {
+                                        }
+                                    </style>
+                                    <div class="modal-body loan-modal" style="white-space: normal;">
+                                        <p><b>Instance ID:</b> @loan.InstanceId</p>
+                                        <p><b>Borrowed Date:</b> @loan.BorrowedDate</p>
+                                        <p><b>Returned Date:</b> @loan.ReturnedDate</p>
+                                        <p><b>Status:</b> @loanStatusDictionary[loan.StatusId]</p>
+                                        @if (loan.StatusId == 1)
+                                        {
+                                            <span class="text-danger">
+                                                *Note: Come pick it up within 24 hours after placing an order to loan a book on the web.
+                                            </span>
+                                        }
+                                        else if (loan.StatusId == 2)
+                                        {
+                                            <span class="text-danger">
+                                                *Note: Return the book after 30 days from the date of booking.
+                                            </span>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p class="no-loans">No loans found.</p>
+    }
+</div>

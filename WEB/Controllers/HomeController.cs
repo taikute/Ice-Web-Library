@@ -21,10 +21,30 @@ namespace WEB.Controllers
         }
 
         [HttpGet, MyAuthorizationFilter(1, false, true)]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
+            var books = new List<Book>();
+            var instances = await _apiHelper.GetAll<Instance>("Instances");
+            var loans = await _apiHelper.GetAll<Loan>("Loans");
+
+            foreach (var instance in instances!)
+            {
+                instance.Loans = loans!.Where(l => l.InstanceId == instance.Id).ToList();
+                if (instance.Loans.Count > 0)
+                {
+                    var book = await _apiHelper.GetByID<Book>(instance.BookId, "Books");
+                    if (book != null)
+                    {
+                        if (!books.Contains(book))
+                        {
+                            books.Add(book);
+                        }
+                    }
+                }
+            }
+
             ViewData["MsgDict"] = MyMessage.Get();
-            return View();
+            return View(books);
         }
         [HttpPost, Route("Search"), MyAuthorizationFilter(1, false, true)]
         public async Task<ActionResult> Search(string searchTerm)

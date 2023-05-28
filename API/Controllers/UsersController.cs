@@ -69,14 +69,6 @@ namespace API.Controllers
             return NoContent();
         }
 
-        //[HttpPut("ChangeActive/{id}/{isOnline}")]
-        //public async Task<IActionResult> ChangeActive(int id, bool isOnline)
-        //{
-        //    var user = await _userRepos.GetById(id);
-        //    user!.IsOnline = isOnline;
-        //    return NoContent();
-        //}
-
         [HttpGet("CheckPassword/{id}/{password}")]
         public async Task<bool> CheckPassWord(int id, string password)
         {

@@ -27,7 +27,7 @@ namespace WEB.Helpers
 
             if (!bool.Parse(HttpContext.Session.GetString("IsApiResponse") ?? "false"))
             {
-                MyMessage.Add("Danger", "Can't connect to database!");
+                MyMessage.Add("Danger", "Cant connect to database!");
                 context.Result = new RedirectToActionResult("MyNotFound", "Errors", null);
             }
             else if (!bool.Parse(HttpContext.Session.GetString("IsLogin") ?? "false"))

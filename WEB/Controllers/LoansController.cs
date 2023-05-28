@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Timers;
 using WEB.Helpers;
 using WEB.Models;
 
@@ -103,8 +104,30 @@ namespace WEB.Controllers
             book!.Quantity = instances!.Where(i => i.StatusId == 1 && i.BookId == book.Id).Count();
             await _apiHelper.Put(book, "Books");
 
+            //Set Due Pickup Date
+            DateTime duePickupDate = loan.BorrowedDate.AddSeconds(20);
+            System.Timers.Timer timer = new();
+            timer.Elapsed += async (sender, e) =>
+            {
+                //không biết id
+                var loans = await _apiHelper.GetAll<Loan>("Loans");
+                var newLoan = loans!.First(l=>l.InstanceId == instance.Id);
+                if (newLoan?.StatusId == 1)
+                {
+                    MyMessage.Add("Danger", "Due pickup date!");
+                }
+            };
+            timer.Interval = (duePickupDate - DateTime.Now).TotalMilliseconds;
+            timer.AutoReset = false;
+
+            timer.Start();
+
             MyMessage.Add("Success", "Loan Success!");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Profile", "Users");
+        }
+        private void LoanExpirationHandler(object sender, ElapsedEventArgs e)
+        {
+            MyMessage.Add("Success", "10s pass");
         }
 
         [HttpGet("UpdateStatus")]

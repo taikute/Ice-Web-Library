@@ -8,6 +8,7 @@ builder.Services.AddSession();
 builder.Services.AddScoped<ApiHelper>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton(new MyAuthorizationFilter(1));
+//builder.Services.AddSingleton<Timer>();
 
 var app = builder.Build();
 

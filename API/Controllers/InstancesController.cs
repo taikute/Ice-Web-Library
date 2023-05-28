@@ -30,5 +30,11 @@ namespace API.Controllers
             await _instanceRepos.Update(instance);
             return NoContent();
         }
+        [HttpPost]
+        public async Task<IActionResult> PostInstance(Instance instance)
+        {
+            await _instanceRepos.Create(instance);
+            return NoContent();
+        }
     }
 }

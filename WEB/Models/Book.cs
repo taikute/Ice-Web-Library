@@ -38,7 +38,7 @@ namespace WEB.Models
         public string Title { get; set; } = "NewTitle";
 
         [StringLength(200)]
-        public string Description { get; set; } = "NewDescription";
+        public string? Description { get; set; }
 
         [Required]
         [DisplayName("Publish Year")]

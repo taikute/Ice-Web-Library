@@ -155,6 +155,8 @@ namespace WEB.Controllers
 
             filteredInfo += "Page:" + page;
             ViewData["FilteredInfo"] = filteredInfo;
+
+            ViewData["MsgDict"] = MyMessage.Get();
             return View(books);
         }
         #endregion
@@ -172,7 +174,6 @@ namespace WEB.Controllers
         [HttpPost("Create"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> Create(Book book, IFormFile? coverImage)
         {
-            ViewData["coverImage"] = coverImage;
             ViewBag.Authors = await _apiHelper.GetAll<Author>("Authors");
             ViewBag.Categories = await _apiHelper.GetAll<Category>("Categories");
             ViewBag.Publishers = await _apiHelper.GetAll<Publisher>("Publishers");
@@ -202,10 +203,35 @@ namespace WEB.Controllers
 
                 book.CoverImagePath = "~/" + fileName;
             }
-
+            //Check ISBN
+            var books = await _apiHelper.GetAll<Book>("Books");
+            foreach (var item in books!)
+            {
+                if (item.ISBN == book.ISBN)
+                {
+                    ModelState.AddModelError("ISBN", "ISBN exists.");
+                    return View(book);
+                }
+            }
 
             await _apiHelper.Post(book, "Books");
-            return RedirectToAction("Manager");
+
+            //Add Instances
+            books = await _apiHelper.GetAll<Book>("Books");
+            book = books!.First(b => b.ISBN == book.ISBN);
+            for (int i = 0; i < book.Quantity; i++)
+            {
+                var instance = new Instance
+                {
+                    Id = 0,
+                    BookId = book.Id,
+                    StatusId = 1
+                };
+                await _apiHelper.Post(instance, "Instances");
+            }
+
+            MyMessage.Add("Success", "Add success!");
+            return RedirectToAction("Manager", "Books", new {searchTerm = book.ISBN});
         }
         #endregion
         #region Detail
@@ -232,14 +258,37 @@ namespace WEB.Controllers
             return View(book);
         }
         [HttpPost, Route("Edit"), MyAuthorizationFilter(2)]
-        public async Task<IActionResult> Edit(Book book)
+        public async Task<IActionResult> Edit(Book book, IFormFile? coverImage)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _apiHelper.Put(book, "Books");
-                return RedirectToAction("Detail", new { id = book.Id });
+                return View(book);
             }
-            return View(book);
+            if (book.Price % 50000 != 0)
+            {
+                ModelState.AddModelError("Price", "Price must be divisible by 5.");
+            }
+            if (coverImage != null)
+            {
+                if (coverImage.Length > 512 * 1024)
+                {
+                    ModelState.AddModelError("CoverImagePath", "Cover image size must be less than 512 KB.");
+                    return View(book);
+                }
+                string extension = Path.GetExtension(coverImage.FileName);
+                string fileName = book.ISBN.ToString() + extension;
+                string imagePath = Path.Combine(_webHostEnvironment.WebRootPath, "book-cover-img", fileName);
+
+                using var stream = new FileStream(imagePath, FileMode.Create);
+                await coverImage.CopyToAsync(stream);
+
+                book.CoverImagePath = "~/" + fileName;
+            }
+
+            book = await _apiHelper.GetByID<Book>(book.Id, "Books") ?? book;
+            await _apiHelper.Put(book, "Books");
+            MyMessage.Add("Success", "Edit success!");
+            return RedirectToAction("Manager", "Books", new { searchTerm = book.ISBN });
         }
         #endregion
         #region Delete
@@ -252,7 +301,20 @@ namespace WEB.Controllers
         [HttpPost, Route("DeleteConfirmed"), MyAuthorizationFilter(2)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var instances = await _apiHelper.GetAll<Instance>("Instances");
+            var book = await _apiHelper.GetByID<Book>(id, "Books");
+            instances = instances!.Where(i => i.BookId == book!.Id);
+            foreach (var instance in instances)
+            {
+                if (instance.StatusId == 2)
+                {
+                    MyMessage.Add("Danger", "Cant delete book!");
+                    return RedirectToAction("Manager", "Books", new {searchTerm = book?.ISBN});
+                }
+            }
+
             await _apiHelper.Delete<Book>(id, "Books");
+            MyMessage.Add("Success", "Delete success!");
             return RedirectToAction("Manager");
         }
         #endregion
